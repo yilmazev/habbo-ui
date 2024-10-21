@@ -1,0 +1,100 @@
+.flash-minimize {
+	.arrow-left {
+		@apply bg-[url('/client-assets/images/1flash/minimize/arrow-left.png')] w-[6px] h-[8px];
+	}
+
+	.arrow-right {
+		@apply bg-[url('/client-assets/images/1flash/minimize/arrow-right.png')] w-[6px] h-[8px];
+	}
+}
+
+.flash-toolbar {
+	.icon-toolbar {
+		@apply relative cursor-pointer drop-shadow-[1px_1px_0_#00000047] hover:-translate-x-px hover:-translate-y-px hover:drop-shadow-[2px_2px_0_#00000047] active:translate-x-0 active:translate-y-0 active:brightness-90 active:drop-shadow-[1px_1px_0_#00000047];
+
+		&.icon-homeroom {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/homeroom.png')] w-[32px] h-[30px];
+		}
+
+		&.icon-hotelview {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/hotelview.png')] w-[28px] h-[28px];
+		}
+
+		&.icon-rooms {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/rooms.png')] w-[44px] h-[30px];
+		}
+
+		&.icon-rooms {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/rooms.png')] w-[44px] h-[30px];
+		}
+
+		&.icon-gamecenter {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/gamecenter.png')] w-[44px] h-[25px];
+		}
+
+		&.icon-shop {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/shop.png')] w-[37px] h-[37px];
+		}
+
+		&.icon-inventory {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/inventory.png')] w-[44px] h-[41px];
+		}
+
+		&.icon-camera {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/camera.png')] w-[38px] h-[45px];
+		}
+
+		&.icon-friends {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/friends.png')] w-[32px] h-[33px];
+		}
+
+		&.icon-search {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/search.png')] w-[29px] h-[33px];
+		}
+
+		&.icon-messages {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/messages.png')] w-[26px] h-[32px];
+		}
+	}
+
+	.flash-find-friend-bar {
+		.icon-head {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/find-friend-head.png')] w-[31px] h-[34px];
+		}
+	}
+
+	.flash-friend-bar {
+		.icon-messenger {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/friend-messenger.png')] size-[21px];
+		}
+
+		.icon-follow {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/friend-follow.png')] size-[21px];
+		}
+
+		.icon-profile {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/icons/friend-profile.png')] size-[21px];
+		}
+	}
+
+	.friends-arrow {
+		@apply w-[29px] h-[31px];
+
+
+		&.left {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/friends-arrow-left.png')];
+
+			&:hover {
+				@apply bg-[url('/client-assets/images/1flash/toolbar/friends-arrow-left-hover.png')];
+			}
+		}
+
+		&.right {
+			@apply bg-[url('/client-assets/images/1flash/toolbar/friends-arrow-right.png')];
+
+			&:hover {
+				@apply bg-[url('/client-assets/images/1flash/toolbar/friends-arrow-right-hover.png')];
+			}
+		}
+	}
+}
