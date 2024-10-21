@@ -1,7 +1,7 @@
-import { FC, useMemo, useRef } from "react";
-import { ColumnProps } from "..";
-import { GetConfiguration } from "../../api";
-import { DraggableWindowProps } from "../draggable-window";
+import { FC, useMemo, useRef } from "react"
+import { ColumnProps } from ".."
+import { GetConfiguration } from "../../api"
+import { DraggableWindowProps } from "../draggable-window"
 
 export interface NitroBigCardViewProps extends DraggableWindowProps, ColumnProps {
   onCloseClick?: () => void;
@@ -14,12 +14,12 @@ export const NitroBigCardView: FC<NitroBigCardViewProps> = props => {
   const isOverlayRadial: boolean = GetConfiguration("illumina.overlay.radial")
 
   const getClassNames = useMemo(() => {
-    const newClassNames: string[] = ["relative z-[9999]"]
+    const newClassNames: string[] = [ "relative z-[9999]" ]
 
     if (classNames.length) newClassNames.push(...classNames)
 
     return newClassNames
-  }, [classNames])
+  }, [ classNames ])
 
   const getClassName = useMemo(() => {
     let newClassName = getClassNames.join(" ")
@@ -27,7 +27,7 @@ export const NitroBigCardView: FC<NitroBigCardViewProps> = props => {
     if (className.length) newClassName += (" " + className)
 
     return newClassName.trim()
-  }, [getClassNames, className])
+  }, [ getClassNames, className ])
 
   return (
     <div>

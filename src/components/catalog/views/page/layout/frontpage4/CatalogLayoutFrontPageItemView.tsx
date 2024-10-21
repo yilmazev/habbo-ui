@@ -1,7 +1,7 @@
-import { FrontPageItem } from "@nitrots/nitro-renderer";
-import { CSSProperties, FC, ReactNode, useMemo } from "react";
-import { GetConfiguration } from "../../../../../../api";
-import { BaseProps } from "../../../../../../common";
+import { FrontPageItem } from "@nitrots/nitro-renderer"
+import { CSSProperties, FC, ReactNode, useMemo } from "react"
+import { GetConfiguration } from "../../../../../../api"
+import { BaseProps } from "../../../../../../common"
 
 export interface CatalogLayoutFrontPageItemViewProps extends BaseProps<HTMLDivElement> {
   item: FrontPageItem;
@@ -14,12 +14,12 @@ export const CatalogLayoutFrontPageItemView: FC<CatalogLayoutFrontPageItemViewPr
   const { item = null, classNames = [], className = "", children = null, ...rest } = props
 
   const getClassNames = useMemo(() => {
-    const newClassNames: string[] = ["relative cursor-pointer"]
+    const newClassNames: string[] = [ "relative cursor-pointer" ]
 
     if (classNames.length) newClassNames.push(...classNames)
 
     return newClassNames
-  }, [classNames])
+  }, [ classNames ])
 
   const getClassName = useMemo(() => {
     let newClassName = getClassNames.join(" ")
@@ -27,7 +27,7 @@ export const CatalogLayoutFrontPageItemView: FC<CatalogLayoutFrontPageItemViewPr
     if (className.length) newClassName += (" " + className)
 
     return newClassName.trim()
-  }, [getClassNames, className])
+  }, [ getClassNames, className ])
 
   const imageUrl = (GetConfiguration("image.library.url") + item.itemPromoImage)
 
@@ -37,7 +37,7 @@ export const CatalogLayoutFrontPageItemView: FC<CatalogLayoutFrontPageItemViewPr
     if (imageUrl) newStyle.background = `url(${imageUrl}) center no-repeat`
 
     return newStyle
-  }, [imageUrl])
+  }, [ imageUrl ])
 
   if (!item) return null
 

@@ -11,8 +11,8 @@ export class NavigatorRoomInfoViewProps {
 
 export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
   const { onCloseClick = null } = props
-  const [isRoomPicked, setIsRoomPicked] = useState(false)
-  const [isRoomMuted, setIsRoomMuted] = useState(false)
+  const [ isRoomPicked, setIsRoomPicked ] = useState(false)
+  const [ isRoomMuted, setIsRoomMuted ] = useState(false)
   const { report = null } = useHelp()
   const { navigatorData = null } = useNavigator()
 
@@ -23,11 +23,11 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
 
   const hasPermission = (permission: string) => {
     switch (permission) {
-      case "settings":
-        return (GetSessionDataManager().userId === navigatorData.enteredGuestRoom.ownerId || GetSessionDataManager().isModerator)
-      case "staff_pick":
-        return GetSessionDataManager().securityLevel >= SecurityLevel.COMMUNITY
-      default: return false
+    case "settings":
+      return (GetSessionDataManager().userId === navigatorData.enteredGuestRoom.ownerId || GetSessionDataManager().isModerator)
+    case "staff_pick":
+      return GetSessionDataManager().securityLevel >= SecurityLevel.COMMUNITY
+    default: return false
     }
   }
 
@@ -35,54 +35,54 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
     if (!navigatorData || !navigatorData.enteredGuestRoom) return
 
     switch (action) {
-      case "set_home_room":
-        let newRoomId = -1
+    case "set_home_room":
+      let newRoomId = -1
 
-        if (navigatorData.homeRoomId !== navigatorData.enteredGuestRoom.roomId) {
-          newRoomId = navigatorData.enteredGuestRoom.roomId
-        }
+      if (navigatorData.homeRoomId !== navigatorData.enteredGuestRoom.roomId) {
+        newRoomId = navigatorData.enteredGuestRoom.roomId
+      }
 
-        if (newRoomId > 0) SendMessageComposer(new UpdateHomeRoomMessageComposer(newRoomId))
-        return
-      case "navigator_search_tag":
-        CreateLinkEvent(`navigator/search/${value}`)
-        SendMessageComposer(new NavigatorSearchComposer("hotel_view", `tag:${value}`))
-        return
-      case "open_room_thumbnail_camera":
-        DispatchUiEvent(new RoomWidgetThumbnailEvent(RoomWidgetThumbnailEvent.TOGGLE_THUMBNAIL))
-        onCloseClick()
-        return
-      case "open_group_info":
-        GetGroupInformation(navigatorData.enteredGuestRoom.habboGroupId)
-        return
-      case "toggle_room_link":
-        CreateLinkEvent("navigator/toggle-room-link")
-        return
-      case "open_room_settings":
-        SendMessageComposer(new RoomSettingsComposer(navigatorData.enteredGuestRoom.roomId))
-        onCloseClick()
-        return
-      case "toggle_pick":
-        setIsRoomPicked(value => !value)
-        SendMessageComposer(new ToggleStaffPickMessageComposer(navigatorData.enteredGuestRoom.roomId))
-        return
-      case "toggle_mute":
-        setIsRoomMuted(value => !value)
-        SendMessageComposer(new RoomMuteComposer())
-        return
-      case "room_filter":
-        SendMessageComposer(new GetCustomRoomFilterMessageComposer(navigatorData.enteredGuestRoom.roomId))
-        return
-      case "open_floorplan_editor":
-        CreateLinkEvent("floor-editor/toggle")
-        onCloseClick()
-        return
-      case "report_room":
-        report(ReportType.ROOM, { roomId: navigatorData.enteredGuestRoom.roomId, roomName: navigatorData.enteredGuestRoom.roomName })
-        return
-      case "close":
-        onCloseClick()
-        return
+      if (newRoomId > 0) SendMessageComposer(new UpdateHomeRoomMessageComposer(newRoomId))
+      return
+    case "navigator_search_tag":
+      CreateLinkEvent(`navigator/search/${value}`)
+      SendMessageComposer(new NavigatorSearchComposer("hotel_view", `tag:${value}`))
+      return
+    case "open_room_thumbnail_camera":
+      DispatchUiEvent(new RoomWidgetThumbnailEvent(RoomWidgetThumbnailEvent.TOGGLE_THUMBNAIL))
+      onCloseClick()
+      return
+    case "open_group_info":
+      GetGroupInformation(navigatorData.enteredGuestRoom.habboGroupId)
+      return
+    case "toggle_room_link":
+      CreateLinkEvent("navigator/toggle-room-link")
+      return
+    case "open_room_settings":
+      SendMessageComposer(new RoomSettingsComposer(navigatorData.enteredGuestRoom.roomId))
+      onCloseClick()
+      return
+    case "toggle_pick":
+      setIsRoomPicked(value => !value)
+      SendMessageComposer(new ToggleStaffPickMessageComposer(navigatorData.enteredGuestRoom.roomId))
+      return
+    case "toggle_mute":
+      setIsRoomMuted(value => !value)
+      SendMessageComposer(new RoomMuteComposer())
+      return
+    case "room_filter":
+      SendMessageComposer(new GetCustomRoomFilterMessageComposer(navigatorData.enteredGuestRoom.roomId))
+      return
+    case "open_floorplan_editor":
+      CreateLinkEvent("floor-editor/toggle")
+      onCloseClick()
+      return
+    case "report_room":
+      report(ReportType.ROOM, { roomId: navigatorData.enteredGuestRoom.roomId, roomName: navigatorData.enteredGuestRoom.roomName })
+      return
+    case "close":
+      onCloseClick()
+      return
     }
   }
 
@@ -92,7 +92,7 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
     }
 
     return `${GetConfiguration("thumbnails.url").replace("%thumbnail%", roomId.toString())}?cache=${Math.random()}`
-  }, [customUrl, roomId])
+  }, [ customUrl, roomId ])
 
   useEffect(() => {
     if (!navigatorData) return
@@ -100,7 +100,7 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
     setIsRoomPicked(navigatorData.currentRoomIsStaffPick)
 
     if (navigatorData.enteredGuestRoom) setIsRoomMuted(navigatorData.enteredGuestRoom.allInRoomMuted)
-  }, [navigatorData])
+  }, [ navigatorData ])
 
   if (!navigatorData.enteredGuestRoom) return null
 
@@ -141,7 +141,7 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
           <div className="mb-3 flex gap-2 px-2.5" onClick={() => processAction("open_group_info")}>
             <LayoutBadgeImageView className="flex-none" badgeCode={navigatorData.enteredGuestRoom.groupBadgeCode} isGroup={true} />
             <p className="text-sm underline">
-              {LocalizeText("navigator.guildbase", ["groupName"], [navigatorData.enteredGuestRoom.groupName])}
+              {LocalizeText("navigator.guildbase", [ "groupName" ], [ navigatorData.enteredGuestRoom.groupName ])}
             </p>
           </div>}
         <div className="flex w-full flex-col gap-1">

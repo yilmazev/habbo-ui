@@ -38,41 +38,41 @@ export class Product implements IProduct {
 
   public getIconUrl(offer: IPurchasableOffer = null, stuffData: IObjectData = null): string {
     switch (this._productType) {
-      case ProductTypeEnum.FLOOR:
-        return GetRoomEngine().getFurnitureFloorIconUrl(this.productClassId)
-      case ProductTypeEnum.WALL: {
-        if (offer && this._furnitureData) {
-          let iconName = ""
+    case ProductTypeEnum.FLOOR:
+      return GetRoomEngine().getFurnitureFloorIconUrl(this.productClassId)
+    case ProductTypeEnum.WALL: {
+      if (offer && this._furnitureData) {
+        let iconName = ""
 
-          switch (this._furnitureData.className) {
-            case "floor":
-              iconName = ["th", this._furnitureData.className, offer.product.extraParam].join("_")
-              break
-            case "wallpaper":
-              iconName = ["th", "wall", offer.product.extraParam].join("_")
-              break
-            case "landscape":
-              iconName = ["th", this._furnitureData.className, (offer.product.extraParam || "").replace(".", "_"), "001"].join("_")
-              break
-          }
-
-          if (iconName !== "") {
-            const assetUrl = GetConfiguration("catalog.asset.url")
-
-            return `${assetUrl}/${iconName}.png`
-          }
+        switch (this._furnitureData.className) {
+        case "floor":
+          iconName = [ "th", this._furnitureData.className, offer.product.extraParam ].join("_")
+          break
+        case "wallpaper":
+          iconName = [ "th", "wall", offer.product.extraParam ].join("_")
+          break
+        case "landscape":
+          iconName = [ "th", this._furnitureData.className, (offer.product.extraParam || "").replace(".", "_"), "001" ].join("_")
+          break
         }
 
-        return GetRoomEngine().getFurnitureWallIconUrl(this.productClassId, this._extraParam)
+        if (iconName !== "") {
+          const assetUrl = GetConfiguration("catalog.asset.url")
+
+          return `${assetUrl}/${iconName}.png`
+        }
       }
-      case ProductTypeEnum.EFFECT:
-        return GetPixelEffectIcon(this.productClassId)
-      case ProductTypeEnum.HABBO_CLUB:
-        return GetSubscriptionProductIcon(this.productClassId)
-      case ProductTypeEnum.BADGE:
-        return GetSessionDataManager().getBadgeUrl(this._extraParam)
-      case ProductTypeEnum.ROBOT:
-        return null
+
+      return GetRoomEngine().getFurnitureWallIconUrl(this.productClassId, this._extraParam)
+    }
+    case ProductTypeEnum.EFFECT:
+      return GetPixelEffectIcon(this.productClassId)
+    case ProductTypeEnum.HABBO_CLUB:
+      return GetSubscriptionProductIcon(this.productClassId)
+    case ProductTypeEnum.BADGE:
+      return GetSessionDataManager().getBadgeUrl(this._extraParam)
+    case ProductTypeEnum.ROBOT:
+      return null
     }
 
     return null

@@ -5,8 +5,8 @@ import { InfiniteScroll } from "../../common"
 import { useChatHistory } from "../../hooks"
 
 export const ChatHistoryView: FC<{}> = props => {
-  const [isVisible, setIsVisible] = useState(false)
-  const [searchText, setSearchText] = useState("")
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ searchText, setSearchText ] = useState("")
   const { chatHistory = [] } = useChatHistory()
   const elementRef = useRef<HTMLDivElement>(null)
 
@@ -16,11 +16,11 @@ export const ChatHistoryView: FC<{}> = props => {
     let text = searchText.toLowerCase()
 
     return chatHistory.filter(entry => ((entry.message && entry.message.toLowerCase().includes(text))) || (entry.name && entry.name.toLowerCase().includes(text)))
-  }, [chatHistory, searchText])
+  }, [ chatHistory, searchText ])
 
   useEffect(() => {
     if (elementRef && elementRef.current && isVisible) elementRef.current.scrollTop = elementRef.current.scrollHeight
-  }, [isVisible])
+  }, [ isVisible ])
 
   useEffect(() => {
     const linkTracker: ILinkEventTracker = {
@@ -30,15 +30,15 @@ export const ChatHistoryView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-          case "show":
-            setIsVisible(true)
-            return
-          case "hide":
-            setIsVisible(false)
-            return
-          case "toggle":
-            setIsVisible(prevValue => !prevValue)
-            return
+        case "show":
+          setIsVisible(true)
+          return
+        case "hide":
+          setIsVisible(false)
+          return
+        case "toggle":
+          setIsVisible(prevValue => !prevValue)
+          return
         }
       },
       eventUrlPrefix: "chat-history/"

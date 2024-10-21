@@ -1,6 +1,6 @@
-import { FC, KeyboardEvent, useEffect, useState } from "react";
-import { INavigatorSearchFilter, LocalizeText, SearchFilterOptions } from "../../../../api";
-import { useNavigator } from "../../../../hooks";
+import { FC, KeyboardEvent, useEffect, useState } from "react"
+import { INavigatorSearchFilter, LocalizeText, SearchFilterOptions } from "../../../../api"
+import { useNavigator } from "../../../../hooks"
 
 export interface NavigatorSearchViewProps {
   sendSearch: (searchValue: string, contextCode: string) => void;
@@ -8,8 +8,8 @@ export interface NavigatorSearchViewProps {
 
 export const NavigatorSearchView: FC<NavigatorSearchViewProps> = props => {
   const { sendSearch = null } = props
-  const [searchFilterIndex, setSearchFilterIndex] = useState(0)
-  const [searchValue, setSearchValue] = useState("")
+  const [ searchFilterIndex, setSearchFilterIndex ] = useState(0)
+  const [ searchValue, setSearchValue ] = useState("")
   const { topLevelContext = null, searchResult = null } = useNavigator()
 
   const processSearch = () => {
@@ -39,7 +39,7 @@ export const NavigatorSearchView: FC<NavigatorSearchViewProps> = props => {
     let value: string = ""
 
     if (split.length >= 2) {
-      const [query, ...rest] = split
+      const [ query, ...rest ] = split
 
       filter = SearchFilterOptions.find(option => (option.query === query))
       value = rest.join(":")
@@ -52,7 +52,7 @@ export const NavigatorSearchView: FC<NavigatorSearchViewProps> = props => {
 
     setSearchFilterIndex(SearchFilterOptions.findIndex(option => (option === filter)))
     setSearchValue(value)
-  }, [searchResult])
+  }, [ searchResult ])
 
   return (
     <div className="mb-1.5 flex w-full gap-[13px]">

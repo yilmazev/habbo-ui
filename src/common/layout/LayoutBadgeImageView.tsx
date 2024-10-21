@@ -1,7 +1,7 @@
-import { BadgeImageReadyEvent, NitroSprite, TextureUtils } from "@nitrots/nitro-renderer";
-import { CSSProperties, FC, useEffect, useMemo, useRef, useState } from "react";
-import { GetConfiguration, GetSessionDataManager, LocalizeBadgeDescription, LocalizeBadgeName, LocalizeText } from "../../api";
-import { BaseProps } from "../Base";
+import { BadgeImageReadyEvent, NitroSprite, TextureUtils } from "@nitrots/nitro-renderer"
+import { CSSProperties, FC, useEffect, useMemo, useRef, useState } from "react"
+import { GetConfiguration, GetSessionDataManager, LocalizeBadgeDescription, LocalizeBadgeName, LocalizeText } from "../../api"
+import { BaseProps } from "../Base"
 
 export interface LayoutBadgeImageViewProps extends BaseProps<HTMLDivElement>
 {
@@ -108,7 +108,7 @@ export const LayoutBadgeImageView: FC<LayoutBadgeImageViewProps> = props =>
     <div ref={ elementRef } onMouseOver={ event => setIsVisible(true) } onMouseLeave={ event => setIsVisible(false) } className={ getClassName } style={ getStyle } { ...rest }>
       { showInfo && isVisible &&
                 <div className="illumina-badge-details pixelated z-[9999]">
-                  <p className="mb-1 font-volter_bold text-[9px] !leading-3">{ isGroup ? customTitle : LocalizeBadgeName(badgeCode) }</p>
+                  <p className="font-volter_bold mb-1 text-[9px] !leading-3">{ isGroup ? customTitle : LocalizeBadgeName(badgeCode) }</p>
                   { GetConfiguration("badge.descriptions.enabled", true) && <p className="font-volter text-[9px] !leading-3">{ isGroup ? LocalizeText("group.badgepopup.body") : LocalizeBadgeDescription(badgeCode) }</p> }
                 </div> }
       { children }

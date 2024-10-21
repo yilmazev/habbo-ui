@@ -4,8 +4,8 @@ import { useBetween } from "use-between"
 import { useMessageEvent } from "../../events"
 
 const useRoomPromoteState = () => {
-  const [promoteInformation, setPromoteInformation] = useState<RoomEventMessageParser>(null)
-  const [isExtended, setIsExtended] = useState(false)
+  const [ promoteInformation, setPromoteInformation ] = useState<RoomEventMessageParser>(null)
+  const [ isExtended, setIsExtended ] = useState(false)
 
   useMessageEvent<RoomEventEvent>(RoomEventEvent, event => {
     const parser = event.getParser()

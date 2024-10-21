@@ -20,8 +20,8 @@ const TABS: string[] = [
 
 export const ModToolsTicketsView: FC<ModToolsTicketsViewProps> = props => {
   const { onCloseClick = null } = props
-  const [currentTab, setCurrentTab] = useState(0)
-  const [issueInfoWindows, setIssueInfoWindows] = useState<number[]>([])
+  const [ currentTab, setCurrentTab ] = useState(0)
+  const [ issueInfoWindows, setIssueInfoWindows ] = useState<number[]>([])
   const { tickets = [] } = useModTools()
 
   const openIssues = tickets.filter(issue => issue.state === IssueMessageData.STATE_OPEN)
@@ -30,7 +30,7 @@ export const ModToolsTicketsView: FC<ModToolsTicketsViewProps> = props => {
 
   const closeIssue = (issueId: number) => {
     setIssueInfoWindows(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
       const existingIndex = newValue.indexOf(issueId)
 
       if (existingIndex >= 0) newValue.splice(existingIndex, 1)
@@ -41,7 +41,7 @@ export const ModToolsTicketsView: FC<ModToolsTicketsViewProps> = props => {
 
   const handleIssue = (issueId: number) => {
     setIssueInfoWindows(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
       const existingIndex = newValue.indexOf(issueId)
 
       if (existingIndex === -1) newValue.push(issueId)
@@ -53,9 +53,9 @@ export const ModToolsTicketsView: FC<ModToolsTicketsViewProps> = props => {
 
   const CurrentTabComponent = () => {
     switch (currentTab) {
-      case 0: return <ModToolsOpenIssuesTabView openIssues={openIssues} />
-      case 1: return <ModToolsMyIssuesTabView myIssues={myIssues} handleIssue={handleIssue} />
-      case 2: return <ModToolsPickedIssuesTabView pickedIssues={pickedIssues} />
+    case 0: return <ModToolsOpenIssuesTabView openIssues={openIssues} />
+    case 1: return <ModToolsMyIssuesTabView myIssues={myIssues} handleIssue={handleIssue} />
+    case 2: return <ModToolsPickedIssuesTabView pickedIssues={pickedIssues} />
     }
 
     return null

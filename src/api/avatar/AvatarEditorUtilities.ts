@@ -15,18 +15,18 @@ export class AvatarEditorUtilities {
 
   public static getGender(gender: string): string {
     switch (gender) {
-      case FigureData.MALE:
-      case "m":
-      case "M":
-        gender = FigureData.MALE
-        break
-      case FigureData.FEMALE:
-      case "f":
-      case "F":
-        gender = FigureData.FEMALE
-        break
-      default:
-        gender = FigureData.MALE
+    case FigureData.MALE:
+    case "m":
+    case "M":
+      gender = FigureData.MALE
+      break
+    case FigureData.FEMALE:
+    case "f":
+    case "F":
+      gender = FigureData.FEMALE
+      break
+    default:
+      gender = FigureData.MALE
     }
 
     return gender

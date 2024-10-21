@@ -1,7 +1,7 @@
-import { IAvatarFigureContainer, SaveWardrobeOutfitMessageComposer } from "@nitrots/nitro-renderer";
-import { Dispatch, FC, SetStateAction, useCallback, useMemo } from "react";
-import { FigureData, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, LocalizeText, SendMessageComposer } from "../../../api";
-import { Button, LayoutAvatarImage } from "../../../common";
+import { IAvatarFigureContainer, SaveWardrobeOutfitMessageComposer } from "@nitrots/nitro-renderer"
+import { Dispatch, FC, SetStateAction, useCallback, useMemo } from "react"
+import { FigureData, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, LocalizeText, SendMessageComposer } from "../../../api"
+import { Button, LayoutAvatarImage } from "../../../common"
 
 export interface AvatarEditorWardrobeViewProps {
   figureData: FigureData;
@@ -18,31 +18,31 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
   const wearFigureAtIndex = useCallback((index: number) => {
     if ((index >= savedFigures.length) || (index < 0)) return
 
-    const [figure, gender] = savedFigures[index]
+    const [ figure, gender ] = savedFigures[index]
 
     loadAvatarInEditor(figure.getFigureString(), gender)
-  }, [savedFigures, loadAvatarInEditor])
+  }, [ savedFigures, loadAvatarInEditor ])
 
   const saveFigureAtWardrobeIndex = useCallback((index: number) => {
     if (!figureData || (index >= savedFigures.length) || (index < 0)) return
 
-    const newFigures = [...savedFigures]
+    const newFigures = [ ...savedFigures ]
 
     const figure = figureData.getFigureString()
     const gender = figureData.gender
 
-    newFigures[index] = [GetAvatarRenderManager().createFigureContainer(figure), gender]
+    newFigures[index] = [ GetAvatarRenderManager().createFigureContainer(figure), gender ]
 
     setSavedFigures(newFigures)
     SendMessageComposer(new SaveWardrobeOutfitMessageComposer((index + 1), figure, gender))
-  }, [figureData, savedFigures, setSavedFigures])
+  }, [ figureData, savedFigures, setSavedFigures ])
 
   const figures = useMemo(() => {
     if (!savedFigures || !savedFigures.length) return []
 
     const items: JSX.Element[] = []
 
-    savedFigures.forEach(([figureContainer, gender], index) => {
+    savedFigures.forEach(([ figureContainer, gender ], index) => {
       let clubLevel = 0
 
       if (figureContainer) clubLevel = GetAvatarRenderManager().getFigureClubLevel(figureContainer, gender)
@@ -61,7 +61,7 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
     })
 
     return items
-  }, [savedFigures, hcDisabled, saveFigureAtWardrobeIndex, wearFigureAtIndex])
+  }, [ savedFigures, hcDisabled, saveFigureAtWardrobeIndex, wearFigureAtIndex ])
 
   return (
     <div className="w-full">

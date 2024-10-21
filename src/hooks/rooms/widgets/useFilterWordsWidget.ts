@@ -3,8 +3,8 @@ import { useState } from "react"
 import { useMessageEvent } from "../../events"
 
 const useFilterWordsWidgetState = () => {
-  const [wordsFilter, setWordsFilter] = useState<string[]>(null)
-  const [isVisible, setIsVisible] = useState(false)
+  const [ wordsFilter, setWordsFilter ] = useState<string[]>(null)
+  const [ isVisible, setIsVisible ] = useState(false)
 
   const onClose = () => setIsVisible(false)
 

@@ -7,8 +7,8 @@ import { useGameCenter } from "../../../hooks"
 
 export const GameView = () => {
   const { selectedGame, accountStatus } = useGameCenter()
-  const [isGameLoading, setIsGameLoading] = useState(false)
-  const [iframeSrc, setIframeSrc] = useState(null)
+  const [ isGameLoading, setIsGameLoading ] = useState(false)
+  const [ iframeSrc, setIframeSrc ] = useState(null)
   const basejumpRef = useRef(null)
 
   const getBgColour = () => selectedGame.bgColor
@@ -65,7 +65,7 @@ export const GameView = () => {
       SendMessageComposer(new GetGameStatusMessageComposer(selectedGame.gameId))
       SendMessageComposer(new Game2GetAccountGameStatusMessageComposer(selectedGame.gameId))
     }
-  }, [selectedGame])
+  }, [ selectedGame ])
 
   return <>
     <div className="relative flex size-full justify-center bg-left-bottom bg-repeat-x pt-[63px]" style={{ backgroundColor: getBgColour(), backgroundImage: getBgImage() }}>
@@ -75,7 +75,7 @@ export const GameView = () => {
             <p className="pb-2 text-center text-xs font-semibold !leading-3 [text-shadow:_0_1px_0_#fff]" style={{ textShadow: `0 1px 0 ${getBgColour()}` }}>{LocalizeText(`gamecenter.${selectedGame.gameNameId}.description_title`)}</p>
             <img src={selectedGame.assetUrl + "game_logo.png"} />
             {(accountStatus.hasUnlimitedGames || accountStatus.freeGamesLeft > 0) && <>
-              <Button className="relative !h-10 !font-volter_bold !text-[9px] !font-normal" onClick={event => onPlay(selectedGame.gameNameId)}>
+              <Button className="!font-volter_bold relative !h-10 !text-[9px] !font-normal" onClick={event => onPlay(selectedGame.gameNameId)}>
                 {LocalizeText("gamecenter.play_now")}
                 {/* { !accountStatus.hasUnlimitedGames && 
                                     <LayoutItemCountView count={ accountStatus.freeGamesLeft }/> } */}

@@ -1,7 +1,7 @@
-import { GuideSessionRequesterCancelsMessageComposer } from "@nitrots/nitro-renderer";
-import { FC } from "react";
-import { LocalizeText, SendMessageComposer } from "../../../api";
-import { Button } from "../../../common";
+import { GuideSessionRequesterCancelsMessageComposer } from "@nitrots/nitro-renderer"
+import { FC } from "react"
+import { LocalizeText, SendMessageComposer } from "../../../api"
+import { Button } from "../../../common"
 
 interface GuideToolUserPendingViewProps {
   helpRequestDescription: string;
@@ -25,7 +25,7 @@ export const GuideToolUserPendingView: FC<GuideToolUserPendingViewProps> = props
       <div className="mt-3.5">
         <p className="mb-2 font-semibold text-[#484848] [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("guide.help.request.user.pending.info.title")}</p>
         <p className="mb-3.5 text-[13px] [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("guide.help.request.user.pending.info.message")}</p>
-        <p className="text-xs font-semibold [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("guide.help.request.user.pending.info.waiting", ["waitingtime"], [helpRequestAverageTime.toString()])}</p>
+        <p className="text-xs font-semibold [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("guide.help.request.user.pending.info.waiting", [ "waitingtime" ], [ helpRequestAverageTime.toString() ])}</p>
       </div>
       <div className="my-3 h-0.5 w-full border-b border-white bg-[#CCCCCC] dark:border-[#36322C] dark:bg-black" />
       <Button className="w-fit gap-1.5" onClick={cancelRequest}>

@@ -1,7 +1,7 @@
-import { AvatarScaleType, AvatarSetType } from "@nitrots/nitro-renderer";
-import { CSSProperties, FC, useEffect, useMemo, useRef, useState } from "react";
-import { GetAvatarRenderManager } from "../../api";
-import { BaseProps } from "../Base";
+import { AvatarScaleType, AvatarSetType } from "@nitrots/nitro-renderer"
+import { CSSProperties, FC, useEffect, useMemo, useRef, useState } from "react"
+import { GetAvatarRenderManager } from "../../api"
+import { BaseProps } from "../Base"
 
 export interface ILayoutAvatarImage extends BaseProps<HTMLDivElement> {
   figure: string;
@@ -12,17 +12,17 @@ export interface ILayoutAvatarImage extends BaseProps<HTMLDivElement> {
 }
 
 export const LayoutAvatarImage: FC<ILayoutAvatarImage> = ({ figure = "", gender = "M", headOnly = false, direction = 0, scale = 1, classNames = [], className = "", style = {}, ...rest }) => {
-  const [avatarUrl, setAvatarUrl] = useState(null)
-  const [randomValue, setRandomValue] = useState(-1)
+  const [ avatarUrl, setAvatarUrl ] = useState(null)
+  const [ randomValue, setRandomValue ] = useState(-1)
   const isDisposed = useRef(false)
 
   const getClassNames = useMemo(() => {
-    const newClassNames: string[] = ["avatar-image"]
+    const newClassNames: string[] = [ "avatar-image" ]
 
     if (classNames.length) newClassNames.push(...classNames)
 
     return newClassNames
-  }, [classNames])
+  }, [ classNames ])
 
   const getClassName = useMemo(() => {
     let newClassName = getClassNames.join(" ")
@@ -30,7 +30,7 @@ export const LayoutAvatarImage: FC<ILayoutAvatarImage> = ({ figure = "", gender 
     if (className.length) newClassName += (" " + className)
 
     return newClassName.trim()
-  }, [getClassNames, className])
+  }, [ getClassNames, className ])
 
   const getStyle = useMemo(() => {
     let newStyle: CSSProperties = {}
@@ -46,7 +46,7 @@ export const LayoutAvatarImage: FC<ILayoutAvatarImage> = ({ figure = "", gender 
     if (Object.keys(style).length) newStyle = { ...newStyle, ...style }
 
     return newStyle
-  }, [avatarUrl, scale, style])
+  }, [ avatarUrl, scale, style ])
 
   useEffect(() => {
     const avatarImage = GetAvatarRenderManager().createAvatarImage(figure, AvatarScaleType.LARGE, gender, {
@@ -72,7 +72,7 @@ export const LayoutAvatarImage: FC<ILayoutAvatarImage> = ({ figure = "", gender 
     if (image) setAvatarUrl(image.src)
 
     avatarImage.dispose()
-  }, [figure, gender, direction, headOnly, randomValue])
+  }, [ figure, gender, direction, headOnly, randomValue ])
 
   useEffect(() => {
     isDisposed.current = false

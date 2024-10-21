@@ -6,8 +6,8 @@ import { OfferBubbleView } from "./OfferBubbleView"
 import { OfferWindowView } from "./OfferWindowView"
 
 export const OfferView = () => {
-  const [offer, setOffer] = useState<TargetedOfferData>(null)
-  const [opened, setOpened] = useState(false)
+  const [ offer, setOffer ] = useState<TargetedOfferData>(null)
+  const [ opened, setOpened ] = useState(false)
 
   useMessageEvent<TargetedOfferEvent>(TargetedOfferEvent, evt => {
     let parser = evt.getParser()

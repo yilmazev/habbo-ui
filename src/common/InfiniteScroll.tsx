@@ -1,5 +1,5 @@
-import { useVirtual } from "@tanstack/react-virtual";
-import { FC, Fragment, ReactElement, useEffect, useRef, useState } from "react";
+import { useVirtual } from "@tanstack/react-virtual"
+import { FC, Fragment, ReactElement, useEffect, useRef, useState } from "react"
 
 interface InfiniteScrollProps<T = any> {
   className: string;
@@ -11,7 +11,7 @@ interface InfiniteScrollProps<T = any> {
 
 export const InfiniteScroll: FC<InfiniteScrollProps> = props => {
   const { className = null, rows = [], overscan = 5, scrollToBottom = false, rowRender = null } = props
-  const [scrollIndex, setScrollIndex] = useState(rows.length - 1)
+  const [ scrollIndex, setScrollIndex ] = useState(rows.length - 1)
   const elementRef = useRef<HTMLDivElement>(null)
 
   const { virtualItems = [], totalSize = 0, scrollToIndex = null } = useVirtual({
@@ -27,7 +27,7 @@ export const InfiniteScroll: FC<InfiniteScrollProps> = props => {
     if (!scrollToBottom) return
 
     scrollToIndex(scrollIndex)
-  }, [scrollToBottom, scrollIndex, scrollToIndex])
+  }, [ scrollToBottom, scrollIndex, scrollToIndex ])
 
   return (
     <div ref={elementRef} className={className}>

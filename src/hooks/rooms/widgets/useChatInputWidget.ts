@@ -7,12 +7,12 @@ import { useObjectSelectedEvent } from "../engine"
 import { useRoom } from "../useRoom"
 
 const useChatInputWidgetState = () => {
-  const [selectedUsername, setSelectedUsername] = useState("")
-  const [isTyping, setIsTyping] = useState(false)
-  const [typingStartedSent, setTypingStartedSent] = useState(false)
-  const [isIdle, setIsIdle] = useState(false)
-  const [floodBlocked, setFloodBlocked] = useState(false)
-  const [floodBlockedSeconds, setFloodBlockedSeconds] = useState(0)
+  const [ selectedUsername, setSelectedUsername ] = useState("")
+  const [ isTyping, setIsTyping ] = useState(false)
+  const [ typingStartedSent, setTypingStartedSent ] = useState(false)
+  const [ isIdle, setIsIdle ] = useState(false)
+  const [ floodBlocked, setFloodBlocked ] = useState(false)
+  const [ floodBlockedSeconds, setFloodBlockedSeconds ] = useState(0)
   const { showNitroAlert = null, showConfirm = null } = useNotification()
   const { roomSession = null } = useRoom()
 
@@ -41,139 +41,139 @@ const useChatInputWidgetState = () => {
       }
 
       switch (firstPart.toLowerCase()) {
-        case ":shake":
-          if (window.location.hostname !== "hably.se") {
-            RoomShakingEffect.init(2500, 5000)
-            RoomShakingEffect.turnVisualizationOn()
-
-            return null
-          }
-
-        case ":rotate":
-          if (window.location.hostname !== "hably.se") {
-            RoomRotatingEffect.init(2500, 5000)
-            RoomRotatingEffect.turnVisualizationOn()
-
-            return null
-          }
-        case ":d":
-        case ";d":
-          if (GetClubMemberLevel() === HabboClubLevelEnum.VIP) {
-            roomSession.sendExpressionMessage(AvatarExpressionEnum.LAUGH.ordinal)
-          }
-
-          break
-        case "o/":
-        case "_o/":
-          roomSession.sendExpressionMessage(AvatarExpressionEnum.WAVE.ordinal)
-
-          return null
-        case ":kiss":
-          if (GetClubMemberLevel() === HabboClubLevelEnum.VIP && window.location.hostname !== "hably.se") {
-            roomSession.sendExpressionMessage(AvatarExpressionEnum.BLOW.ordinal)
-
-            return null
-          }
-
-          break
-        case ":jump":
-          if (GetClubMemberLevel() === HabboClubLevelEnum.VIP) {
-            roomSession.sendExpressionMessage(AvatarExpressionEnum.JUMP.ordinal)
-
-            return null
-          }
-
-          break
-        case ":idle":
-          roomSession.sendExpressionMessage(AvatarExpressionEnum.IDLE.ordinal)
-
-          return null
-        case "_b":
-          roomSession.sendExpressionMessage(AvatarExpressionEnum.RESPECT.ordinal)
-
-          return null
-        case ":sign":
-          roomSession.sendSignMessage(parseInt(secondPart))
-
-          return null
-        case ":iddqd":
-        case ":flip":
-          GetRoomEngine().events.dispatchEvent(new RoomZoomEvent(roomSession.roomId, -1, true))
-
-          return null
-        case ":zoom":
-          GetRoomEngine().events.dispatchEvent(new RoomZoomEvent(roomSession.roomId, parseFloat(secondPart), false))
-
-          return null
-        case ":screenshot":
-          const texture = GetRoomEngine().createTextureFromRoom(roomSession.roomId, 1)
-
-          const image = new Image()
-
-          image.src = TextureUtils.generateImageUrl(texture)
-
-          const newWindow = window.open("")
-          newWindow.document.write(image.outerHTML)
-          return null
-        case ":pickall":
-          if (roomSession.isRoomOwner || GetSessionDataManager().isModerator) {
-            showConfirm(LocalizeText("room.confirm.pick_all"), () => {
-              GetSessionDataManager().sendSpecialCommandMessage(":pickall")
-            },
-              null, null, null, LocalizeText("generic.alert.title"))
-          }
-
-          return null
-        case ":ejectall":
-          if (roomSession.isRoomOwner || GetSessionDataManager().isModerator || roomSession.controllerLevel >= RoomControllerLevel.GUEST) {
-            showConfirm(LocalizeText("room.confirm.eject_all"), () => {
-              GetSessionDataManager().sendSpecialCommandMessage(":ejectall")
-            },
-              null, null, null, LocalizeText("generic.alert.title"))
-          }
-          return null
-        case ":furni":
-          CreateLinkEvent("furni-chooser/")
-          return null
-        case ":chooser":
-          CreateLinkEvent("user-chooser/")
-          return null
-        case ":floor":
-        case ":bcfloor":
-          if (roomSession.controllerLevel >= RoomControllerLevel.ROOM_OWNER) CreateLinkEvent("floor-editor/show")
-
-          return null
-        case ":togglefps": {
-          if (GetTicker().maxFPS > 0) GetTicker().maxFPS = 0
-          else GetTicker().maxFPS = GetConfiguration("system.animation.fps")
+      case ":shake":
+        if (window.location.hostname !== "hably.se") {
+          RoomShakingEffect.init(2500, 5000)
+          RoomShakingEffect.turnVisualizationOn()
 
           return null
         }
-        case ":client":
-        case ":nitro":
-        case ":illumina":
-        case ":billsonnn":
-          showNitroAlert()
-          return null
-        case ":settings":
-          if (roomSession.isRoomOwner || GetSessionDataManager().isModerator) {
-            SendMessageComposer(new RoomSettingsComposer(roomSession.roomId))
-          }
+
+      case ":rotate":
+        if (window.location.hostname !== "hably.se") {
+          RoomRotatingEffect.init(2500, 5000)
+          RoomRotatingEffect.turnVisualizationOn()
 
           return null
+        }
+      case ":d":
+      case ";d":
+        if (GetClubMemberLevel() === HabboClubLevelEnum.VIP) {
+          roomSession.sendExpressionMessage(AvatarExpressionEnum.LAUGH.ordinal)
+        }
+
+        break
+      case "o/":
+      case "_o/":
+        roomSession.sendExpressionMessage(AvatarExpressionEnum.WAVE.ordinal)
+
+        return null
+      case ":kiss":
+        if (GetClubMemberLevel() === HabboClubLevelEnum.VIP && window.location.hostname !== "hably.se") {
+          roomSession.sendExpressionMessage(AvatarExpressionEnum.BLOW.ordinal)
+
+          return null
+        }
+
+        break
+      case ":jump":
+        if (GetClubMemberLevel() === HabboClubLevelEnum.VIP) {
+          roomSession.sendExpressionMessage(AvatarExpressionEnum.JUMP.ordinal)
+
+          return null
+        }
+
+        break
+      case ":idle":
+        roomSession.sendExpressionMessage(AvatarExpressionEnum.IDLE.ordinal)
+
+        return null
+      case "_b":
+        roomSession.sendExpressionMessage(AvatarExpressionEnum.RESPECT.ordinal)
+
+        return null
+      case ":sign":
+        roomSession.sendSignMessage(parseInt(secondPart))
+
+        return null
+      case ":iddqd":
+      case ":flip":
+        GetRoomEngine().events.dispatchEvent(new RoomZoomEvent(roomSession.roomId, -1, true))
+
+        return null
+      case ":zoom":
+        GetRoomEngine().events.dispatchEvent(new RoomZoomEvent(roomSession.roomId, parseFloat(secondPart), false))
+
+        return null
+      case ":screenshot":
+        const texture = GetRoomEngine().createTextureFromRoom(roomSession.roomId, 1)
+
+        const image = new Image()
+
+        image.src = TextureUtils.generateImageUrl(texture)
+
+        const newWindow = window.open("")
+        newWindow.document.write(image.outerHTML)
+        return null
+      case ":pickall":
+        if (roomSession.isRoomOwner || GetSessionDataManager().isModerator) {
+          showConfirm(LocalizeText("room.confirm.pick_all"), () => {
+            GetSessionDataManager().sendSpecialCommandMessage(":pickall")
+          },
+          null, null, null, LocalizeText("generic.alert.title"))
+        }
+
+        return null
+      case ":ejectall":
+        if (roomSession.isRoomOwner || GetSessionDataManager().isModerator || roomSession.controllerLevel >= RoomControllerLevel.GUEST) {
+          showConfirm(LocalizeText("room.confirm.eject_all"), () => {
+            GetSessionDataManager().sendSpecialCommandMessage(":ejectall")
+          },
+          null, null, null, LocalizeText("generic.alert.title"))
+        }
+        return null
+      case ":furni":
+        CreateLinkEvent("furni-chooser/")
+        return null
+      case ":chooser":
+        CreateLinkEvent("user-chooser/")
+        return null
+      case ":floor":
+      case ":bcfloor":
+        if (roomSession.controllerLevel >= RoomControllerLevel.ROOM_OWNER) CreateLinkEvent("floor-editor/show")
+
+        return null
+      case ":togglefps": {
+        if (GetTicker().maxFPS > 0) GetTicker().maxFPS = 0
+        else GetTicker().maxFPS = GetConfiguration("system.animation.fps")
+
+        return null
+      }
+      case ":client":
+      case ":nitro":
+      case ":illumina":
+      case ":billsonnn":
+        showNitroAlert()
+        return null
+      case ":settings":
+        if (roomSession.isRoomOwner || GetSessionDataManager().isModerator) {
+          SendMessageComposer(new RoomSettingsComposer(roomSession.roomId))
+        }
+
+        return null
       }
     }
 
     switch (chatType) {
-      case ChatMessageTypeEnum.CHAT_DEFAULT:
-        roomSession.sendChatMessage(text, styleId)
-        break
-      case ChatMessageTypeEnum.CHAT_SHOUT:
-        roomSession.sendShoutMessage(text, styleId)
-        break
-      case ChatMessageTypeEnum.CHAT_WHISPER:
-        roomSession.sendWhisperMessage(recipientName, text, styleId)
-        break
+    case ChatMessageTypeEnum.CHAT_DEFAULT:
+      roomSession.sendChatMessage(text, styleId)
+      break
+    case ChatMessageTypeEnum.CHAT_SHOUT:
+      roomSession.sendShoutMessage(text, styleId)
+      break
+    case ChatMessageTypeEnum.CHAT_WHISPER:
+      roomSession.sendWhisperMessage(recipientName, text, styleId)
+      break
     }
   }
 
@@ -214,7 +214,7 @@ const useChatInputWidgetState = () => {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [floodBlocked])
+  }, [ floodBlocked ])
 
   useEffect(() => {
     if (!isIdle) return
@@ -229,7 +229,7 @@ const useChatInputWidgetState = () => {
     }
 
     return () => clearTimeout(timeout)
-  }, [isIdle])
+  }, [ isIdle ])
 
   useEffect(() => {
     if (isTyping) {
@@ -246,7 +246,7 @@ const useChatInputWidgetState = () => {
         roomSession.sendChatTypingMessage(isTyping)
       }
     }
-  }, [roomSession, isTyping, typingStartedSent])
+  }, [ roomSession, isTyping, typingStartedSent ])
 
   return { selectedUsername, floodBlocked, floodBlockedSeconds, setIsTyping, setIsIdle, sendChat }
 }

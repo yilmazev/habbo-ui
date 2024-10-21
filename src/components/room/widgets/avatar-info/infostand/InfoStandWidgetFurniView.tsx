@@ -18,25 +18,25 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
   const { avatarInfo = null, onClose = null } = props
   const { roomSession = null } = useRoom()
 
-  const [pickupMode, setPickupMode] = useState(0)
-  const [canMove, setCanMove] = useState(false)
-  const [canRotate, setCanRotate] = useState(false)
-  const [canUse, setCanUse] = useState(false)
-  const [furniKeys, setFurniKeys] = useState<string[]>([])
-  const [furniValues, setFurniValues] = useState<string[]>([])
-  const [customKeys, setCustomKeys] = useState<string[]>([])
-  const [customValues, setCustomValues] = useState<string[]>([])
-  const [isCrackable, setIsCrackable] = useState(false)
-  const [crackableHits, setCrackableHits] = useState(0)
-  const [crackableTarget, setCrackableTarget] = useState(0)
-  const [godMode, setGodMode] = useState(false)
-  const [canSeeFurniId, setCanSeeFurniId] = useState(false)
-  const [groupName, setGroupName] = useState(null)
-  const [isJukeBox, setIsJukeBox] = useState(false)
-  const [isSongDisk, setIsSongDisk] = useState(false)
-  const [songId, setSongId] = useState(0)
-  const [songName, setSongName] = useState("")
-  const [songCreator, setSongCreator] = useState("")
+  const [ pickupMode, setPickupMode ] = useState(0)
+  const [ canMove, setCanMove ] = useState(false)
+  const [ canRotate, setCanRotate ] = useState(false)
+  const [ canUse, setCanUse ] = useState(false)
+  const [ furniKeys, setFurniKeys ] = useState<string[]>([])
+  const [ furniValues, setFurniValues ] = useState<string[]>([])
+  const [ customKeys, setCustomKeys ] = useState<string[]>([])
+  const [ customValues, setCustomValues ] = useState<string[]>([])
+  const [ isCrackable, setIsCrackable ] = useState(false)
+  const [ crackableHits, setCrackableHits ] = useState(0)
+  const [ crackableTarget, setCrackableTarget ] = useState(0)
+  const [ godMode, setGodMode ] = useState(false)
+  const [ canSeeFurniId, setCanSeeFurniId ] = useState(false)
+  const [ groupName, setGroupName ] = useState(null)
+  const [ isJukeBox, setIsJukeBox ] = useState(false)
+  const [ isSongDisk, setIsSongDisk ] = useState(false)
+  const [ songId, setSongId ] = useState(0)
+  const [ songName, setSongName ] = useState("")
+  const [ songCreator, setSongCreator ] = useState("")
 
   useSoundEvent<NowPlayingEvent>(NowPlayingEvent.NPE_SONG_CHANGED, event => {
     setSongId(event.id)
@@ -171,7 +171,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
     setSongId(furniSongId)
 
     if (avatarInfo.groupId) SendMessageComposer(new GroupInformationComposer(avatarInfo.groupId, false))
-  }, [roomSession, avatarInfo])
+  }, [ roomSession, avatarInfo ])
 
   useMessageEvent<GroupInformationEvent>(GroupInformationEvent, event => {
     const parser = event.getParser()
@@ -188,7 +188,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
 
     setSongName(songInfo?.name ?? "")
     setSongCreator(songInfo?.creator ?? "")
-  }, [songId])
+  }, [ songId ])
 
   const onFurniSettingChange = useCallback((index: number, value: string) => {
     const clone = Array.from(furniValues)
@@ -196,7 +196,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
     clone[index] = value
 
     setFurniValues(clone)
-  }, [furniValues])
+  }, [ furniValues ])
 
   const onCustomVariableChange = useCallback((index: number, value: string) => {
     const clone = Array.from(customValues)
@@ -204,7 +204,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
     clone[index] = value
 
     setCustomValues(clone)
-  }, [customValues])
+  }, [ customValues ])
 
   const getFurniSettingsAsString = useCallback(() => {
     if (furniKeys.length === 0 || furniValues.length === 0) return ""
@@ -223,7 +223,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
     }
 
     return data
-  }, [furniKeys, furniValues])
+  }, [ furniKeys, furniValues ])
 
   const processButtonAction = useCallback((action: string) => {
     if (!action || (action === "")) return
@@ -231,56 +231,56 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
     let objectData: string = null
 
     switch (action) {
-      case "buy_one":
-        CreateLinkEvent(`catalog/open/offerId/${avatarInfo.purchaseOfferId}`)
-        return
-      case "move":
-        GetRoomEngine().processRoomObjectOperation(avatarInfo.id, avatarInfo.category, RoomObjectOperationType.OBJECT_MOVE)
-        break
-      case "rotate":
-        GetRoomEngine().processRoomObjectOperation(avatarInfo.id, avatarInfo.category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE)
-        break
-      case "pickup":
-        if (pickupMode === PICKUP_MODE_FULL) {
-          GetRoomEngine().processRoomObjectOperation(avatarInfo.id, avatarInfo.category, RoomObjectOperationType.OBJECT_PICKUP)
-        }
-        else {
-          GetRoomEngine().processRoomObjectOperation(avatarInfo.id, avatarInfo.category, RoomObjectOperationType.OBJECT_EJECT)
-        }
-        break
-      case "use":
-        GetRoomEngine().useRoomObject(avatarInfo.id, avatarInfo.category)
-        break
-      case "save_branding_configuration": {
-        const mapData = new Map<string, string>()
-        const dataParts = getFurniSettingsAsString().split("\t")
-
-        if (dataParts) {
-          for (const part of dataParts) {
-            const [key, value] = part.split("=", 2)
-
-            mapData.set(key, value)
-          }
-        }
-
-        GetRoomEngine().modifyRoomObjectDataWithMap(avatarInfo.id, avatarInfo.category, RoomObjectOperationType.OBJECT_SAVE_STUFF_DATA, mapData)
-        break
+    case "buy_one":
+      CreateLinkEvent(`catalog/open/offerId/${avatarInfo.purchaseOfferId}`)
+      return
+    case "move":
+      GetRoomEngine().processRoomObjectOperation(avatarInfo.id, avatarInfo.category, RoomObjectOperationType.OBJECT_MOVE)
+      break
+    case "rotate":
+      GetRoomEngine().processRoomObjectOperation(avatarInfo.id, avatarInfo.category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE)
+      break
+    case "pickup":
+      if (pickupMode === PICKUP_MODE_FULL) {
+        GetRoomEngine().processRoomObjectOperation(avatarInfo.id, avatarInfo.category, RoomObjectOperationType.OBJECT_PICKUP)
       }
-      case "save_custom_variables": {
-        const map = new Map()
-
-        for (let i = 0; i < customKeys.length; i++) {
-          const key = customKeys[i]
-          const value = customValues[i]
-
-          if ((key && key.length) && (value && value.length)) map.set(key, value)
-        }
-
-        SendMessageComposer(new SetObjectDataMessageComposer(avatarInfo.id, map))
-        break
+      else {
+        GetRoomEngine().processRoomObjectOperation(avatarInfo.id, avatarInfo.category, RoomObjectOperationType.OBJECT_EJECT)
       }
+      break
+    case "use":
+      GetRoomEngine().useRoomObject(avatarInfo.id, avatarInfo.category)
+      break
+    case "save_branding_configuration": {
+      const mapData = new Map<string, string>()
+      const dataParts = getFurniSettingsAsString().split("\t")
+
+      if (dataParts) {
+        for (const part of dataParts) {
+          const [ key, value ] = part.split("=", 2)
+
+          mapData.set(key, value)
+        }
+      }
+
+      GetRoomEngine().modifyRoomObjectDataWithMap(avatarInfo.id, avatarInfo.category, RoomObjectOperationType.OBJECT_SAVE_STUFF_DATA, mapData)
+      break
     }
-  }, [avatarInfo, pickupMode, customKeys, customValues, getFurniSettingsAsString])
+    case "save_custom_variables": {
+      const map = new Map()
+
+      for (let i = 0; i < customKeys.length; i++) {
+        const key = customKeys[i]
+        const value = customValues[i]
+
+        if ((key && key.length) && (value && value.length)) map.set(key, value)
+      }
+
+      SendMessageComposer(new SetObjectDataMessageComposer(avatarInfo.id, map))
+      break
+    }
+    }
+  }, [ avatarInfo, pickupMode, customKeys, customValues, getFurniSettingsAsString ])
 
   const getGroupBadgeCode = useCallback(() => {
     const stringDataType = (avatarInfo.stuffData as StringDataType)
@@ -288,7 +288,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
     if (!stringDataType || !(stringDataType instanceof StringDataType)) return null
 
     return stringDataType.getValue(2)
-  }, [avatarInfo])
+  }, [ avatarInfo ])
 
   if (!avatarInfo) return null
 
@@ -357,7 +357,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
         {(avatarInfo.purchaseOfferId > 0) && <Button variant="volter" className="w-fit !px-2.5" onClick={event => processButtonAction("buy_one")}>{LocalizeText("infostand.button.buy")}</Button>}
         {isCrackable && <>
           <div className="my-[7px] h-0.5 w-full border-b border-white bg-[#CCCCCC] dark:border-[#36322C] dark:bg-black" />
-          <p className="text-[13px] !leading-3 [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("infostand.crackable_furni.hits_remaining", ["hits", "target"], [crackableHits.toString(), crackableTarget.toString()])}</p>
+          <p className="text-[13px] !leading-3 [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("infostand.crackable_furni.hits_remaining", [ "hits", "target" ], [ crackableHits.toString(), crackableTarget.toString() ])}</p>
         </>}
         {canSeeFurniId && <>
           <div className="my-[7px] h-0.5 w-full border-b border-white bg-[#CCCCCC] dark:border-[#36322C] dark:bg-black" />

@@ -18,13 +18,13 @@ interface CombinedProps extends InventoryTradeViewProps, InventoryFurnitureViewP
 export const InventoryTradeView: FC<CombinedProps> = props => {
   const { cancelTrade = null } = props
   const { roomPreviewer = null } = props
-  const [groupItem, setGroupItem] = useState<GroupItem>(null)
-  const [ownGroupItem, setOwnGroupItem] = useState<GroupItem>(null)
-  const [otherGroupItem, setOtherGroupItem] = useState<GroupItem>(null)
-  const [filteredGroupItems, setFilteredGroupItems] = useState<GroupItem[]>(null)
-  const [countdownTick, setCountdownTick] = useState(3)
-  const [quantity, setQuantity] = useState(1)
-  const [furnitureName, setFurnitureName] = useState("")
+  const [ groupItem, setGroupItem ] = useState<GroupItem>(null)
+  const [ ownGroupItem, setOwnGroupItem ] = useState<GroupItem>(null)
+  const [ otherGroupItem, setOtherGroupItem ] = useState<GroupItem>(null)
+  const [ filteredGroupItems, setFilteredGroupItems ] = useState<GroupItem[]>(null)
+  const [ countdownTick, setCountdownTick ] = useState(3)
+  const [ quantity, setQuantity ] = useState(1)
+  const [ furnitureName, setFurnitureName ] = useState("")
   const { ownUser = null, otherUser = null, groupItems = [], tradeState = TradeState.TRADING_STATE_READY, progressTrade = null, removeItem = null, setTradeState = null } = useInventoryTrade()
   const { simpleAlert = null } = useNotification()
 
@@ -72,7 +72,7 @@ export const InventoryTradeView: FC<CombinedProps> = props => {
         roomPreviewer.addFurnitureIntoRoom(groupItem.type, new Vector3d(90), groupItem.stuffData, (furnitureItem.extra.toString()))
       }
     }
-  }, [roomPreviewer, groupItem])
+  }, [ roomPreviewer, groupItem ])
 
   const canTradeItem = (isWallItem: boolean, spriteId: number, category: number, groupable: boolean, stuffData: IObjectData) => {
     if (!ownUser || ownUser.accepts || !ownUser.userItems) return false
@@ -166,7 +166,7 @@ export const InventoryTradeView: FC<CombinedProps> = props => {
 
   useEffect(() => {
     setQuantity(1)
-  }, [groupItem])
+  }, [ groupItem ])
 
   useEffect(() => {
     if (tradeState !== TradeState.TRADING_STATE_COUNTDOWN) return
@@ -184,13 +184,13 @@ export const InventoryTradeView: FC<CombinedProps> = props => {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [tradeState, setTradeState])
+  }, [ tradeState, setTradeState ])
 
   useEffect(() => {
     if (countdownTick !== 0) return
 
     setTradeState(TradeState.TRADING_STATE_CONFIRMING)
-  }, [countdownTick, setTradeState])
+  }, [ countdownTick, setTradeState ])
 
   if ((tradeState === TradeState.TRADING_STATE_READY) || !ownUser || !otherUser) return null
 
@@ -256,8 +256,8 @@ export const InventoryTradeView: FC<CombinedProps> = props => {
                   : <i className="h-11 w-[29px] bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-74px_0px]" />}
               </div>
               <div className="pt-3">
-                <p className="text-sm [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("inventory.trading.info.itemcount", ["value"], [ownUser.itemCount.toString()])}</p>
-                <p className="text-sm [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("inventory.trading.info.creditvalue.own", ["value"], [getTotalCredits(ownUser.userItems).toString()])}</p>
+                <p className="text-sm [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("inventory.trading.info.itemcount", [ "value" ], [ ownUser.itemCount.toString() ])}</p>
+                <p className="text-sm [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("inventory.trading.info.creditvalue.own", [ "value" ], [ getTotalCredits(ownUser.userItems).toString() ])}</p>
               </div>
             </div>
           </div>
@@ -280,8 +280,8 @@ export const InventoryTradeView: FC<CombinedProps> = props => {
                   : <i className="h-11 w-[29px] bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-74px_0px]" />}
               </div>
               <div className="pt-3">
-                <p className="text-sm [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("inventory.trading.info.itemcount", ["value"], [otherUser.itemCount.toString()])}</p>
-                <p className="text-sm [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("inventory.trading.info.creditvalue", ["value"], [getTotalCredits(otherUser.userItems).toString()])}</p>
+                <p className="text-sm [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("inventory.trading.info.itemcount", [ "value" ], [ otherUser.itemCount.toString() ])}</p>
+                <p className="text-sm [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("inventory.trading.info.creditvalue", [ "value" ], [ getTotalCredits(otherUser.userItems).toString() ])}</p>
               </div>
             </div>
           </div>
@@ -293,7 +293,7 @@ export const InventoryTradeView: FC<CombinedProps> = props => {
         {(tradeState === TradeState.TRADING_STATE_RUNNING) &&
           <Button variant="primary" disabled={(!ownUser.itemCount && !otherUser.itemCount)} onClick={!ownUser.itemCount && !otherUser.itemCount ? null : progressTrade}>{LocalizeText(ownUser.accepts ? "inventory.trading.modify" : "inventory.trading.accept")}</Button>}
         {(tradeState === TradeState.TRADING_STATE_COUNTDOWN) &&
-          <Button variant="primary" disabled>{LocalizeText("inventory.trading.countdown", ["counter"], [countdownTick.toString()])}</Button>}
+          <Button variant="primary" disabled>{LocalizeText("inventory.trading.countdown", [ "counter" ], [ countdownTick.toString() ])}</Button>}
         {(tradeState === TradeState.TRADING_STATE_CONFIRMING) &&
           <Button variant="primary" onClick={progressTrade}>{LocalizeText("inventory.trading.confirm")}</Button>}
         {(tradeState === TradeState.TRADING_STATE_CONFIRMED) &&

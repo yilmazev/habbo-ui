@@ -6,12 +6,12 @@ import { useMessageEvent } from "../events"
 import { useNotification } from "../notification"
 
 const useWiredState = () => {
-  const [trigger, setTrigger] = useState<Triggerable>(null)
-  const [intParams, setIntParams] = useState<number[]>([])
-  const [stringParam, setStringParam] = useState("")
-  const [furniIds, setFurniIds] = useState<number[]>([])
-  const [actionDelay, setActionDelay] = useState(0)
-  const [allowsFurni, setAllowsFurni] = useState(WiredFurniType.STUFF_SELECTION_OPTION_NONE)
+  const [ trigger, setTrigger ] = useState<Triggerable>(null)
+  const [ intParams, setIntParams ] = useState<number[]>([])
+  const [ stringParam, setStringParam ] = useState("")
+  const [ furniIds, setFurniIds ] = useState<number[]>([])
+  const [ actionDelay, setActionDelay ] = useState(0)
+  const [ allowsFurni, setAllowsFurni ] = useState(WiredFurniType.STUFF_SELECTION_OPTION_NONE)
   const { showConfirm = null } = useNotification()
 
   const saveWired = () => {
@@ -47,7 +47,7 @@ const useWiredState = () => {
     if (objectId <= 0) return
 
     setFurniIds(prevValue => {
-      const newFurniIds = [...prevValue]
+      const newFurniIds = [ ...prevValue ]
 
       const index = prevValue.indexOf(objectId)
 
@@ -105,7 +105,7 @@ const useWiredState = () => {
       })
       setAllowsFurni(WiredFurniType.STUFF_SELECTION_OPTION_NONE)
     }
-  }, [trigger])
+  }, [ trigger ])
 
   return { trigger, setTrigger, intParams, setIntParams, stringParam, setStringParam, furniIds, setFurniIds, actionDelay, setActionDelay, setAllowsFurni, saveWired, selectObjectForWired }
 }

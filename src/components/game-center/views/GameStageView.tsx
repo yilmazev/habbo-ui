@@ -6,7 +6,7 @@ import { useGameCenter } from "../../../hooks"
 
 export const GameStageView = () => {
   const { gameURL, setGameURL } = useGameCenter()
-  const [loadTimes, setLoadTimes] = useState(0)
+  const [ loadTimes, setLoadTimes ] = useState(0)
   const ref = useRef<HTMLDivElement>()
 
   useEffect(() => {
@@ -27,14 +27,14 @@ export const GameStageView = () => {
     ref.current.innerHTML = ""
     ref.current.appendChild(frame)
 
-  }, [ref, gameURL])
+  }, [ ref, gameURL ])
 
   useEffect(() => {
     if (loadTimes > 1) {
       setGameURL(null)
       SendMessageComposer(new Game2ExitGameMessageComposer())
     }
-  }, [loadTimes, setGameURL])
+  }, [ loadTimes, setGameURL ])
 
   if (!gameURL) return null
 

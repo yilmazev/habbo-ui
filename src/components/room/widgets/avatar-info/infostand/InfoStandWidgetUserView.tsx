@@ -15,9 +15,9 @@ interface InfoStandWidgetUserViewProps {
 
 export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props => {
   const { avatarInfo = null, setAvatarInfo = null, onClose = null } = props
-  const [motto, setMotto] = useState(null)
-  const [isEditingMotto, setIsEditingMotto] = useState(false)
-  const [relationships, setRelationships] = useState<RelationshipStatusInfoMessageParser>(null)
+  const [ motto, setMotto ] = useState(null)
+  const [ isEditingMotto, setIsEditingMotto ] = useState(false)
+  const [ relationships, setRelationships ] = useState<RelationshipStatusInfoMessageParser>(null)
   const { roomSession = null } = useRoom()
 
   const saveMotto = (motto: string) => {
@@ -34,9 +34,9 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
     event.stopPropagation()
 
     switch (event.key) {
-      case "Enter":
-        saveMotto((event.target as HTMLInputElement).value)
-        return
+    case "Enter":
+      saveMotto((event.target as HTMLInputElement).value)
+      return
     }
   }
 
@@ -104,7 +104,7 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
       setMotto(null)
       setRelationships(null)
     }
-  }, [avatarInfo])
+  }, [ avatarInfo ])
 
   if (!avatarInfo) return null
 
@@ -164,7 +164,7 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
         <>
           <div className="my-1 h-0.5 w-full border-b border-white bg-[#CCCCCC] dark:border-[#36322C] dark:bg-black" />
           <p className="text-sm [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">
-            {LocalizeText("infostand.text.handitem", ["item"], [LocalizeText("handitem" + avatarInfo.carryItem)])}
+            {LocalizeText("infostand.text.handitem", [ "item" ], [ LocalizeText("handitem" + avatarInfo.carryItem) ])}
           </p>
         </>}
       <div className="mt-[7px] h-[52px]">

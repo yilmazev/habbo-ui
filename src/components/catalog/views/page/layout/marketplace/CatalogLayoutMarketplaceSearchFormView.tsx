@@ -1,6 +1,6 @@
-import { FC, useCallback, useEffect, useState } from "react";
-import { IMarketplaceSearchOptions, LocalizeText, MarketplaceSearchType } from "../../../../../../api";
-import { Button } from "../../../../../../common";
+import { FC, useCallback, useEffect, useState } from "react"
+import { IMarketplaceSearchOptions, LocalizeText, MarketplaceSearchType } from "../../../../../../api"
+import { Button } from "../../../../../../common"
 
 export interface SearchFormViewProps {
   searchType: number;
@@ -10,23 +10,23 @@ export interface SearchFormViewProps {
 
 export const SearchFormView: FC<SearchFormViewProps> = props => {
   const { searchType = null, sortTypes = null, onSearch = null } = props
-  const [sortType, setSortType] = useState(sortTypes ? sortTypes[0] : 3) // first item of SORT_TYPES_ACTIVITY
-  const [searchQuery, setSearchQuery] = useState("")
-  const [min, setMin] = useState(0)
-  const [max, setMax] = useState(0)
+  const [ sortType, setSortType ] = useState(sortTypes ? sortTypes[0] : 3) // first item of SORT_TYPES_ACTIVITY
+  const [ searchQuery, setSearchQuery ] = useState("")
+  const [ min, setMin ] = useState(0)
+  const [ max, setMax ] = useState(0)
 
   const onSortTypeChange = useCallback((sortType: number) => {
     setSortType(sortType)
 
     if ((searchType === MarketplaceSearchType.BY_ACTIVITY) || (searchType === MarketplaceSearchType.BY_VALUE)) onSearch({ minPrice: -1, maxPrice: -1, query: "", type: sortType })
-  }, [onSearch, searchType])
+  }, [ onSearch, searchType ])
 
   const onClickSearch = useCallback(() => {
     const minPrice = ((min > 0) ? min : -1)
     const maxPrice = ((max > 0) ? max : -1)
 
     onSearch({ minPrice: minPrice, maxPrice: maxPrice, type: sortType, query: searchQuery })
-  }, [max, min, onSearch, searchQuery, sortType])
+  }, [ max, min, onSearch, searchQuery, sortType ])
 
   useEffect(() => {
     if (!sortTypes || !sortTypes.length) return
@@ -36,7 +36,7 @@ export const SearchFormView: FC<SearchFormViewProps> = props => {
     setSortType(sortType)
 
     if (searchType === MarketplaceSearchType.BY_ACTIVITY || MarketplaceSearchType.BY_VALUE === searchType) onSearch({ minPrice: -1, maxPrice: -1, query: "", type: sortType })
-  }, [onSearch, searchType, sortTypes])
+  }, [ onSearch, searchType, sortTypes ])
 
   return (
     <div className="illumina-furni-item mt-[5px] flex h-[120px] w-[360px] flex-col items-center justify-center">

@@ -1,7 +1,7 @@
-import { RelationshipStatusEnum, RelationshipStatusInfoMessageParser } from "@nitrots/nitro-renderer";
-import { FC } from "react";
-import { GetUserProfile, LocalizeText } from "../../../api";
-import { LayoutAvatarImage } from "../../../common";
+import { RelationshipStatusEnum, RelationshipStatusInfoMessageParser } from "@nitrots/nitro-renderer"
+import { FC } from "react"
+import { GetUserProfile, LocalizeText } from "../../../api"
+import { LayoutAvatarImage } from "../../../common"
 
 interface RelationshipsContainerViewProps {
   relationships: RelationshipStatusInfoMessageParser;
@@ -48,7 +48,7 @@ export const RelationshipsContainerView: FC<RelationshipsContainerViewProps> = p
         </div>
         <p className="pl-[27px] text-[11px] italic text-[#838383]">
           {(relationshipInfo && (relationshipInfo.friendCount > 1)) &&
-            LocalizeText(`extendedprofile.relstatus.others.${relationshipName}`, ["count"], [(relationshipInfo.friendCount - 1).toString()])}
+            LocalizeText(`extendedprofile.relstatus.others.${relationshipName}`, [ "count" ], [ (relationshipInfo.friendCount - 1).toString() ])}
           &nbsp;
         </p>
       </div>

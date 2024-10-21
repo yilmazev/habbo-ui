@@ -1,6 +1,6 @@
-import { FC, useState } from "react";
-import { LocalizeText } from "../../../../api";
-import { Button, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common";
+import { FC, useState } from "react"
+import { LocalizeText } from "../../../../api"
+import { Button, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
 
 interface FriendsRoomInviteViewProps {
   selectedFriendsIds: number[];
@@ -10,7 +10,7 @@ interface FriendsRoomInviteViewProps {
 
 export const FriendsRoomInviteView: FC<FriendsRoomInviteViewProps> = props => {
   const { selectedFriendsIds = null, onCloseClick = null, sendRoomInvite = null } = props
-  const [roomInviteMessage, setRoomInviteMessage] = useState("")
+  const [ roomInviteMessage, setRoomInviteMessage ] = useState("")
 
   return (
     <NitroCardView uniqueKey="friends-room-invite" className="illumina-friends-room-invite">

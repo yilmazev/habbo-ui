@@ -3,13 +3,13 @@ import { MessengerFriend } from "../../../../api"
 import { FriendBarItemView } from "./FriendBarItemView"
 
 export const FriendBarView: FC<{ onlineFriends: MessengerFriend[] }> = ({ onlineFriends = null }) => {
-  const [indexOffset, setIndexOffset] = useState(0)
+  const [ indexOffset, setIndexOffset ] = useState(0)
   const elementRef = useRef<HTMLDivElement | null>(null)
-  const [containerWidth, setContainerWidth] = useState(1)
-  const [maxDisplayCount, setMaxDisplayCount] = useState(1)
+  const [ containerWidth, setContainerWidth ] = useState(1)
+  const [ maxDisplayCount, setMaxDisplayCount ] = useState(1)
 
   const ITEM_WIDTH = 127
-  const MAX_DISPLAY_COUNT = 3;
+  const MAX_DISPLAY_COUNT = 3
 
   useEffect(() => {
     function handleResize() {
@@ -26,7 +26,7 @@ export const FriendBarView: FC<{ onlineFriends: MessengerFriend[] }> = ({ online
     return () => {
       window.removeEventListener("resize", handleResize)
     }
-  }, [containerWidth, maxDisplayCount, ITEM_WIDTH, onlineFriends])
+  }, [ containerWidth, maxDisplayCount, ITEM_WIDTH, onlineFriends ])
 
   return (
     <div className="flex size-full items-center">

@@ -16,12 +16,12 @@ interface NavigatorRoomSettingsTabViewProps {
 
 export const NavigatorRoomSettingsBasicTabView: FC<NavigatorRoomSettingsTabViewProps> = props => {
   const { roomData = null, handleChange = null, onClose = null } = props
-  const [roomName, setRoomName] = useState("")
-  const [roomDescription, setRoomDescription] = useState("")
-  const [roomTag1, setRoomTag1] = useState("")
-  const [roomTag2, setRoomTag2] = useState("")
-  const [tagIndex, setTagIndex] = useState(0)
-  const [typeError, setTypeError] = useState("")
+  const [ roomName, setRoomName ] = useState("")
+  const [ roomDescription, setRoomDescription ] = useState("")
+  const [ roomTag1, setRoomTag1 ] = useState("")
+  const [ roomTag2, setRoomTag2 ] = useState("")
+  const [ tagIndex, setTagIndex ] = useState(0)
+  const [ typeError, setTypeError ] = useState("")
   const { showConfirm = null } = useNotification()
   const { categories = null } = useNavigator()
 
@@ -31,26 +31,26 @@ export const NavigatorRoomSettingsBasicTabView: FC<NavigatorRoomSettingsTabViewP
     if (!parser) return
 
     switch (parser.code) {
-      case RoomSettingsSaveErrorParser.ERROR_INVALID_TAG:
-        setTypeError("navigator.roomsettings.unacceptablewords")
-      case RoomSettingsSaveErrorParser.ERROR_NON_USER_CHOOSABLE_TAG:
-        setTypeError("navigator.roomsettings.nonuserchoosabletag")
-        break
-      default:
-        setTypeError("")
-        break
+    case RoomSettingsSaveErrorParser.ERROR_INVALID_TAG:
+      setTypeError("navigator.roomsettings.unacceptablewords")
+    case RoomSettingsSaveErrorParser.ERROR_NON_USER_CHOOSABLE_TAG:
+      setTypeError("navigator.roomsettings.nonuserchoosabletag")
+      break
+    default:
+      setTypeError("")
+      break
     }
   })
 
   const deleteRoom = () => {
-    showConfirm(LocalizeText("navigator.roomsettings.deleteroom.confirm.message", ["room_name"], [roomData.roomName]), () => {
+    showConfirm(LocalizeText("navigator.roomsettings.deleteroom.confirm.message", [ "room_name" ], [ roomData.roomName ]), () => {
       SendMessageComposer(new RoomDeleteComposer(roomData.roomId))
 
       if (onClose) onClose()
 
       CreateLinkEvent("navigator/search/myworld_view")
     },
-      null, null, null, LocalizeText("navigator.roomsettings.deleteroom.confirm.title"))
+    null, null, null, LocalizeText("navigator.roomsettings.deleteroom.confirm.title"))
   }
 
   const saveRoomName = () => {
@@ -74,7 +74,7 @@ export const NavigatorRoomSettingsBasicTabView: FC<NavigatorRoomSettingsTabViewP
 
     setTypeError("")
     setTagIndex(index)
-    handleChange("tags", (roomTag1 === "" && roomTag2 !== "") ? [roomTag2] : [roomTag1, roomTag2])
+    handleChange("tags", (roomTag1 === "" && roomTag2 !== "") ? [ roomTag2 ] : [ roomTag1, roomTag2 ])
   }
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export const NavigatorRoomSettingsBasicTabView: FC<NavigatorRoomSettingsTabViewP
     setRoomDescription(roomData.roomDescription)
     setRoomTag1((roomData.tags.length > 0 && roomData.tags[0]) ? roomData.tags[0] : "")
     setRoomTag2((roomData.tags.length > 0 && roomData.tags[1]) ? roomData.tags[1] : "")
-  }, [roomData])
+  }, [ roomData ])
 
   return (
     <div className="mt-2 flex flex-col gap-2">

@@ -9,9 +9,9 @@ import { RelationshipsContainerView } from "./views/RelationshipsContainerView"
 import { RoomsContainerView } from "./views/RoomsContainerView"
 
 export const UserProfileView: FC<{}> = props => {
-  const [userProfile, setUserProfile] = useState<UserProfileParser>(null)
-  const [userBadges, setUserBadges] = useState<string[]>([])
-  const [userRelationships, setUserRelationships] = useState<RelationshipStatusInfoMessageParser>(null)
+  const [ userProfile, setUserProfile ] = useState<UserProfileParser>(null)
+  const [ userBadges, setUserBadges ] = useState<string[]>([])
+  const [ userRelationships, setUserRelationships ] = useState<RelationshipStatusInfoMessageParser>(null)
   const { canRequestFriend = null, getFriend = null } = useFriends()
   const { report = null } = useHelp()
 
@@ -26,15 +26,15 @@ export const UserProfileView: FC<{}> = props => {
 
     if (name) {
       switch (name) {
-        case "message":
-          OpenMessengerChat(userProfile.id)
-          break
-        case "friend":
-          CreateLinkEvent(`friends/request/${userProfile.id}/${userProfile.username}`)
-          return
-        case "report":
-          report(ReportType.BULLY, { reportedUserId: userProfile.id })
-          break
+      case "message":
+        OpenMessengerChat(userProfile.id)
+        break
+      case "friend":
+        CreateLinkEvent(`friends/request/${userProfile.id}/${userProfile.username}`)
+        return
+      case "report":
+        report(ReportType.BULLY, { reportedUserId: userProfile.id })
+        break
       }
     }
 
@@ -117,7 +117,7 @@ export const UserProfileView: FC<{}> = props => {
               </div>
             </div>
           </div>
-          <p className="mb-5 mr-[25px] text-xs font-semibold text-white [text-shadow:_0_1px_0_#33312B]">{LocalizeText("profile.created_at.text", ["date"], [userProfile.registration])}</p>
+          <p className="mb-5 mr-[25px] text-xs font-semibold text-white [text-shadow:_0_1px_0_#33312B]">{LocalizeText("profile.created_at.text", [ "date" ], [ userProfile.registration ])}</p>
         </div>
       </NitroBigCardHeaderView>
       <NitroBigCardContentView className="!p-0 !pt-[5px]">
@@ -126,10 +126,10 @@ export const UserProfileView: FC<{}> = props => {
             <div className="w-full">
               <p className="!dark:text-[#cccccc] text-xs font-semibold !leading-3 text-[#1B1B1B]  [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">
                 {userProfile.isOnline
-                  ? LocalizeText("profile.online.text", ["username"], [userProfile.username])
-                  : LocalizeText("profile.offline.text", ["username"], [userProfile.username])}
+                  ? LocalizeText("profile.online.text", [ "username" ], [ userProfile.username ])
+                  : LocalizeText("profile.offline.text", [ "username" ], [ userProfile.username ])}
                 &nbsp;
-                <span className="font-normal text-[#4A4A4A]">{LocalizeText("profile.last_login.text", ["time"], [FriendlyTime.format(userProfile.secondsSinceLastVisit, ".ago", 2)])}</span>
+                <span className="font-normal text-[#4A4A4A]">{LocalizeText("profile.last_login.text", [ "time" ], [ FriendlyTime.format(userProfile.secondsSinceLastVisit, ".ago", 2) ])}</span>
               </p>
             </div>
             <div className="flex justify-end gap-1">

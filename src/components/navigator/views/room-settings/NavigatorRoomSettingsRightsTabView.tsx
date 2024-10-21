@@ -11,7 +11,7 @@ interface NavigatorRoomSettingsTabViewProps {
 
 export const NavigatorRoomSettingsRightsTabView: FC<NavigatorRoomSettingsTabViewProps> = props => {
   const { roomData = null } = props
-  const [usersWithRights, setUsersWithRights] = useState<Map<number, string>>(new Map())
+  const [ usersWithRights, setUsersWithRights ] = useState<Map<number, string>>(new Map())
   const { friends = [] } = useFriends()
 
   const friendsWithoutRights = friends.map((friend: MessengerFriend) => friend).filter(friend => friend.id !== -1 && !Array.from(usersWithRights.keys()).includes(friend.id))
@@ -54,17 +54,17 @@ export const NavigatorRoomSettingsRightsTabView: FC<NavigatorRoomSettingsTabView
 
   useEffect(() => {
     SendMessageComposer(new RoomUsersWithRightsComposer(roomData.roomId))
-  }, [roomData.roomId])
+  }, [ roomData.roomId ])
 
   return (
     <div className="mt-2 flex h-full justify-between">
       <div className="flex flex-col">
         <p className="mb-1 text-sm">
-          {LocalizeText("navigator.flatctrls.userswithrights", ["displayed", "total"], [usersWithRights.size.toString(), usersWithRights.size.toString()])}
+          {LocalizeText("navigator.flatctrls.userswithrights", [ "displayed", "total" ], [ usersWithRights.size.toString(), usersWithRights.size.toString() ])}
         </p>
         <div className="illumina-input flex w-[150px] flex-1 flex-col p-1">
           <div className="illumina-scrollbar mb-1.5 h-[336px]">
-            {Array.from(usersWithRights.entries()).map(([id, name], index) => (
+            {Array.from(usersWithRights.entries()).map(([ id, name ], index) => (
               <div key={index} className="cursor-pointer overflow-hidden p-1 odd:bg-[#EEEEEE] dark:odd:bg-[#27251F]">
                 <p className="text-sm" onClick={event => SendMessageComposer(new RoomTakeRightsComposer(id))}> {name}</p>
               </div>
@@ -77,7 +77,7 @@ export const NavigatorRoomSettingsRightsTabView: FC<NavigatorRoomSettingsTabView
       </div>
       <div className="flex flex-col">
         <p className="mb-1 text-sm">
-          {LocalizeText("navigator.flatctrls.friends", ["displayed", "total"], [friendsWithoutRights.length.toString(), friendsWithoutRights.length.toString()])}
+          {LocalizeText("navigator.flatctrls.friends", [ "displayed", "total" ], [ friendsWithoutRights.length.toString(), friendsWithoutRights.length.toString() ])}
         </p>
         <div className="illumina-input flex w-[150px] flex-1 flex-col p-1">
           <div className="illumina-scrollbar mb-1.5 h-[336px]">

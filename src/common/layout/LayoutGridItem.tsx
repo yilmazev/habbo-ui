@@ -1,6 +1,6 @@
-import { FC, useMemo } from "react";
-import { ColumnProps } from "../Column";
-import { LayoutLimitedEditionStyledNumberView } from "./limited-edition";
+import { FC, useMemo } from "react"
+import { ColumnProps } from "../Column"
+import { LayoutLimitedEditionStyledNumberView } from "./limited-edition"
 
 export interface LayoutGridItemProps extends ColumnProps {
   itemImage?: string;
@@ -21,7 +21,7 @@ export const LayoutGridItem: FC<LayoutGridItemProps> = props => {
   const { itemImage = undefined, itemBundle = false, itemAbsolute = false, itemColor = undefined, itemActive = false, itemCount = 1, itemCountMinimum = 1, itemUniqueSoldout = false, itemUniqueNumber = -2, itemUnseen = false, itemHighlight = false, disabled = false, center = true, style = {}, classNames = [], className = "", children = null, ...rest } = props
 
   const getClassNames = useMemo(() => {
-    const newClassNames: string[] = ["relative flex items-center justify-center h-[43px] cursor-pointer"]
+    const newClassNames: string[] = [ "relative flex items-center justify-center h-[43px] cursor-pointer" ]
 
     if (!itemBundle) newClassNames.push("illumina-furni-item")
 
@@ -38,7 +38,7 @@ export const LayoutGridItem: FC<LayoutGridItemProps> = props => {
     if (classNames.length) newClassNames.push(...classNames)
 
     return newClassNames
-  }, [itemActive, itemUniqueSoldout, itemUniqueNumber, itemUnseen, itemHighlight, disabled, itemImage, classNames])
+  }, [ itemActive, itemUniqueSoldout, itemUniqueNumber, itemUnseen, itemHighlight, disabled, itemImage, classNames ])
 
   const getClassName = useMemo(() => {
     let newClassName = getClassNames.join(" flex-col ")
@@ -46,7 +46,7 @@ export const LayoutGridItem: FC<LayoutGridItemProps> = props => {
     if (className.length) newClassName += (" " + className)
 
     return newClassName.trim()
-  }, [getClassNames, className])
+  }, [ getClassNames, className ])
 
   const getStyle = useMemo(() => {
     let newStyle = { ...style }
@@ -58,7 +58,7 @@ export const LayoutGridItem: FC<LayoutGridItemProps> = props => {
     if (Object.keys(style).length) newStyle = { ...newStyle, ...style }
 
     return newStyle
-  }, [style, itemImage, itemColor, itemUniqueSoldout, itemUniqueNumber])
+  }, [ style, itemImage, itemColor, itemUniqueSoldout, itemUniqueNumber ])
 
   return (
     <div className={getClassName} {...rest}>

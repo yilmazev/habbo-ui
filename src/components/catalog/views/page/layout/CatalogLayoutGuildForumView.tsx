@@ -6,13 +6,13 @@ import { CatalogLayoutProps } from "./CatalogLayout.types"
 
 export const CatalogLayouGuildForumView: FC<CatalogLayoutProps> = props => {
   const { page = null } = props
-  const [selectedGroupIndex, setSelectedGroupIndex] = useState(0)
+  const [ selectedGroupIndex, setSelectedGroupIndex ] = useState(0)
   const { currentOffer = null, setCurrentOffer = null, catalogOptions = null } = useCatalog()
   const { groups = null } = catalogOptions
 
   useEffect(() => {
     SendMessageComposer(new CatalogGroupsComposer())
-  }, [page])
+  }, [ page ])
 
   return null
 }

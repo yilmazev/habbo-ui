@@ -1,6 +1,6 @@
-import { RelationshipStatusEnum, RelationshipStatusInfo } from "@nitrots/nitro-renderer";
-import { FC } from "react";
-import { GetUserProfile, LocalizeText } from "../../../../../api";
+import { RelationshipStatusEnum, RelationshipStatusInfo } from "@nitrots/nitro-renderer"
+import { FC } from "react"
+import { GetUserProfile, LocalizeText } from "../../../../../api"
 
 interface InfoStandWidgetUserRelationshipsRelationshipItemViewProps {
   type: number;
@@ -35,7 +35,7 @@ export const InfoStandWidgetUserRelationshipsRelationshipItemView: FC<InfoStandW
       <i className={`h-3.5 w-[13px] bg-[url('/client-assets/images/spritesheet.png?v=2451779')] ${getUserRelationshipPosition()}`} />
       <p className="text-sm !leading-3 [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]" onClick={event => GetUserProfile(relationship.randomFriendId)}>
         <u className="cursor-pointer">{relationship.randomFriendName}</u>
-        {(relationship.friendCount > 1) && (" " + LocalizeText(`extendedprofile.relstatus.others.${relationshipName}`, ["count"], [(relationship.friendCount - 1).toString()]))}
+        {(relationship.friendCount > 1) && (" " + LocalizeText(`extendedprofile.relstatus.others.${relationshipName}`, [ "count" ], [ (relationship.friendCount - 1).toString() ]))}
       </p>
     </div>
   )

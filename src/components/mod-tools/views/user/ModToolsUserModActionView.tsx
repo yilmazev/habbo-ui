@@ -26,9 +26,9 @@ const MOD_ACTION_DEFINITIONS = [
 
 export const ModToolsUserModActionView: FC<ModToolsUserModActionViewProps> = props => {
   const { user = null, onCloseClick = null } = props
-  const [selectedTopic, setSelectedTopic] = useState(-1)
-  const [selectedAction, setSelectedAction] = useState(-1)
-  const [message, setMessage] = useState("")
+  const [ selectedTopic, setSelectedTopic ] = useState(-1)
+  const [ selectedAction, setSelectedAction ] = useState(-1)
+  const [ message, setMessage ] = useState("")
   const { cfhCategories = null, settings = null } = useModTools()
   const { simpleAlert = null } = useNotification()
 
@@ -42,7 +42,7 @@ export const ModToolsUserModActionView: FC<ModToolsUserModActionViewProps> = pro
     }
 
     return values
-  }, [cfhCategories])
+  }, [ cfhCategories ])
 
   const sendAlert = (message: string) => simpleAlert(message, NotificationAlertType.DEFAULT, null, null, "Error")
 
@@ -82,54 +82,54 @@ export const ModToolsUserModActionView: FC<ModToolsUserModActionViewProps> = pro
     const messageOrDefault = (message.trim().length === 0) ? LocalizeText(`help.cfh.topic.${category.id}`) : message
 
     switch (sanction.actionType) {
-      case ModActionDefinition.ALERT: {
-        if (!settings.alertPermission) {
-          sendAlert("You have insufficient permissions")
+    case ModActionDefinition.ALERT: {
+      if (!settings.alertPermission) {
+        sendAlert("You have insufficient permissions")
 
-          return
-        }
-
-        SendMessageComposer(new ModAlertMessageComposer(user.userId, messageOrDefault, category.id))
-        break
+        return
       }
-      case ModActionDefinition.MUTE:
-        SendMessageComposer(new ModMuteMessageComposer(user.userId, messageOrDefault, category.id))
-        break
-      case ModActionDefinition.BAN: {
-        if (!settings.banPermission) {
-          sendAlert("You have insufficient permissions")
 
-          return
-        }
+      SendMessageComposer(new ModAlertMessageComposer(user.userId, messageOrDefault, category.id))
+      break
+    }
+    case ModActionDefinition.MUTE:
+      SendMessageComposer(new ModMuteMessageComposer(user.userId, messageOrDefault, category.id))
+      break
+    case ModActionDefinition.BAN: {
+      if (!settings.banPermission) {
+        sendAlert("You have insufficient permissions")
 
-        SendMessageComposer(new ModBanMessageComposer(user.userId, messageOrDefault, category.id, selectedAction, (sanction.actionId === 106)))
-        break
+        return
       }
-      case ModActionDefinition.KICK: {
-        if (!settings.kickPermission) {
-          sendAlert("You have insufficient permissions")
-          return
-        }
 
-        SendMessageComposer(new ModKickMessageComposer(user.userId, messageOrDefault, category.id))
-        break
+      SendMessageComposer(new ModBanMessageComposer(user.userId, messageOrDefault, category.id, selectedAction, (sanction.actionId === 106)))
+      break
+    }
+    case ModActionDefinition.KICK: {
+      if (!settings.kickPermission) {
+        sendAlert("You have insufficient permissions")
+        return
       }
-      case ModActionDefinition.TRADE_LOCK: {
-        const numSeconds = (sanction.actionLengthHours * 60)
 
-        SendMessageComposer(new ModTradingLockMessageComposer(user.userId, messageOrDefault, numSeconds, category.id))
-        break
+      SendMessageComposer(new ModKickMessageComposer(user.userId, messageOrDefault, category.id))
+      break
+    }
+    case ModActionDefinition.TRADE_LOCK: {
+      const numSeconds = (sanction.actionLengthHours * 60)
+
+      SendMessageComposer(new ModTradingLockMessageComposer(user.userId, messageOrDefault, numSeconds, category.id))
+      break
+    }
+    case ModActionDefinition.MESSAGE: {
+      if (message.trim().length === 0) {
+        sendAlert("Please write a message to user")
+
+        return
       }
-      case ModActionDefinition.MESSAGE: {
-        if (message.trim().length === 0) {
-          sendAlert("Please write a message to user")
 
-          return
-        }
-
-        SendMessageComposer(new ModMessageMessageComposer(user.userId, message, category.id))
-        break
-      }
+      SendMessageComposer(new ModMessageMessageComposer(user.userId, message, category.id))
+      break
+    }
     }
 
     onCloseClick()

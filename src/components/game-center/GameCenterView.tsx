@@ -8,7 +8,7 @@ import { GameView } from "./views/GameView"
 
 export const GameCenterView = () => {
   const { isVisible, setIsVisible, games, accountStatus } = useGameCenter()
-  const [blackScreen, setBlackScreen] = useState(false)
+  const [ blackScreen, setBlackScreen ] = useState(false)
 
   useEffect(() => {
 
@@ -17,16 +17,16 @@ export const GameCenterView = () => {
         const value = url.split("/")
 
         switch (value[1]) {
-          case "show":
-            setBlackScreen(true)
-            VisitDesktop()
-            setTimeout(() => {
-              setIsVisible(true)
-            }, 250)
-            return
-          case "hide":
-            setIsVisible(false)
-            return
+        case "show":
+          setBlackScreen(true)
+          VisitDesktop()
+          setTimeout(() => {
+            setIsVisible(true)
+          }, 250)
+          return
+        case "hide":
+          setIsVisible(false)
+          return
         }
       },
       eventUrlPrefix: "games/"

@@ -6,12 +6,12 @@ import { CatalogLayoutProps } from "./CatalogLayout.types"
 
 export const CatalogLayoutRoomAdsView: FC<CatalogLayoutProps> = props => {
   const { page = null } = props
-  const [eventName, setEventName] = useState("")
-  const [eventDesc, setEventDesc] = useState("")
-  const [roomId, setRoomId] = useState(-1)
-  const [availableRooms, setAvailableRooms] = useState<RoomEntryData[]>([])
-  const [extended, setExtended] = useState(false)
-  const [categoryId, setCategoryId] = useState(1)
+  const [ eventName, setEventName ] = useState("")
+  const [ eventDesc, setEventDesc ] = useState("")
+  const [ roomId, setRoomId ] = useState(-1)
+  const [ availableRooms, setAvailableRooms ] = useState<RoomEntryData[]>([])
+  const [ extended, setExtended ] = useState(false)
+  const [ categoryId, setCategoryId ] = useState(1)
   const { categories = null } = useNavigator()
   const { setIsVisible = null } = useCatalog()
   const { promoteInformation, isExtended, setIsExtended } = useRoomPromote()
@@ -26,7 +26,7 @@ export const CatalogLayoutRoomAdsView: FC<CatalogLayoutProps> = props => {
       setIsExtended(false) // This is from hook useRoomPromotte
     }
 
-  }, [isExtended, eventName, eventDesc, categoryId])
+  }, [ isExtended, eventName, eventDesc, categoryId ])
 
   const resetData = () => {
     setRoomId(-1)

@@ -1,6 +1,6 @@
-import { RoomChatSettings, RoomObjectCategory } from "@nitrots/nitro-renderer";
-import { FC, useEffect, useMemo, useRef, useState } from "react";
-import { ChatBubbleMessage, GetRoomEngine } from "../../../../api";
+import { RoomChatSettings, RoomObjectCategory } from "@nitrots/nitro-renderer"
+import { FC, useEffect, useMemo, useRef, useState } from "react"
+import { ChatBubbleMessage, GetRoomEngine } from "../../../../api"
 
 interface ChatWidgetMessageViewProps {
   chat: ChatBubbleMessage;
@@ -10,20 +10,20 @@ interface ChatWidgetMessageViewProps {
 
 export const ChatWidgetMessageView: FC<ChatWidgetMessageViewProps> = props => {
   const { chat = null, makeRoom = null, bubbleWidth = RoomChatSettings.CHAT_BUBBLE_WIDTH_NORMAL } = props
-  const [isVisible, setIsVisible] = useState(false)
-  const [isReady, setIsReady] = useState(false)
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ isReady, setIsReady ] = useState(false)
   const elementRef = useRef<HTMLDivElement>()
 
   const getBubbleWidth = useMemo(() => {
     switch (bubbleWidth) {
-      case RoomChatSettings.CHAT_BUBBLE_WIDTH_NORMAL:
-        return 350
-      case RoomChatSettings.CHAT_BUBBLE_WIDTH_THIN:
-        return 240
-      case RoomChatSettings.CHAT_BUBBLE_WIDTH_WIDE:
-        return 2000
+    case RoomChatSettings.CHAT_BUBBLE_WIDTH_NORMAL:
+      return 350
+    case RoomChatSettings.CHAT_BUBBLE_WIDTH_THIN:
+      return 240
+    case RoomChatSettings.CHAT_BUBBLE_WIDTH_WIDE:
+      return 2000
     }
-  }, [bubbleWidth])
+  }, [ bubbleWidth ])
 
   useEffect(() => {
     setIsVisible(false)
@@ -57,7 +57,7 @@ export const ChatWidgetMessageView: FC<ChatWidgetMessageViewProps> = props => {
 
       setIsReady(false)
     }
-  }, [chat])
+  }, [ chat ])
 
   useEffect(() => {
     if (!isReady || !chat || isVisible) return
@@ -65,7 +65,7 @@ export const ChatWidgetMessageView: FC<ChatWidgetMessageViewProps> = props => {
     if (makeRoom) makeRoom(chat)
 
     setIsVisible(true)
-  }, [chat, isReady, isVisible, makeRoom])
+  }, [ chat, isReady, isVisible, makeRoom ])
 
   return (
     <div ref={elementRef} className={`bubble-container absolute w-fit select-none transition-[top] delay-0 duration-[0.2s] ease-[ease] [pointer-events:all] ${isVisible ? "visible" : "invisible"}`} onClick={event => GetRoomEngine().selectRoomObject(chat.roomId, chat.senderId, RoomObjectCategory.UNIT)}>

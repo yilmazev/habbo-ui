@@ -16,11 +16,11 @@ const getTimeZeroPadded = (time: number) => {
 let modDisclaimerTimeout: ReturnType<typeof setTimeout> = null
 
 const useNotificationState = () => {
-  const [alerts, setAlerts] = useState<NotificationAlertItem[]>([])
-  const [bubbleAlerts, setBubbleAlerts] = useState<NotificationBubbleItem[]>([])
-  const [confirms, setConfirms] = useState<NotificationConfirmItem[]>([])
-  const [bubblesDisabled, setBubblesDisabled] = useState(false)
-  const [modDisclaimerShown, setModDisclaimerShown] = useState(false)
+  const [ alerts, setAlerts ] = useState<NotificationAlertItem[]>([])
+  const [ bubbleAlerts, setBubbleAlerts ] = useState<NotificationBubbleItem[]>([])
+  const [ confirms, setConfirms ] = useState<NotificationConfirmItem[]>([])
+  const [ bubblesDisabled, setBubblesDisabled ] = useState(false)
+  const [ modDisclaimerShown, setModDisclaimerShown ] = useState(false)
 
   const getMainNotificationConfig = () => GetConfiguration<{ [key: string]: { delivery?: string, display?: string; title?: string; image?: string } }>("notification", {})
 
@@ -35,7 +35,7 @@ const useNotificationState = () => {
   const getNotificationPart = (options: Map<string, string>, type: string, key: string, localize: boolean) => {
     if (options.has(key)) return options.get(key)
 
-    const localizeKey = ["notification", type, key].join(".")
+    const localizeKey = [ "notification", type, key ].join(".")
 
     if (GetNitroInstance().localization.hasValue(localizeKey) || localize) return LocalizeText(localizeKey, Array.from(options.keys()), Array.from(options.values()))
 
@@ -55,20 +55,20 @@ const useNotificationState = () => {
 
     if (!type || !type.length) type = NotificationAlertType.DEFAULT
 
-    const alertItem = new NotificationAlertItem([cleanText(message)], type, clickUrl, clickUrlText, title, imageUrl)
+    const alertItem = new NotificationAlertItem([ cleanText(message) ], type, clickUrl, clickUrlText, title, imageUrl)
 
-    setAlerts(prevValue => [alertItem, ...prevValue])
+    setAlerts(prevValue => [ alertItem, ...prevValue ])
   }, [])
 
-  const showNitroAlert = useCallback(() => simpleAlert(null, NotificationAlertType.NITRO), [simpleAlert])
+  const showNitroAlert = useCallback(() => simpleAlert(null, NotificationAlertType.NITRO), [ simpleAlert ])
 
   const showSingleBubble = useCallback((message: string, type: string, imageUrl: string = null, internalLink: string = null) => {
     if (bubblesDisabled) return
 
     const notificationItem = new NotificationBubbleItem(message, type, imageUrl, internalLink)
 
-    setBubbleAlerts(prevValue => [notificationItem, ...prevValue])
-  }, [bubblesDisabled])
+    setBubbleAlerts(prevValue => [ notificationItem, ...prevValue ])
+  }, [ bubblesDisabled ])
 
   const showNotification = (type: string, options: Map<string, string> = null) => {
     if (!options) options = new Map()
@@ -104,7 +104,7 @@ const useNotificationState = () => {
 
     const confirmItem = new NotificationConfirmItem(type, message, onConfirm, onCancel, confirmText, cancelText, title)
 
-    setConfirms(prevValue => [confirmItem, ...prevValue])
+    setConfirms(prevValue => [ confirmItem, ...prevValue ])
   }, [])
 
   const showModeratorMessage = (message: string, url: string = null, showHabboWay: boolean = true) => {
@@ -113,52 +113,52 @@ const useNotificationState = () => {
 
   const showTradeAlert = useCallback((type: number, otherUsername: string = "") => {
     switch (type) {
-      case TradingNotificationType.ALERT_SCAM:
-        simpleAlert(LocalizeText("inventory.trading.warning.other_not_offering"), NotificationAlertType.ALERT, null, null, LocalizeText("inventory.trading.notification.title"))
-        return
-      case TradingNotificationType.HOTEL_TRADING_DISABLED:
-      case TradingNotificationType.YOU_NOT_ALLOWED:
-      case TradingNotificationType.THEY_NOT_ALLOWED:
-      case TradingNotificationType.ROOM_DISABLED:
-      case TradingNotificationType.YOU_OPEN:
-      case TradingNotificationType.THEY_OPEN:
-        simpleAlert(LocalizeText(`inventory.trading.openfail.${type}`, ["otherusername"], [otherUsername]), NotificationAlertType.ALERT, null, null, LocalizeText("inventory.trading.openfail.title"))
-        return
-      case TradingNotificationType.ERROR_WHILE_COMMIT:
-        simpleAlert(`${LocalizeText("inventory.trading.notification.caption")}, ${LocalizeText("inventory.trading.notification.commiterror.info")}`, NotificationAlertType.ALERT, null, null, LocalizeText("inventory.trading.notification.title"))
-        return
-      case TradingNotificationType.THEY_CANCELLED:
-        simpleAlert(LocalizeText("inventory.trading.info.closed"), NotificationAlertType.ALERT, null, null, LocalizeText("inventory.trading.notification.title"))
-        return
+    case TradingNotificationType.ALERT_SCAM:
+      simpleAlert(LocalizeText("inventory.trading.warning.other_not_offering"), NotificationAlertType.ALERT, null, null, LocalizeText("inventory.trading.notification.title"))
+      return
+    case TradingNotificationType.HOTEL_TRADING_DISABLED:
+    case TradingNotificationType.YOU_NOT_ALLOWED:
+    case TradingNotificationType.THEY_NOT_ALLOWED:
+    case TradingNotificationType.ROOM_DISABLED:
+    case TradingNotificationType.YOU_OPEN:
+    case TradingNotificationType.THEY_OPEN:
+      simpleAlert(LocalizeText(`inventory.trading.openfail.${type}`, [ "otherusername" ], [ otherUsername ]), NotificationAlertType.ALERT, null, null, LocalizeText("inventory.trading.openfail.title"))
+      return
+    case TradingNotificationType.ERROR_WHILE_COMMIT:
+      simpleAlert(`${LocalizeText("inventory.trading.notification.caption")}, ${LocalizeText("inventory.trading.notification.commiterror.info")}`, NotificationAlertType.ALERT, null, null, LocalizeText("inventory.trading.notification.title"))
+      return
+    case TradingNotificationType.THEY_CANCELLED:
+      simpleAlert(LocalizeText("inventory.trading.info.closed"), NotificationAlertType.ALERT, null, null, LocalizeText("inventory.trading.notification.title"))
+      return
     }
-  }, [simpleAlert])
+  }, [ simpleAlert ])
 
   const showPurchaseAlert = useCallback((type: PurchaseNotificationType) => {
     switch (type) {
-      case PurchaseNotificationType.SOLD_OUT:
-        showConfirm(LocalizeText("catalog.alert.limited_edition_sold_out.message"), null, null, LocalizeText("generic.ok"), null, LocalizeText("catalog.alert.limited_edition_sold_out.message.title"))
-        return
-      case PurchaseNotificationType.NOT_ENOUGH_CREDITS:
-        showConfirm(LocalizeText("catalog.alert.notenough.credits.description"), null, null, LocalizeText("generic.ok"), null, LocalizeText("catalog.alert.notenough.title"))
-        return
-      case PurchaseNotificationType.NOT_ENOUGH_CREDITS_DUCKETS:
-        showConfirm(LocalizeText("catalog.alert.notenough.creditsandpixels.description"), null, null, LocalizeText("generic.ok"), null, LocalizeText("catalog.alert.notenough.title"))
-        return
-      case PurchaseNotificationType.NOT_ENOUGH_DUCKETS:
-        showConfirm(LocalizeText("catalog.alert.notenough.activitypoints.description.0"), null, null, LocalizeText("generic.ok"), null, LocalizeText("catalog.alert.notenough.activitypoints.title.0"))
-        return
-      case PurchaseNotificationType.NOT_ENOUGH_DIAMONDS:
-        showConfirm(LocalizeText("catalog.alert.notenough.activitypoints.description.5"), null, null, LocalizeText("generic.ok"), null, LocalizeText("catalog.alert.notenough.activitypoints.title.5"))
-        return
-      case PurchaseNotificationType.NOT_ENOUGH_CLOUDS:
-        showConfirm(LocalizeText("catalog.alert.notenough.activitypoints.description.104"), null, null, LocalizeText("generic.ok"), null, LocalizeText("catalog.alert.notenough.activitypoints.title.104"))
-        return
+    case PurchaseNotificationType.SOLD_OUT:
+      showConfirm(LocalizeText("catalog.alert.limited_edition_sold_out.message"), null, null, LocalizeText("generic.ok"), null, LocalizeText("catalog.alert.limited_edition_sold_out.message.title"))
+      return
+    case PurchaseNotificationType.NOT_ENOUGH_CREDITS:
+      showConfirm(LocalizeText("catalog.alert.notenough.credits.description"), null, null, LocalizeText("generic.ok"), null, LocalizeText("catalog.alert.notenough.title"))
+      return
+    case PurchaseNotificationType.NOT_ENOUGH_CREDITS_DUCKETS:
+      showConfirm(LocalizeText("catalog.alert.notenough.creditsandpixels.description"), null, null, LocalizeText("generic.ok"), null, LocalizeText("catalog.alert.notenough.title"))
+      return
+    case PurchaseNotificationType.NOT_ENOUGH_DUCKETS:
+      showConfirm(LocalizeText("catalog.alert.notenough.activitypoints.description.0"), null, null, LocalizeText("generic.ok"), null, LocalizeText("catalog.alert.notenough.activitypoints.title.0"))
+      return
+    case PurchaseNotificationType.NOT_ENOUGH_DIAMONDS:
+      showConfirm(LocalizeText("catalog.alert.notenough.activitypoints.description.5"), null, null, LocalizeText("generic.ok"), null, LocalizeText("catalog.alert.notenough.activitypoints.title.5"))
+      return
+    case PurchaseNotificationType.NOT_ENOUGH_CLOUDS:
+      showConfirm(LocalizeText("catalog.alert.notenough.activitypoints.description.104"), null, null, LocalizeText("generic.ok"), null, LocalizeText("catalog.alert.notenough.activitypoints.title.104"))
+      return
     }
-  }, [showConfirm])
+  }, [ showConfirm ])
 
   const closeAlert = useCallback((alert: NotificationAlertItem) => {
     setAlerts(prevValue => {
-      const newAlerts = [...prevValue]
+      const newAlerts = [ ...prevValue ]
       const index = newAlerts.findIndex(value => (alert === value))
 
       if (index >= 0) newAlerts.splice(index, 1)
@@ -169,7 +169,7 @@ const useNotificationState = () => {
 
   const closeBubbleAlert = useCallback((item: NotificationBubbleItem) => {
     setBubbleAlerts(prevValue => {
-      const newAlerts = [...prevValue]
+      const newAlerts = [ ...prevValue ]
       const index = newAlerts.findIndex(value => (item === value))
 
       if (index >= 0) newAlerts.splice(index, 1)
@@ -180,7 +180,7 @@ const useNotificationState = () => {
 
   const closeConfirm = useCallback((item: NotificationConfirmItem) => {
     setConfirms(prevValue => {
-      const newConfirms = [...prevValue]
+      const newConfirms = [ ...prevValue ]
       const index = newConfirms.findIndex(value => (item === value))
 
       if (index >= 0) newConfirms.splice(index, 1)
@@ -195,7 +195,7 @@ const useNotificationState = () => {
     if (parser.userId !== GetSessionDataManager().userId) return
 
     const text1 = LocalizeText("notifications.text.respect.1")
-    const text2 = LocalizeText("notifications.text.respect.2", ["count"], [parser.respectsReceived.toString()])
+    const text2 = LocalizeText("notifications.text.respect.2", [ "count" ], [ parser.respectsReceived.toString() ])
 
     showSingleBubble(text1, NotificationBubbleType.RESPECT)
     showSingleBubble(text2, NotificationBubbleType.RESPECT)
@@ -239,7 +239,7 @@ const useNotificationState = () => {
 
     const imageUrl = GetConfiguration("image.library.notifications.url", "").replace("%image%", parser.type.toString())
 
-    showSingleBubble(LocalizeText("notifications.text.loyalty.received", ["AMOUNT"], [parser.amountChanged.toString()]), NotificationBubbleType.INFO, imageUrl)
+    showSingleBubble(LocalizeText("notifications.text.loyalty.received", [ "AMOUNT" ], [ parser.amountChanged.toString() ]), NotificationBubbleType.INFO, imageUrl)
   })
 
   useMessageEvent<UserBannedMessageEvent>(UserBannedMessageEvent, event => {
@@ -251,7 +251,7 @@ const useNotificationState = () => {
   useMessageEvent<HotelClosesAndWillOpenAtEvent>(HotelClosesAndWillOpenAtEvent, event => {
     const parser = event.getParser()
 
-    simpleAlert(LocalizeText(("opening.hours." + (parser.userThrowOutAtClose ? "disconnected" : "closed")), ["h", "m"], [getTimeZeroPadded(parser.openHour), getTimeZeroPadded(parser.openMinute)]), NotificationAlertType.DEFAULT, null, null, LocalizeText("opening.hours.title"))
+    simpleAlert(LocalizeText(("opening.hours." + (parser.userThrowOutAtClose ? "disconnected" : "closed")), [ "h", "m" ], [ getTimeZeroPadded(parser.openHour), getTimeZeroPadded(parser.openMinute) ]), NotificationAlertType.DEFAULT, null, null, LocalizeText("opening.hours.title"))
   })
 
   useMessageEvent<PetReceivedMessageEvent>(PetReceivedMessageEvent, event => {
@@ -275,7 +275,7 @@ const useNotificationState = () => {
 
     const alertItem = new NotificationAlertItem(messages, NotificationAlertType.MOTD, null, null, LocalizeText("notifications.motd.title"))
 
-    setAlerts(prevValue => [alertItem, ...prevValue])
+    setAlerts(prevValue => [ alertItem, ...prevValue ])
   })
 
   useMessageEvent<PetLevelNotificationEvent>(PetLevelNotificationEvent, event => {
@@ -287,7 +287,7 @@ const useNotificationState = () => {
 
     if (imageResult) imageUrl = imageResult.getImage().src
 
-    showSingleBubble(LocalizeText("notifications.text.petlevel", ["pet_name", "level"], [parser.petName, parser.level.toString()]), NotificationBubbleType.PETLEVEL, imageUrl)
+    showSingleBubble(LocalizeText("notifications.text.petlevel", [ "pet_name", "level" ], [ parser.petName, parser.level.toString() ]), NotificationBubbleType.PETLEVEL, imageUrl)
   })
 
   useMessageEvent<InfoFeedEnableMessageEvent>(InfoFeedEnableMessageEvent, event => {
@@ -311,7 +311,7 @@ const useNotificationState = () => {
   useMessageEvent<MaintenanceStatusMessageEvent>(MaintenanceStatusMessageEvent, event => {
     const parser = event.getParser()
 
-    simpleAlert(LocalizeText("maintenance.shutdown", ["m", "d"], [parser.minutesUntilMaintenance.toString(), parser.duration.toString()]), NotificationAlertType.DEFAULT, null, null, LocalizeText("opening.hours.title"))
+    simpleAlert(LocalizeText("maintenance.shutdown", [ "m", "d" ], [ parser.minutesUntilMaintenance.toString(), parser.duration.toString() ]), NotificationAlertType.DEFAULT, null, null, LocalizeText("opening.hours.title"))
   })
 
   useMessageEvent<ModeratorCautionEvent>(ModeratorCautionEvent, event => {
@@ -329,47 +329,47 @@ const useNotificationState = () => {
   useMessageEvent<HotelWillCloseInMinutesEvent>(HotelWillCloseInMinutesEvent, event => {
     const parser = event.getParser()
 
-    simpleAlert(LocalizeText("opening.hours.shutdown", ["m"], [parser.openMinute.toString()]), NotificationAlertType.DEFAULT, null, null, LocalizeText("opening.hours.title"))
+    simpleAlert(LocalizeText("opening.hours.shutdown", [ "m" ], [ parser.openMinute.toString() ]), NotificationAlertType.DEFAULT, null, null, LocalizeText("opening.hours.title"))
   })
 
   useMessageEvent<HotelClosedAndOpensEvent>(HotelClosedAndOpensEvent, event => {
     const parser = event.getParser()
 
-    simpleAlert(LocalizeText("opening.hours.disconnected", ["h", "m"], [parser.openHour.toString(), parser.openMinute.toString()]), NotificationAlertType.DEFAULT, null, null, LocalizeText("opening.hours.title"))
+    simpleAlert(LocalizeText("opening.hours.disconnected", [ "h", "m" ], [ parser.openHour.toString(), parser.openMinute.toString() ]), NotificationAlertType.DEFAULT, null, null, LocalizeText("opening.hours.title"))
   })
 
   useMessageEvent<ConnectionErrorEvent>(ConnectionErrorEvent, event => {
     const parser = event.getParser()
 
     switch (parser.errorCode) {
-      default:
-      case 0:
-        simpleAlert(LocalizeText("connection.server.error.desc", ["errorCode"], [parser.errorCode.toString()]), NotificationAlertType.ALERT, null, null, LocalizeText("connection.server.error.title"))
-        break
-      case 1001:
-      case 1002:
-      case 1003:
-      case 1004:
-      case 1005:
-      case 1006:
-      case 1007:
-      case 1008:
-      case 1009:
-      case 1010:
-      case 1011:
-      case 1012:
-      case 1013:
-      case 1014:
-      case 1015:
-      case 1016:
-      case 1017:
-      case 1018:
-      case 1019:
-        event.connection.dispose()
-        break
-      case 4013:
-        simpleAlert(LocalizeText("connection.room.maintenance.desc"), NotificationAlertType.ALERT, null, null, LocalizeText("connection.room.maintenance.title"))
-        break
+    default:
+    case 0:
+      simpleAlert(LocalizeText("connection.server.error.desc", [ "errorCode" ], [ parser.errorCode.toString() ]), NotificationAlertType.ALERT, null, null, LocalizeText("connection.server.error.title"))
+      break
+    case 1001:
+    case 1002:
+    case 1003:
+    case 1004:
+    case 1005:
+    case 1006:
+    case 1007:
+    case 1008:
+    case 1009:
+    case 1010:
+    case 1011:
+    case 1012:
+    case 1013:
+    case 1014:
+    case 1015:
+    case 1016:
+    case 1017:
+    case 1018:
+    case 1019:
+      event.connection.dispose()
+      break
+    case 4013:
+      simpleAlert(LocalizeText("connection.room.maintenance.desc"), NotificationAlertType.ALERT, null, null, LocalizeText("connection.room.maintenance.title"))
+      break
     }
   })
 
@@ -402,7 +402,7 @@ const useNotificationState = () => {
 
       setModDisclaimerShown(true)
     }
-  }, [modDisclaimerShown, showSingleBubble])
+  }, [ modDisclaimerShown, showSingleBubble ])
 
   useMessageEvent<RoomEnterEvent>(RoomEnterEvent, onRoomEnterEvent)
 

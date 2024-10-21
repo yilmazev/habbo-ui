@@ -1,6 +1,6 @@
-import { FC, useMemo } from "react";
-import { LocalizeText } from "../../api";
-import { BaseProps } from "../Base";
+import { FC, useMemo } from "react"
+import { LocalizeText } from "../../api"
+import { BaseProps } from "../Base"
 
 interface LayoutCounterTimeViewProps extends BaseProps<HTMLDivElement> {
   day: string;
@@ -13,12 +13,12 @@ export const LayoutCounterTimeView: FC<LayoutCounterTimeViewProps> = props => {
   const { day = "00", hour = "00", minutes = "00", seconds = "00", classNames = [], className = "", children = null, ...rest } = props
 
   const getClassNames = useMemo(() => {
-    const newClassNames: string[] = ["flex"]
+    const newClassNames: string[] = [ "flex" ]
 
     if (classNames.length) newClassNames.push(...classNames)
 
     return newClassNames
-  }, [classNames])
+  }, [ classNames ])
 
   const getClassName = useMemo(() => {
     let newClassName = getClassNames.join(" ")
@@ -26,7 +26,7 @@ export const LayoutCounterTimeView: FC<LayoutCounterTimeViewProps> = props => {
     if (className.length) newClassName += (" " + className)
 
     return newClassName.trim()
-  }, [getClassNames, className])
+  }, [ getClassNames, className ])
 
   return (
     <div className={getClassName} {...rest}>

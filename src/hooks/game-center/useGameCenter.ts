@@ -5,12 +5,12 @@ import { GetConfiguration, SendMessageComposer } from "../../api"
 import { useMessageEvent } from "../events"
 
 const useGameCenterState = () => {
-  const [isVisible, setIsVisible] = useState(false)
-  const [games, setGames] = useState(null)
-  const [selectedGame, setSelectedGame] = useState(null)
-  const [accountStatus, setAccountStatus] = useState<Game2AccountGameStatusMessageParser>(null)
-  const [gameOffline, setGameOffline] = useState(false)
-  const [gameURL, setGameURL] = useState(null)
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ games, setGames ] = useState(null)
+  const [ selectedGame, setSelectedGame ] = useState(null)
+  const [ accountStatus, setAccountStatus ] = useState<Game2AccountGameStatusMessageParser>(null)
+  const [ gameOffline, setGameOffline ] = useState(false)
+  const [ gameURL, setGameURL ] = useState(null)
 
   const gameList = GetConfiguration<string[]>("illumina.gamecenter.game_list")
 
@@ -44,10 +44,10 @@ const useGameCenterState = () => {
     if (!parser) return
 
     switch (parser.gameTypeId) {
-      case 0:
-        return console.log("snowwar")
-      default:
-        return console.log(parser.gameTypeId)
+    case 0:
+      return console.log("snowwar")
+    default:
+      return console.log(parser.gameTypeId)
     }
   })
 
@@ -58,7 +58,7 @@ const useGameCenterState = () => {
     else {
       // dispose or wtv
     }
-  }, [isVisible])
+  }, [ isVisible ])
 
   return {
     isVisible, setIsVisible,

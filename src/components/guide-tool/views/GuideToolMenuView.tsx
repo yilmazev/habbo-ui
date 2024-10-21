@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { LocalizeText } from "../../../api";
+import { FC } from "react"
+import { LocalizeText } from "../../../api"
 
 interface GuideToolMenuViewProps {
   isOnDuty: boolean;
@@ -60,8 +60,8 @@ export const GuideToolMenuView: FC<GuideToolMenuViewProps> = props => {
       <div className="ml-1 flex items-center gap-2">
         <i className="block h-6 w-[23px] bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-247px_-253px]" />
         <div className="flex flex-col gap-1">
-          <p className="text-[13px] !leading-3 text-[#010101] [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]" dangerouslySetInnerHTML={{ __html: LocalizeText("guide.help.guide.tool.helpersonduty", ["amount"], [helpersOnDuty.toString()]) }} />
-          <p className="text-[13px] !leading-3 text-[#010101] [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]" dangerouslySetInnerHTML={{ __html: LocalizeText("guide.help.guide.tool.guardiansonduty", ["amount"], [guardiansOnDuty.toString()]) }} />
+          <p className="text-[13px] !leading-3 text-[#010101] [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]" dangerouslySetInnerHTML={{ __html: LocalizeText("guide.help.guide.tool.helpersonduty", [ "amount" ], [ helpersOnDuty.toString() ]) }} />
+          <p className="text-[13px] !leading-3 text-[#010101] [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]" dangerouslySetInnerHTML={{ __html: LocalizeText("guide.help.guide.tool.guardiansonduty", [ "amount" ], [ guardiansOnDuty.toString() ]) }} />
         </div>
       </div>
       {/* <div className="my-2 h-0.5 w-full border-b border-white dark:border-[#36322C] bg-[#CCCCCC] dark:bg-black" />

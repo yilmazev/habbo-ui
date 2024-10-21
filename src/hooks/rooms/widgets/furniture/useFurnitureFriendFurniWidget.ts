@@ -5,13 +5,13 @@ import { useMessageEvent, useRoomEngineEvent } from "../../../events"
 import { useFurniRemovedEvent } from "../../engine"
 
 const useFurnitureFriendFurniWidgetState = () => {
-  const [objectId, setObjectId] = useState(-1)
-  const [category, setCategory] = useState(-1)
-  const [type, setType] = useState(0)
-  const [usernames, setUsernames] = useState<string[]>([])
-  const [figures, setFigures] = useState<string[]>([])
-  const [date, setDate] = useState(null)
-  const [stage, setStage] = useState(0)
+  const [ objectId, setObjectId ] = useState(-1)
+  const [ category, setCategory ] = useState(-1)
+  const [ type, setType ] = useState(0)
+  const [ usernames, setUsernames ] = useState<string[]>([])
+  const [ figures, setFigures ] = useState<string[]>([])
+  const [ date, setDate ] = useState(null)
+  const [ stage, setStage ] = useState(0)
 
   const onClose = () => {
     setObjectId(-1)
@@ -51,8 +51,8 @@ const useFurnitureFriendFurniWidgetState = () => {
     setObjectId(event.objectId)
     setCategory(event.category)
     setType(type)
-    setUsernames([data[1], data[2]])
-    setFigures([data[3], data[4]])
+    setUsernames([ data[1], data[2] ])
+    setFigures([ data[3], data[4] ])
     setDate(data[5])
     setStage(0)
   })

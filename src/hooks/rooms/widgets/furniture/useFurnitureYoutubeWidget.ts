@@ -10,15 +10,15 @@ const CONTROL_COMMAND_PAUSE_VIDEO = 2
 const CONTROL_COMMAND_CONTINUE_VIDEO = 3
 
 const useFurnitureYoutubeWidgetState = () => {
-  const [objectId, setObjectId] = useState(-1)
-  const [category, setCategory] = useState(-1)
-  const [videoId, setVideoId] = useState(null)
-  const [videoStart, setVideoStart] = useState(null)
-  const [videoEnd, setVideoEnd] = useState(null)
-  const [currentVideoState, setCurrentVideoState] = useState(-1)
-  const [selectedVideo, setSelectedVideo] = useState(null)
-  const [playlists, setPlaylists] = useState<YoutubeDisplayPlaylist[]>(null)
-  const [hasControl, setHasControl] = useState(false)
+  const [ objectId, setObjectId ] = useState(-1)
+  const [ category, setCategory ] = useState(-1)
+  const [ videoId, setVideoId ] = useState(null)
+  const [ videoStart, setVideoStart ] = useState(null)
+  const [ videoEnd, setVideoEnd ] = useState(null)
+  const [ currentVideoState, setCurrentVideoState ] = useState(-1)
+  const [ selectedVideo, setSelectedVideo ] = useState(null)
+  const [ playlists, setPlaylists ] = useState<YoutubeDisplayPlaylist[]>(null)
+  const [ hasControl, setHasControl ] = useState(false)
 
   const onClose = () => {
     setObjectId(-1)
@@ -96,12 +96,12 @@ const useFurnitureYoutubeWidgetState = () => {
     if ((objectId === -1) || (objectId !== parser.furniId)) return
 
     switch (parser.commandId) {
-      case 1:
-        setCurrentVideoState(YoutubeVideoPlaybackStateEnum.PLAYING)
-        break
-      case 2:
-        setCurrentVideoState(YoutubeVideoPlaybackStateEnum.PAUSED)
-        break
+    case 1:
+      setCurrentVideoState(YoutubeVideoPlaybackStateEnum.PLAYING)
+      break
+    case 2:
+      setCurrentVideoState(YoutubeVideoPlaybackStateEnum.PAUSED)
+      break
     }
   })
 

@@ -1,7 +1,7 @@
-import { NavigatorSearchResultList } from "@nitrots/nitro-renderer";
-import { FC, useEffect, useState } from "react";
-import { GetConfiguration, LocalizeText, NavigatorSearchResultViewDisplayMode } from "../../../../api";
-import { NavigatorSearchResultItemView } from "./NavigatorSearchResultItemView";
+import { NavigatorSearchResultList } from "@nitrots/nitro-renderer"
+import { FC, useEffect, useState } from "react"
+import { GetConfiguration, LocalizeText, NavigatorSearchResultViewDisplayMode } from "../../../../api"
+import { NavigatorSearchResultItemView } from "./NavigatorSearchResultItemView"
 
 export interface NavigatorSearchResultViewProps {
   searchResult: NavigatorSearchResultList;
@@ -9,8 +9,8 @@ export interface NavigatorSearchResultViewProps {
 
 export const NavigatorSearchResultView: FC<NavigatorSearchResultViewProps> = props => {
   const { searchResult = null, ...rest } = props
-  const [isExtended, setIsExtended] = useState(true)
-  const [displayMode, setDisplayMode] = useState(0)
+  const [ isExtended, setIsExtended ] = useState(true)
+  const [ displayMode, setDisplayMode ] = useState(0)
 
   const getResultTitle = () => {
     let name = searchResult.code
@@ -47,7 +47,7 @@ export const NavigatorSearchResultView: FC<NavigatorSearchResultViewProps> = pro
     } else {
       setDisplayMode(searchResult.mode)
     }
-  }, [searchResult])
+  }, [ searchResult ])
 
   const gridHasTwoColumns = (displayMode >= NavigatorSearchResultViewDisplayMode.THUMBNAILS)
   const navigatorType = GetConfiguration("illumina.navigator.type")

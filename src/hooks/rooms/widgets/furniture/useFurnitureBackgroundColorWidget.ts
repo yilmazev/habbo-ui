@@ -6,14 +6,14 @@ import { useFurniRemovedEvent } from "../../engine"
 import { useRoom } from "../../useRoom"
 
 const useFurnitureBackgroundColorWidgetState = () => {
-  const [objectId, setObjectId] = useState(-1)
-  const [category, setCategory] = useState(-1)
-  const [color, setColor] = useState(0)
+  const [ objectId, setObjectId ] = useState(-1)
+  const [ category, setCategory ] = useState(-1)
+  const [ color, setColor ] = useState(0)
   const { roomSession = null } = useRoom()
 
   const applyToner = () => {
     const hsl = ColorConverter.rgbToHSL(color)
-    const [_, hue, saturation, lightness] = ColorUtils.int_to_8BitVals(hsl)
+    const [ _, hue, saturation, lightness ] = ColorUtils.int_to_8BitVals(hsl)
     SendMessageComposer(new ApplyTonerComposer(objectId, hue, saturation, lightness))
   }
 
@@ -55,9 +55,9 @@ const useFurnitureBackgroundColorWidgetState = () => {
     if ((objectId === -1) || (category === -1)) return
 
     const hls = ColorConverter.rgbToHSL(color)
-    const [_, hue, saturation, lightness] = ColorUtils.int_to_8BitVals(hls)
+    const [ _, hue, saturation, lightness ] = ColorUtils.int_to_8BitVals(hls)
     DispatchUiEvent(new RoomWidgetUpdateBackgroundColorPreviewEvent(RoomWidgetUpdateBackgroundColorPreviewEvent.PREVIEW, hue, saturation, lightness))
-  }, [objectId, category, color])
+  }, [ objectId, category, color ])
 
   return { objectId, color, setColor, applyToner, toggleToner, onClose }
 }

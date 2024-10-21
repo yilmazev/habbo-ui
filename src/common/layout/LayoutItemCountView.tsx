@@ -1,5 +1,5 @@
-import { FC, useMemo } from "react";
-import { BaseProps } from "..";
+import { FC, useMemo } from "react"
+import { BaseProps } from ".."
 
 interface LayoutItemCountViewProps extends BaseProps<HTMLDivElement> {
   count: number;
@@ -9,12 +9,12 @@ export const LayoutItemCountView: FC<LayoutItemCountViewProps> = props => {
   const { count = 0, classNames = [], className = "", children = null, ...rest } = props
 
   const getClassNames = useMemo(() => {
-    const newClassNames: string[] = ["illumina-item-badge absolute top-0 right-0 px-1.5 text-[11px] font-semibold [text-shadow:_0_1px_0_#ec2822] not-italic text-white z-30"]
+    const newClassNames: string[] = [ "illumina-item-badge absolute top-0 right-0 px-1.5 text-[11px] font-semibold [text-shadow:_0_1px_0_#ec2822] not-italic text-white z-30" ]
 
     if (classNames.length) newClassNames.push(...classNames)
 
     return newClassNames
-  }, [classNames])
+  }, [ classNames ])
 
   const getClassName = useMemo(() => {
     let newClassName = getClassNames.join(" ")
@@ -22,7 +22,7 @@ export const LayoutItemCountView: FC<LayoutItemCountViewProps> = props => {
     if (className.length) newClassName += (" " + className)
 
     return newClassName.trim()
-  }, [getClassNames, className])
+  }, [ getClassNames, className ])
 
   return (
     <div className={getClassName} {...rest}>

@@ -1,20 +1,20 @@
 import { Dispose, DropBounce, EaseOut, JumpBy, Motions, NitroToolbarAnimateIconEvent, PerkAllowancesMessageEvent, PerkEnum, Queue, Wait } from "@nitrots/nitro-renderer"
 import { FC, useState } from "react"
-import { CreateLinkEvent, GetConfiguration, MessengerIconState, OpenMessengerChat, VisitDesktop } from "../../api"
+import { CreateLinkEvent, GetConfiguration, MessengerIconState, VisitDesktop } from "../../api"
 import { LayoutAvatarImage, LayoutItemCountView, TransitionAnimation, TransitionAnimationTypes } from "../../common"
 import { useAchievements, useFriends, useInventoryUnseenTracker, useMessageEvent, useMessenger, useRoomEngineEvent, useSessionInfo } from "../../hooks"
 import { ToolbarMeView } from "./ToolbarMeView"
 
 export const Toolbar: FC<{ isInRoom: boolean }> = ({ isInRoom }) => {
-  const [isMeExpanded, setMeExpanded] = useState(false)
-  const [useGuideTool, setUseGuideTool] = useState(false)
-  const [isMinimizeLeft, setIsMinimizeLeft] = useState(false)
-  const [isMinimizeRight, setIsMinimizeRight] = useState(false)
+  const [ isMeExpanded, setMeExpanded ] = useState(false)
+  const [ useGuideTool, setUseGuideTool ] = useState(false)
+  const [ isMinimizeLeft, setIsMinimizeLeft ] = useState(false)
+  const [ isMinimizeRight, setIsMinimizeRight ] = useState(false)
 
   const { userFigure = null } = useSessionInfo()
   const { getFullCount = 0 } = useInventoryUnseenTracker()
   const { getTotalUnseen = 0 } = useAchievements()
-  const { iconState = MessengerIconState.HIDDEN } = useMessenger();
+  const { iconState = MessengerIconState.HIDDEN } = useMessenger()
   const { requests = [] } = useFriends()
 
   const gameCenterEnabled: boolean = GetConfiguration("game.center.enabled")
@@ -67,13 +67,13 @@ export const Toolbar: FC<{ isInRoom: boolean }> = ({ isInRoom }) => {
         <ToolbarMeView useGuideTool={useGuideTool} unseenAchievementCount={getTotalUnseen} setMeExpanded={setMeExpanded} />
       </TransitionAnimation>
       <div className="flash-toolbar absolute bottom-0 left-0 z-10 flex h-[51px] w-full items-center justify-center bg-[url('/client-assets/images/1flash/toolbar/bg.png')] bg-repeat-x">
-        <button className="flash-minimize absolute left-0 flex items-center justify-center bg-[url('/client-assets/images/1flash/toolbar/minimize-left.png')] w-[14px] h-[43px] top-[5px]">
+        <button className="flash-minimize absolute left-0 top-[5px] flex h-[43px] w-[14px] items-center justify-center bg-[url('/client-assets/images/1flash/toolbar/minimize-left.png')]">
           {isMinimizeLeft
             ? <i className="arrow-right" />
             : <i className="arrow-left" />
           }
-        </div>
-        <div className="flex items-center h-full pt-[4px] pb-[4px] absolute left-0">
+        </button>
+        <div className="absolute left-0 flex h-full items-center py-[4px]">
           {isInRoom
             ? <div className="ml-[27px]" onClick={() => VisitDesktop()}>
               <i className="icon-toolbar icon-hotelview mr-[17px]" />
@@ -108,34 +108,9 @@ export const Toolbar: FC<{ isInRoom: boolean }> = ({ isInRoom }) => {
             <i className="icon-toolbar icon-camera ml-[11px] mt-[6px]" />
           </div>
           }
-          <div className="mx-[16px] h-[40px] w-[1px] bg-[#454442]" />
+          <div className="mx-[16px] h-[40px] w-px bg-[#454442]" />
         </div>
-        <div id="toolbar-chat-input-container" className="-translate-y-[62px]" />
-        <div className="flex items-center h-full absolute right-[14px]">
-          <div className="mx-[16px] h-[40px] w-[1px] bg-[#454442]" />
-          <div className="flex items-center">
-            <div onClick={() => CreateLinkEvent("friends/toggle")}>
-              <i className="icon-toolbar icon-friends mr-[15px]">
-                {(requests.length > 0) && <LayoutItemCountView count={requests.length} />}
-              </i>
-            </div>
-            <div onClick={() => CreateLinkEvent("friends/toggle")}>
-              <i className="icon-toolbar icon-search mr-[10px]" />
-            </div>
-            <div>
-              <div className="w-[26px] h-[32px] mr-[21px]">
-                {((iconState === MessengerIconState.SHOW) || (iconState === MessengerIconState.UNREAD)) &&
-                  <i className={`icon-toolbar icon-messages ${(iconState === MessengerIconState.UNREAD) && 'unread'}`} onClick={() => OpenMessengerChat()} />
-                }
-              </div>
-            </div>
-          </div>
-          <div id="toolbar-friend-bar-container" className="flex h-[51px] w-full" />
-        </div>
-        <div className="flash-minimize absolute right-0 flex items-center justify-center bg-[url('/client-assets/images/1flash/toolbar/minimize-right.png')] w-[14px] h-[43px] top-[5px]">
-          <i className="arrow-right" />
-        </div>
-      </div>
+      </div >
     </>
   )
 }

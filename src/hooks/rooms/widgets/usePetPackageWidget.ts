@@ -6,11 +6,11 @@ import { useNotification } from "../../notification"
 
 const usePetPackageWidgetState = () => {
   const { simpleAlert = null } = useNotification()
-  const [isVisible, setIsVisible] = useState(false)
-  const [objectId, setObjectId] = useState(-1)
-  const [objectType, setObjectType] = useState("")
-  const [petName, setPetName] = useState("")
-  const [errorResult, setErrorResult] = useState("")
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ objectId, setObjectId ] = useState(-1)
+  const [ objectType, setObjectType ] = useState("")
+  const [ petName, setPetName ] = useState("")
+  const [ errorResult, setErrorResult ] = useState("")
 
   const onClose = () => {
     setErrorResult("")

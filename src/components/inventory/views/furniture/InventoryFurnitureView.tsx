@@ -25,8 +25,8 @@ const attemptPlaceMarketplaceOffer = (groupItem: GroupItem) => {
 
 export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props => {
   const { roomSession = null, roomPreviewer = null } = props
-  const [isVisible, setIsVisible] = useState(false)
-  const [filteredGroupItems, setFilteredGroupItems] = useState<GroupItem[]>([])
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ filteredGroupItems, setFilteredGroupItems ] = useState<GroupItem[]>([])
   const { groupItems = [], selectedItem = null, activate = null, deactivate = null } = useInventoryFurni()
   const { resetItems = null } = useInventoryUnseenTracker()
 
@@ -75,7 +75,7 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props => 
         roomPreviewer.addFurnitureIntoRoom(selectedItem.type, new Vector3d(90), selectedItem.stuffData, (furnitureItem.extra.toString()))
       }
     }
-  }, [roomPreviewer, selectedItem])
+  }, [ roomPreviewer, selectedItem ])
 
   useEffect(() => {
     if (!selectedItem || !selectedItem.hasUnseenItems) return
@@ -83,7 +83,7 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props => 
     resetItems(UnseenItemCategory.FURNI, selectedItem.items.map(item => item.id))
 
     selectedItem.hasUnseenItems = false
-  }, [selectedItem, resetItems])
+  }, [ selectedItem, resetItems ])
 
   useEffect(() => {
     if (!isVisible) return
@@ -91,7 +91,7 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props => 
     const id = activate()
 
     return () => deactivate(id)
-  }, [isVisible, activate, deactivate])
+  }, [ isVisible, activate, deactivate ])
 
   useEffect(() => {
     setIsVisible(true)

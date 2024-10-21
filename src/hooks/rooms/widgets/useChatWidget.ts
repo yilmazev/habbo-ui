@@ -10,8 +10,8 @@ const avatarImageCache: Map<string, string> = new Map()
 const petImageCache: Map<string, string> = new Map()
 
 const useChatWidgetState = () => {
-  const [chatMessages, setChatMessages] = useState<ChatBubbleMessage[]>([])
-  const [chatSettings, setChatSettings] = useState<IRoomChatSettings>({
+  const [ chatMessages, setChatMessages ] = useState<ChatBubbleMessage[]>([])
+  const [ chatSettings, setChatSettings ] = useState<IRoomChatSettings>({
     mode: RoomChatSettings.CHAT_MODE_FREE_FLOW,
     weight: RoomChatSettings.CHAT_BUBBLE_WIDTH_NORMAL,
     speed: RoomChatSettings.CHAT_SCROLL_SPEED_NORMAL,
@@ -26,14 +26,14 @@ const useChatWidgetState = () => {
     if (!chatSettings) return 6000
 
     switch (chatSettings.speed) {
-      case RoomChatSettings.CHAT_SCROLL_SPEED_FAST:
-        return 3000
-      case RoomChatSettings.CHAT_SCROLL_SPEED_NORMAL:
-        return 6000
-      case RoomChatSettings.CHAT_SCROLL_SPEED_SLOW:
-        return 12000
+    case RoomChatSettings.CHAT_SCROLL_SPEED_FAST:
+      return 3000
+    case RoomChatSettings.CHAT_SCROLL_SPEED_NORMAL:
+      return 6000
+    case RoomChatSettings.CHAT_SCROLL_SPEED_SLOW:
+      return 12000
     }
-  }, [chatSettings])
+  }, [ chatSettings ])
 
   const setFigureImage = (figure: string) => {
     const avatarImage = GetAvatarRenderManager().createAvatarImage(figure, AvatarScaleType.LARGE, null, {
@@ -106,17 +106,17 @@ const useChatWidgetState = () => {
       const figure = userData.figure
 
       switch (userType) {
-        case RoomObjectType.PET:
-          imageUrl = getPetImage(figure, 2, true, 64, roomObject.model.getValue(RoomObjectVariable.FIGURE_POSTURE))
-          petType = new PetFigureData(figure).typeId
-          break
-        case RoomObjectType.USER:
-          imageUrl = getUserImage(figure)
-          break
-        case RoomObjectType.RENTABLE_BOT:
-        case RoomObjectType.BOT:
-          styleId = SystemChatStyleEnum.BOT
-          break
+      case RoomObjectType.PET:
+        imageUrl = getPetImage(figure, 2, true, 64, roomObject.model.getValue(RoomObjectVariable.FIGURE_POSTURE))
+        petType = new PetFigureData(figure).typeId
+        break
+      case RoomObjectType.USER:
+        imageUrl = getUserImage(figure)
+        break
+      case RoomObjectType.RENTABLE_BOT:
+      case RoomObjectType.BOT:
+        styleId = SystemChatStyleEnum.BOT
+        break
       }
 
       avatarColor = avatarColorCache.get(figure)
@@ -124,52 +124,52 @@ const useChatWidgetState = () => {
     }
 
     switch (chatType) {
-      case RoomSessionChatEvent.CHAT_TYPE_RESPECT:
-        text = LocalizeText("widgets.chatbubble.respect", ["username"], [username])
-        break
-      case RoomSessionChatEvent.CHAT_TYPE_PETREVIVE:
-      case RoomSessionChatEvent.CHAT_TYPE_PET_REBREED_FERTILIZE:
-      case RoomSessionChatEvent.CHAT_TYPE_PET_SPEED_FERTILIZE: {
-        let textKey = "widget.chatbubble.petrevived"
+    case RoomSessionChatEvent.CHAT_TYPE_RESPECT:
+      text = LocalizeText("widgets.chatbubble.respect", [ "username" ], [ username ])
+      break
+    case RoomSessionChatEvent.CHAT_TYPE_PETREVIVE:
+    case RoomSessionChatEvent.CHAT_TYPE_PET_REBREED_FERTILIZE:
+    case RoomSessionChatEvent.CHAT_TYPE_PET_SPEED_FERTILIZE: {
+      let textKey = "widget.chatbubble.petrevived"
 
-        if (chatType === RoomSessionChatEvent.CHAT_TYPE_PET_REBREED_FERTILIZE) {
-          textKey = "widget.chatbubble.petrefertilized;"
-        }
-
-        else if (chatType === RoomSessionChatEvent.CHAT_TYPE_PET_SPEED_FERTILIZE) {
-          textKey = "widget.chatbubble.petspeedfertilized"
-        }
-
-        let targetUserName: string = null
-
-        const newRoomObject = GetRoomEngine().getRoomObject(roomSession.roomId, event.extraParam, RoomObjectCategory.UNIT)
-
-        if (newRoomObject) {
-          const newUserData = roomSession.userDataManager.getUserDataByIndex(roomObject.id)
-
-          if (newUserData) targetUserName = newUserData.name
-        }
-
-        text = LocalizeText(textKey, ["petName", "userName"], [username, targetUserName])
-        break
+      if (chatType === RoomSessionChatEvent.CHAT_TYPE_PET_REBREED_FERTILIZE) {
+        textKey = "widget.chatbubble.petrefertilized;"
       }
-      case RoomSessionChatEvent.CHAT_TYPE_PETRESPECT:
-        text = LocalizeText("widget.chatbubble.petrespect", ["petname"], [username])
-        break
-      case RoomSessionChatEvent.CHAT_TYPE_PETTREAT:
-        text = LocalizeText("widget.chatbubble.pettreat", ["petname"], [username])
-        break
-      case RoomSessionChatEvent.CHAT_TYPE_HAND_ITEM_RECEIVED:
-        text = LocalizeText("widget.chatbubble.handitem", ["username", "handitem"], [username, LocalizeText(("handitem" + event.extraParam))])
-        break
-      case RoomSessionChatEvent.CHAT_TYPE_MUTE_REMAINING: {
-        const hours = ((event.extraParam > 0) ? Math.floor((event.extraParam / 3600)) : 0).toString()
-        const minutes = ((event.extraParam > 0) ? Math.floor((event.extraParam % 3600) / 60) : 0).toString()
-        const seconds = (event.extraParam % 60).toString()
 
-        text = LocalizeText("widget.chatbubble.mutetime", ["hours", "minutes", "seconds"], [hours, minutes, seconds])
-        break
+      else if (chatType === RoomSessionChatEvent.CHAT_TYPE_PET_SPEED_FERTILIZE) {
+        textKey = "widget.chatbubble.petspeedfertilized"
       }
+
+      let targetUserName: string = null
+
+      const newRoomObject = GetRoomEngine().getRoomObject(roomSession.roomId, event.extraParam, RoomObjectCategory.UNIT)
+
+      if (newRoomObject) {
+        const newUserData = roomSession.userDataManager.getUserDataByIndex(roomObject.id)
+
+        if (newUserData) targetUserName = newUserData.name
+      }
+
+      text = LocalizeText(textKey, [ "petName", "userName" ], [ username, targetUserName ])
+      break
+    }
+    case RoomSessionChatEvent.CHAT_TYPE_PETRESPECT:
+      text = LocalizeText("widget.chatbubble.petrespect", [ "petname" ], [ username ])
+      break
+    case RoomSessionChatEvent.CHAT_TYPE_PETTREAT:
+      text = LocalizeText("widget.chatbubble.pettreat", [ "petname" ], [ username ])
+      break
+    case RoomSessionChatEvent.CHAT_TYPE_HAND_ITEM_RECEIVED:
+      text = LocalizeText("widget.chatbubble.handitem", [ "username", "handitem" ], [ username, LocalizeText(("handitem" + event.extraParam)) ])
+      break
+    case RoomSessionChatEvent.CHAT_TYPE_MUTE_REMAINING: {
+      const hours = ((event.extraParam > 0) ? Math.floor((event.extraParam / 3600)) : 0).toString()
+      const minutes = ((event.extraParam > 0) ? Math.floor((event.extraParam % 3600) / 60) : 0).toString()
+      const seconds = (event.extraParam % 60).toString()
+
+      text = LocalizeText("widget.chatbubble.mutetime", [ "hours", "minutes", "seconds" ], [ hours, minutes, seconds ])
+      break
+    }
     }
 
     const formattedText = RoomChatFormatter(text)
@@ -188,7 +188,7 @@ const useChatWidgetState = () => {
       imageUrl,
       color)
 
-    setChatMessages(prevValue => [...prevValue, chatMessage])
+    setChatMessages(prevValue => [ ...prevValue, chatMessage ])
     addChatEntry({ id: -1, webId: userData.webID, entityId: userData.roomIndex, name: username, imageUrl, style: styleId, chatType: chatType, entityType: userData.type, message: formattedText, timestamp: ChatHistoryCurrentDate(), type: ChatEntryType.TYPE_CHAT, roomId: roomSession.roomId, color })
   })
 

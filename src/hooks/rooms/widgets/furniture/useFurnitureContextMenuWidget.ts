@@ -11,13 +11,13 @@ export const EFFECTBOX_OPEN: string = "EFFECTBOX_OPEN"
 export const MYSTERYTROPHY_OPEN_DIALOG: string = "MYSTERYTROPHY_OPEN_DIALOG"
 
 const useFurnitureContextMenuWidgetState = () => {
-  const [objectId, setObjectId] = useState(-1)
-  const [mode, setMode] = useState(null)
-  const [confirmMode, setConfirmMode] = useState(null)
-  const [confirmingObjectId, setConfirmingObjectId] = useState(-1)
-  const [groupData, setGroupData] = useState<GroupFurniContextMenuInfoMessageParser>(null)
-  const [isGroupMember, setIsGroupMember] = useState(false)
-  const [objectOwnerId, setObjectOwnerId] = useState(-1)
+  const [ objectId, setObjectId ] = useState(-1)
+  const [ mode, setMode ] = useState(null)
+  const [ confirmMode, setConfirmMode ] = useState(null)
+  const [ confirmingObjectId, setConfirmingObjectId ] = useState(-1)
+  const [ groupData, setGroupData ] = useState<GroupFurniContextMenuInfoMessageParser>(null)
+  const [ isGroupMember, setIsGroupMember ] = useState(false)
+  const [ objectOwnerId, setObjectOwnerId ] = useState(-1)
   const { roomSession = null } = useRoom()
 
   const onClose = () => {
@@ -35,34 +35,34 @@ const useFurnitureContextMenuWidgetState = () => {
   const processAction = (name: string) => {
     if (name) {
       switch (name) {
-        case "use_friend_furni":
-          roomSession.useMultistateItem(objectId)
-          break
-        case "use_monsterplant_seed":
-          setConfirmMode(MONSTERPLANT_SEED_CONFIRMATION)
-          setConfirmingObjectId(objectId)
-          break
-        case "use_random_teleport":
-          GetRoomEngine().useRoomObject(objectId, RoomObjectCategory.FLOOR)
-          break
-        case "use_purchaseable_clothing":
-          setConfirmMode(PURCHASABLE_CLOTHING_CONFIRMATION)
-          setConfirmingObjectId(objectId)
-          break
-        case "use_mystery_box":
-          roomSession.useMultistateItem(objectId)
-          break
-        case "use_mystery_trophy":
-          setConfirmMode(MYSTERYTROPHY_OPEN_DIALOG)
-          setConfirmingObjectId(objectId)
-          break
-        case "join_group":
-          TryJoinGroup(groupData.guildId)
-          setIsGroupMember(true)
-          return
-        case "go_to_group_homeroom":
-          if (groupData) TryVisitRoom(groupData.guildHomeRoomId)
-          break
+      case "use_friend_furni":
+        roomSession.useMultistateItem(objectId)
+        break
+      case "use_monsterplant_seed":
+        setConfirmMode(MONSTERPLANT_SEED_CONFIRMATION)
+        setConfirmingObjectId(objectId)
+        break
+      case "use_random_teleport":
+        GetRoomEngine().useRoomObject(objectId, RoomObjectCategory.FLOOR)
+        break
+      case "use_purchaseable_clothing":
+        setConfirmMode(PURCHASABLE_CLOTHING_CONFIRMATION)
+        setConfirmingObjectId(objectId)
+        break
+      case "use_mystery_box":
+        roomSession.useMultistateItem(objectId)
+        break
+      case "use_mystery_trophy":
+        setConfirmMode(MYSTERYTROPHY_OPEN_DIALOG)
+        setConfirmingObjectId(objectId)
+        break
+      case "join_group":
+        TryJoinGroup(groupData.guildId)
+        setIsGroupMember(true)
+        return
+      case "go_to_group_homeroom":
+        if (groupData) TryVisitRoom(groupData.guildHomeRoomId)
+        break
       }
     }
 
@@ -85,72 +85,72 @@ const useFurnitureContextMenuWidgetState = () => {
     setObjectOwnerId(object.model.getValue(RoomObjectVariable.FURNITURE_OWNER_ID))
 
     switch (event.type) {
-      case RoomEngineTriggerWidgetEvent.REQUEST_MONSTERPLANT_SEED_PLANT_CONFIRMATION_DIALOG:
-        if (!IsOwnerOfFurniture(object)) return
+    case RoomEngineTriggerWidgetEvent.REQUEST_MONSTERPLANT_SEED_PLANT_CONFIRMATION_DIALOG:
+      if (!IsOwnerOfFurniture(object)) return
 
-        setConfirmingObjectId(object.id)
-        setConfirmMode(MONSTERPLANT_SEED_CONFIRMATION)
+      setConfirmingObjectId(object.id)
+      setConfirmMode(MONSTERPLANT_SEED_CONFIRMATION)
 
-        onClose()
+      onClose()
+      return
+    case RoomEngineTriggerWidgetEvent.REQUEST_EFFECTBOX_OPEN_DIALOG:
+      if (!IsOwnerOfFurniture(object)) return
+
+      setConfirmingObjectId(object.id)
+      setConfirmMode(EFFECTBOX_OPEN)
+
+      onClose()
+      return
+    case RoomEngineTriggerWidgetEvent.REQUEST_PURCHASABLE_CLOTHING_CONFIRMATION_DIALOG:
+      if (!IsOwnerOfFurniture(object)) return
+
+      setConfirmingObjectId(object.id)
+      setConfirmMode(PURCHASABLE_CLOTHING_CONFIRMATION)
+
+      onClose()
+      return
+    case RoomEngineTriggerWidgetEvent.REQUEST_MYSTERYBOX_OPEN_DIALOG:
+      roomSession.useMultistateItem(object.id)
+
+      onClose()
+      return
+    case RoomEngineTriggerWidgetEvent.REQUEST_MYSTERYTROPHY_OPEN_DIALOG:
+      if (!IsOwnerOfFurniture(object)) return
+
+      setConfirmingObjectId(object.id)
+      setConfirmMode(MYSTERYTROPHY_OPEN_DIALOG)
+
+      onClose()
+      return
+    case RoomEngineTriggerWidgetEvent.OPEN_FURNI_CONTEXT_MENU:
+
+      setObjectId(object.id)
+
+      switch (event.contextMenu) {
+      case ContextMenuEnum.FRIEND_FURNITURE:
+        setMode(ContextMenuEnum.FRIEND_FURNITURE)
         return
-      case RoomEngineTriggerWidgetEvent.REQUEST_EFFECTBOX_OPEN_DIALOG:
-        if (!IsOwnerOfFurniture(object)) return
-
-        setConfirmingObjectId(object.id)
-        setConfirmMode(EFFECTBOX_OPEN)
-
-        onClose()
+      case ContextMenuEnum.MONSTERPLANT_SEED:
+        if (IsOwnerOfFurniture(object)) setMode(ContextMenuEnum.MONSTERPLANT_SEED)
         return
-      case RoomEngineTriggerWidgetEvent.REQUEST_PURCHASABLE_CLOTHING_CONFIRMATION_DIALOG:
-        if (!IsOwnerOfFurniture(object)) return
-
-        setConfirmingObjectId(object.id)
-        setConfirmMode(PURCHASABLE_CLOTHING_CONFIRMATION)
-
-        onClose()
+      case ContextMenuEnum.MYSTERY_BOX:
+        setMode(ContextMenuEnum.MYSTERY_BOX)
         return
-      case RoomEngineTriggerWidgetEvent.REQUEST_MYSTERYBOX_OPEN_DIALOG:
-        roomSession.useMultistateItem(object.id)
-
-        onClose()
+      case ContextMenuEnum.MYSTERY_TROPHY:
+        if (IsOwnerOfFurniture(object)) setMode(ContextMenuEnum.MYSTERY_TROPHY)
         return
-      case RoomEngineTriggerWidgetEvent.REQUEST_MYSTERYTROPHY_OPEN_DIALOG:
-        if (!IsOwnerOfFurniture(object)) return
-
-        setConfirmingObjectId(object.id)
-        setConfirmMode(MYSTERYTROPHY_OPEN_DIALOG)
-
-        onClose()
+      case ContextMenuEnum.RANDOM_TELEPORT:
+        setMode(ContextMenuEnum.RANDOM_TELEPORT)
         return
-      case RoomEngineTriggerWidgetEvent.OPEN_FURNI_CONTEXT_MENU:
-
-        setObjectId(object.id)
-
-        switch (event.contextMenu) {
-          case ContextMenuEnum.FRIEND_FURNITURE:
-            setMode(ContextMenuEnum.FRIEND_FURNITURE)
-            return
-          case ContextMenuEnum.MONSTERPLANT_SEED:
-            if (IsOwnerOfFurniture(object)) setMode(ContextMenuEnum.MONSTERPLANT_SEED)
-            return
-          case ContextMenuEnum.MYSTERY_BOX:
-            setMode(ContextMenuEnum.MYSTERY_BOX)
-            return
-          case ContextMenuEnum.MYSTERY_TROPHY:
-            if (IsOwnerOfFurniture(object)) setMode(ContextMenuEnum.MYSTERY_TROPHY)
-            return
-          case ContextMenuEnum.RANDOM_TELEPORT:
-            setMode(ContextMenuEnum.RANDOM_TELEPORT)
-            return
-          case ContextMenuEnum.PURCHASABLE_CLOTHING:
-            if (IsOwnerOfFurniture(object)) setMode(ContextMenuEnum.PURCHASABLE_CLOTHING)
-            return
-        }
-
+      case ContextMenuEnum.PURCHASABLE_CLOTHING:
+        if (IsOwnerOfFurniture(object)) setMode(ContextMenuEnum.PURCHASABLE_CLOTHING)
         return
-      case RoomEngineTriggerWidgetEvent.CLOSE_FURNI_CONTEXT_MENU:
-        if (object.id === objectId) onClose()
-        return
+      }
+
+      return
+    case RoomEngineTriggerWidgetEvent.CLOSE_FURNI_CONTEXT_MENU:
+      if (object.id === objectId) onClose()
+      return
     }
   })
 

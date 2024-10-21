@@ -11,17 +11,17 @@ const LANDSCAPE: string = "landscape"
 const POSTER: string = "poster"
 
 const useFurniturePresentWidgetState = () => {
-  const [objectId, setObjectId] = useState(-1)
-  const [classId, setClassId] = useState(-1)
-  const [itemType, setItemType] = useState(null)
-  const [text, setText] = useState(null)
-  const [isOwnerOfFurniture, setIsOwnerOfFurniture] = useState(false)
-  const [senderName, setSenderName] = useState(null)
-  const [senderFigure, setSenderFigure] = useState(null)
-  const [placedItemId, setPlacedItemId] = useState(-1)
-  const [placedItemType, setPlacedItemType] = useState(null)
-  const [placedInRoom, setPlacedInRoom] = useState(false)
-  const [imageUrl, setImageUrl] = useState(null)
+  const [ objectId, setObjectId ] = useState(-1)
+  const [ classId, setClassId ] = useState(-1)
+  const [ itemType, setItemType ] = useState(null)
+  const [ text, setText ] = useState(null)
+  const [ isOwnerOfFurniture, setIsOwnerOfFurniture ] = useState(false)
+  const [ senderName, setSenderName ] = useState(null)
+  const [ senderFigure, setSenderFigure ] = useState(null)
+  const [ placedItemId, setPlacedItemId ] = useState(-1)
+  const [ placedItemType, setPlacedItemType ] = useState(null)
+  const [ placedInRoom, setPlacedInRoom ] = useState(false)
+  const [ imageUrl, setImageUrl ] = useState(null)
   const { roomSession = null } = useRoom()
 
   const onClose = () => {
@@ -80,89 +80,89 @@ const useFurniturePresentWidgetState = () => {
     let giftImage: string = null
 
     switch (event.itemType) {
-      case ProductTypeEnum.WALL: {
-        if (furniData) {
-          switch (furniData.className) {
-            case FLOOR:
-            case LANDSCAPE:
-            case WALLPAPER:
-              let imageType = null
-              let message = null
+    case ProductTypeEnum.WALL: {
+      if (furniData) {
+        switch (furniData.className) {
+        case FLOOR:
+        case LANDSCAPE:
+        case WALLPAPER:
+          let imageType = null
+          let message = null
 
-              if (furniData.className === FLOOR) {
-                imageType = "packagecard_icon_floor"
-                message = LocalizeText("inventory.furni.item.floor.name")
-              }
-
-              else if (furniData.className === LANDSCAPE) {
-                imageType = "packagecard_icon_landscape"
-                message = LocalizeText("inventory.furni.item.landscape.name")
-              }
-
-              else {
-                imageType = "packagecard_icon_wallpaper"
-                message = LocalizeText("inventory.furni.item.wallpaper.name")
-              }
-
-              setText(message)
-              //setImageUrl(getGiftImageUrl(imageType));
-              break
-            case POSTER: {
-              const productCode = event.productCode
-
-              let extras: string = null
-
-              if (productCode.indexOf("poster") === 0) extras = productCode.replace("poster", "")
-
-              const productData = GetSessionDataManager().getProductData(productCode)
-
-              let name: string = null
-
-              if (productData) name = productData.name
-              else if (furniData) name = furniData.name
-
-              setText(name)
-              setImageUrl(GetRoomEngine().getFurnitureWallIconUrl(event.classId, extras))
-
-              break
-            }
-            default: {
-              setText(furniData.name || null)
-              setImageUrl(GetRoomEngine().getFurnitureWallIconUrl(event.classId))
-              break
-            }
+          if (furniData.className === FLOOR) {
+            imageType = "packagecard_icon_floor"
+            message = LocalizeText("inventory.furni.item.floor.name")
           }
-        }
 
-        break
-      }
-      case ProductTypeEnum.HABBO_CLUB:
-        setText(LocalizeText("widget.furni.present.hc"))
-        //setImageUrl(getGiftImageUrl('packagecard_icon_hc'));
-        break
-      default: {
-        if (event.placedItemType === ProductTypeEnum.PET) {
-          const petfigureString = event.petFigureString
-
-          if (petfigureString && petfigureString.length) {
-            const petFigureData = new PetFigureData(petfigureString)
-
-            const petImage = GetRoomEngine().getRoomObjectPetImage(petFigureData.typeId, petFigureData.paletteId, petFigureData.color, new Vector3d(90), 64, imageListener, true, 0, petFigureData.customParts)
-
-            if (petImage) setImageUrl(petImage.getImage().src)
+          else if (furniData.className === LANDSCAPE) {
+            imageType = "packagecard_icon_landscape"
+            message = LocalizeText("inventory.furni.item.landscape.name")
           }
+
+          else {
+            imageType = "packagecard_icon_wallpaper"
+            message = LocalizeText("inventory.furni.item.wallpaper.name")
+          }
+
+          setText(message)
+          //setImageUrl(getGiftImageUrl(imageType));
+          break
+        case POSTER: {
+          const productCode = event.productCode
+
+          let extras: string = null
+
+          if (productCode.indexOf("poster") === 0) extras = productCode.replace("poster", "")
+
+          const productData = GetSessionDataManager().getProductData(productCode)
+
+          let name: string = null
+
+          if (productData) name = productData.name
+          else if (furniData) name = furniData.name
+
+          setText(name)
+          setImageUrl(GetRoomEngine().getFurnitureWallIconUrl(event.classId, extras))
+
+          break
         }
-        else {
-          const furniImage = GetRoomEngine().getFurnitureFloorImage(event.classId, new Vector3d(90), 64, imageListener)
-
-          if (furniImage) setImageUrl(furniImage.getImage().src)
+        default: {
+          setText(furniData.name || null)
+          setImageUrl(GetRoomEngine().getFurnitureWallIconUrl(event.classId))
+          break
         }
-
-        const productData = GetSessionDataManager().getProductData(event.productCode)
-
-        setText((productData && productData.name) || furniData.name)
-        break
+        }
       }
+
+      break
+    }
+    case ProductTypeEnum.HABBO_CLUB:
+      setText(LocalizeText("widget.furni.present.hc"))
+      //setImageUrl(getGiftImageUrl('packagecard_icon_hc'));
+      break
+    default: {
+      if (event.placedItemType === ProductTypeEnum.PET) {
+        const petfigureString = event.petFigureString
+
+        if (petfigureString && petfigureString.length) {
+          const petFigureData = new PetFigureData(petfigureString)
+
+          const petImage = GetRoomEngine().getRoomObjectPetImage(petFigureData.typeId, petFigureData.paletteId, petFigureData.color, new Vector3d(90), 64, imageListener, true, 0, petFigureData.customParts)
+
+          if (petImage) setImageUrl(petImage.getImage().src)
+        }
+      }
+      else {
+        const furniImage = GetRoomEngine().getFurnitureFloorImage(event.classId, new Vector3d(90), 64, imageListener)
+
+        if (furniImage) setImageUrl(furniImage.getImage().src)
+      }
+
+      const productData = GetSessionDataManager().getProductData(event.productCode)
+
+      setText((productData && productData.name) || furniData.name)
+      break
+    }
     }
 
     setObjectId(0)

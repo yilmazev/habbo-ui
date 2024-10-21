@@ -6,12 +6,12 @@ import { useMessageEvent } from "../events"
 import { useLocalStorage } from "../useLocalStorage"
 
 const useSessionInfoState = () => {
-  const [userInfo, setUserInfo] = useState<UserInfoDataParser>(null)
-  const [userFigure, setUserFigure] = useState(null)
-  const [chatStyleId, setChatStyleId] = useState(0)
-  const [userRespectRemaining, setUserRespectRemaining] = useState(0)
-  const [petRespectRemaining, setPetRespectRemaining] = useState(0)
-  const [screenSize, setScreenSize] = useLocalStorage("nitro.screensize", { width: window.innerWidth, height: window.innerHeight })
+  const [ userInfo, setUserInfo ] = useState<UserInfoDataParser>(null)
+  const [ userFigure, setUserFigure ] = useState(null)
+  const [ chatStyleId, setChatStyleId ] = useState(0)
+  const [ userRespectRemaining, setUserRespectRemaining ] = useState(0)
+  const [ petRespectRemaining, setPetRespectRemaining ] = useState(0)
+  const [ screenSize, setScreenSize ] = useLocalStorage("nitro.screensize", { width: window.innerWidth, height: window.innerHeight })
 
   const updateChatStyleId = (styleId: number) => {
     setChatStyleId(styleId)
@@ -74,7 +74,7 @@ const useSessionInfoState = () => {
     return () => {
       window.removeEventListener("resize", onResize)
     }
-  }, [setScreenSize])
+  }, [ setScreenSize ])
 
   return { userInfo, userFigure, chatStyleId, userRespectRemaining, petRespectRemaining, respectUser, respectPet, updateChatStyleId }
 }

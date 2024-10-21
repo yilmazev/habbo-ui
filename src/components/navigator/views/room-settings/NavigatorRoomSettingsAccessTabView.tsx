@@ -1,6 +1,6 @@
-import { RoomDataParser } from "@nitrots/nitro-renderer";
-import { FC, useEffect, useState } from "react";
-import { IRoomData, LocalizeText } from "../../../../api";
+import { RoomDataParser } from "@nitrots/nitro-renderer"
+import { FC, useEffect, useState } from "react"
+import { IRoomData, LocalizeText } from "../../../../api"
 
 interface NavigatorRoomSettingsTabViewProps {
   roomData: IRoomData;
@@ -9,9 +9,9 @@ interface NavigatorRoomSettingsTabViewProps {
 
 export const NavigatorRoomSettingsAccessTabView: FC<NavigatorRoomSettingsTabViewProps> = props => {
   const { roomData = null, handleChange = null } = props
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [isTryingPassword, setIsTryingPassword] = useState(false)
+  const [ password, setPassword ] = useState("")
+  const [ confirmPassword, setConfirmPassword ] = useState("")
+  const [ isTryingPassword, setIsTryingPassword ] = useState(false)
 
   const saveRoomPassword = () => {
     if (!isTryingPassword || ((password.length <= 0) || (confirmPassword.length <= 0) || (password !== confirmPassword))) return
@@ -23,7 +23,7 @@ export const NavigatorRoomSettingsAccessTabView: FC<NavigatorRoomSettingsTabView
     setPassword("")
     setConfirmPassword("")
     setIsTryingPassword(false)
-  }, [roomData])
+  }, [ roomData ])
 
   return (
     <div className="mt-2 flex flex-col gap-2">

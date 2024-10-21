@@ -21,7 +21,7 @@ const MODE_RELATIONSHIP = 6
 
 export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = props => {
   const { avatarInfo = null, onClose = null } = props
-  const [mode, setMode] = useState(MODE_NORMAL)
+  const [ mode, setMode ] = useState(MODE_NORMAL)
   const { canRequestFriend = null, getFriend = null } = useFriends()
   const { report = null } = useHelp()
   const { roomSession = null } = useRoom()
@@ -29,15 +29,15 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
 
   const isShowGiveRights = useMemo(() => {
     return (avatarInfo.amIOwner && (avatarInfo.targetRoomControllerLevel < RoomControllerLevel.GUEST) && !avatarInfo.isGuildRoom)
-  }, [avatarInfo])
+  }, [ avatarInfo ])
 
   const isShowRemoveRights = useMemo(() => {
     return (avatarInfo.amIOwner && (avatarInfo.targetRoomControllerLevel === RoomControllerLevel.GUEST) && !avatarInfo.isGuildRoom)
-  }, [avatarInfo])
+  }, [ avatarInfo ])
 
   const moderateMenuHasContent = useMemo(() => {
     return (avatarInfo.canBeKicked || avatarInfo.canBeBanned || avatarInfo.canBeMuted || isShowGiveRights || isShowRemoveRights)
-  }, [isShowGiveRights, isShowRemoveRights, avatarInfo])
+  }, [ isShowGiveRights, isShowRemoveRights, avatarInfo ])
 
   const canGiveHandItem = useMemo(() => {
     let flag = false
@@ -58,126 +58,126 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
 
     if (name) {
       switch (name) {
-        case "moderate":
-          hideMenu = false
-          setMode(MODE_MODERATE)
-          break
-        case "ban":
-          hideMenu = false
-          setMode(MODE_MODERATE_BAN)
-          break
-        case "mute":
-          hideMenu = false
-          setMode(MODE_MODERATE_MUTE)
-          break
-        case "ambassador":
-          hideMenu = false
-          setMode(MODE_AMBASSADOR)
-          break
-        case "ambassador_mute":
-          hideMenu = false
-          setMode(MODE_AMBASSADOR_MUTE)
-          break
-        case "back_moderate":
-          hideMenu = false
-          setMode(MODE_MODERATE)
-          break
-        case "back_ambassador":
-          hideMenu = false
-          setMode(MODE_AMBASSADOR)
-          break
-        case "back":
-          hideMenu = false
-          setMode(MODE_NORMAL)
-          break
-        case "whisper":
-          DispatchUiEvent(new RoomWidgetUpdateChatInputContentEvent(RoomWidgetUpdateChatInputContentEvent.WHISPER, avatarInfo.name))
-          break
-        case "friend":
-          CreateLinkEvent(`friends/request/${avatarInfo.webID}/${avatarInfo.name}`)
-          break
-        case "relationship":
-          hideMenu = false
-          setMode(MODE_RELATIONSHIP)
-          break
-        case "respect": {
-          respectUser(avatarInfo.webID)
+      case "moderate":
+        hideMenu = false
+        setMode(MODE_MODERATE)
+        break
+      case "ban":
+        hideMenu = false
+        setMode(MODE_MODERATE_BAN)
+        break
+      case "mute":
+        hideMenu = false
+        setMode(MODE_MODERATE_MUTE)
+        break
+      case "ambassador":
+        hideMenu = false
+        setMode(MODE_AMBASSADOR)
+        break
+      case "ambassador_mute":
+        hideMenu = false
+        setMode(MODE_AMBASSADOR_MUTE)
+        break
+      case "back_moderate":
+        hideMenu = false
+        setMode(MODE_MODERATE)
+        break
+      case "back_ambassador":
+        hideMenu = false
+        setMode(MODE_AMBASSADOR)
+        break
+      case "back":
+        hideMenu = false
+        setMode(MODE_NORMAL)
+        break
+      case "whisper":
+        DispatchUiEvent(new RoomWidgetUpdateChatInputContentEvent(RoomWidgetUpdateChatInputContentEvent.WHISPER, avatarInfo.name))
+        break
+      case "friend":
+        CreateLinkEvent(`friends/request/${avatarInfo.webID}/${avatarInfo.name}`)
+        break
+      case "relationship":
+        hideMenu = false
+        setMode(MODE_RELATIONSHIP)
+        break
+      case "respect": {
+        respectUser(avatarInfo.webID)
 
-          if ((userRespectRemaining - 1) >= 1) hideMenu = false
-          break
-        }
-        case "ignore":
-          GetSessionDataManager().ignoreUser(avatarInfo.name)
-          break
-        case "unignore":
-          GetSessionDataManager().unignoreUser(avatarInfo.name)
-          break
-        case "kick":
-          roomSession.sendKickMessage(avatarInfo.webID)
-          break
-        case "ban_hour":
-          roomSession.sendBanMessage(avatarInfo.webID, "RWUAM_BAN_USER_HOUR")
-          break
-        case "ban_day":
-          roomSession.sendBanMessage(avatarInfo.webID, "RWUAM_BAN_USER_DAY")
-          break
-        case "perm_ban":
-          roomSession.sendBanMessage(avatarInfo.webID, "RWUAM_BAN_USER_PERM")
-          break
-        case "mute_2min":
-          roomSession.sendMuteMessage(avatarInfo.webID, 2)
-          break
-        case "mute_5min":
-          roomSession.sendMuteMessage(avatarInfo.webID, 5)
-          break
-        case "mute_10min":
-          roomSession.sendMuteMessage(avatarInfo.webID, 10)
-          break
-        case "give_rights":
-          roomSession.sendGiveRightsMessage(avatarInfo.webID)
-          break
-        case "remove_rights":
-          roomSession.sendTakeRightsMessage(avatarInfo.webID)
-          break
-        case "trade":
-          SendMessageComposer(new TradingOpenComposer(avatarInfo.roomIndex))
-          break
-        case "report":
-          report(ReportType.BULLY, { reportedUserId: avatarInfo.webID })
-          break
-        case "pass_hand_item":
-          SendMessageComposer(new RoomUnitGiveHandItemComposer(avatarInfo.webID))
-          break
-        case "ambassador_alert":
-          roomSession.sendAmbassadorAlertMessage(avatarInfo.webID)
-          break
-        case "ambassador_kick":
-          roomSession.sendKickMessage(avatarInfo.webID)
-          break
-        case "ambassador_mute_2min":
-          roomSession.sendMuteMessage(avatarInfo.webID, 2)
-          break
-        case "ambassador_mute_10min":
-          roomSession.sendMuteMessage(avatarInfo.webID, 10)
-          break
-        case "ambassador_mute_60min":
-          roomSession.sendMuteMessage(avatarInfo.webID, 60)
-          break
-        case "ambassador_mute_18hour":
-          roomSession.sendMuteMessage(avatarInfo.webID, 1080)
-          break
-        case "rship_heart":
-          SendMessageComposer(new SetRelationshipStatusComposer(avatarInfo.webID, MessengerFriend.RELATIONSHIP_HEART))
-          break
-        case "rship_smile":
-          SendMessageComposer(new SetRelationshipStatusComposer(avatarInfo.webID, MessengerFriend.RELATIONSHIP_SMILE))
-          break
-        case "rship_bobba":
-          SendMessageComposer(new SetRelationshipStatusComposer(avatarInfo.webID, MessengerFriend.RELATIONSHIP_BOBBA))
-          break
-        case "rship_none":
-          SendMessageComposer(new SetRelationshipStatusComposer(avatarInfo.webID, MessengerFriend.RELATIONSHIP_NONE))
-          break
+        if ((userRespectRemaining - 1) >= 1) hideMenu = false
+        break
+      }
+      case "ignore":
+        GetSessionDataManager().ignoreUser(avatarInfo.name)
+        break
+      case "unignore":
+        GetSessionDataManager().unignoreUser(avatarInfo.name)
+        break
+      case "kick":
+        roomSession.sendKickMessage(avatarInfo.webID)
+        break
+      case "ban_hour":
+        roomSession.sendBanMessage(avatarInfo.webID, "RWUAM_BAN_USER_HOUR")
+        break
+      case "ban_day":
+        roomSession.sendBanMessage(avatarInfo.webID, "RWUAM_BAN_USER_DAY")
+        break
+      case "perm_ban":
+        roomSession.sendBanMessage(avatarInfo.webID, "RWUAM_BAN_USER_PERM")
+        break
+      case "mute_2min":
+        roomSession.sendMuteMessage(avatarInfo.webID, 2)
+        break
+      case "mute_5min":
+        roomSession.sendMuteMessage(avatarInfo.webID, 5)
+        break
+      case "mute_10min":
+        roomSession.sendMuteMessage(avatarInfo.webID, 10)
+        break
+      case "give_rights":
+        roomSession.sendGiveRightsMessage(avatarInfo.webID)
+        break
+      case "remove_rights":
+        roomSession.sendTakeRightsMessage(avatarInfo.webID)
+        break
+      case "trade":
+        SendMessageComposer(new TradingOpenComposer(avatarInfo.roomIndex))
+        break
+      case "report":
+        report(ReportType.BULLY, { reportedUserId: avatarInfo.webID })
+        break
+      case "pass_hand_item":
+        SendMessageComposer(new RoomUnitGiveHandItemComposer(avatarInfo.webID))
+        break
+      case "ambassador_alert":
+        roomSession.sendAmbassadorAlertMessage(avatarInfo.webID)
+        break
+      case "ambassador_kick":
+        roomSession.sendKickMessage(avatarInfo.webID)
+        break
+      case "ambassador_mute_2min":
+        roomSession.sendMuteMessage(avatarInfo.webID, 2)
+        break
+      case "ambassador_mute_10min":
+        roomSession.sendMuteMessage(avatarInfo.webID, 10)
+        break
+      case "ambassador_mute_60min":
+        roomSession.sendMuteMessage(avatarInfo.webID, 60)
+        break
+      case "ambassador_mute_18hour":
+        roomSession.sendMuteMessage(avatarInfo.webID, 1080)
+        break
+      case "rship_heart":
+        SendMessageComposer(new SetRelationshipStatusComposer(avatarInfo.webID, MessengerFriend.RELATIONSHIP_HEART))
+        break
+      case "rship_smile":
+        SendMessageComposer(new SetRelationshipStatusComposer(avatarInfo.webID, MessengerFriend.RELATIONSHIP_SMILE))
+        break
+      case "rship_bobba":
+        SendMessageComposer(new SetRelationshipStatusComposer(avatarInfo.webID, MessengerFriend.RELATIONSHIP_BOBBA))
+        break
+      case "rship_none":
+        SendMessageComposer(new SetRelationshipStatusComposer(avatarInfo.webID, MessengerFriend.RELATIONSHIP_NONE))
+        break
       }
     }
 
@@ -186,7 +186,7 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
 
   useEffect(() => {
     setMode(MODE_NORMAL)
-  }, [avatarInfo])
+  }, [ avatarInfo ])
 
   return (
     <ContextMenuView objectId={avatarInfo.roomIndex} category={RoomObjectCategory.UNIT} userType={avatarInfo.userType} onClose={onClose} collapsable={true}>
@@ -200,7 +200,7 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
           </ContextMenuListItemView>
           {(userRespectRemaining > 0) &&
             <ContextMenuListItemView onClick={event => processAction("respect")}>
-              {LocalizeText("infostand.button.respect", ["count"], [userRespectRemaining.toString()])}
+              {LocalizeText("infostand.button.respect", [ "count" ], [ userRespectRemaining.toString() ])}
             </ContextMenuListItemView>}
           {getFriend(avatarInfo.webID) &&
             <ContextMenuListItemView onClick={event => processAction("relationship")}>

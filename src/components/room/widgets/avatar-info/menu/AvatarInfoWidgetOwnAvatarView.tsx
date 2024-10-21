@@ -22,7 +22,7 @@ const MODE_SIGNS = 4
 
 export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProps> = props => {
   const { avatarInfo = null, isDancing = false, setIsDecorating = null, onClose = null } = props
-  const [mode, setMode] = useState((isDancing && HasHabboClub()) ? MODE_CLUB_DANCES : MODE_NORMAL)
+  const [ mode, setMode ] = useState((isDancing && HasHabboClub()) ? MODE_CLUB_DANCES : MODE_NORMAL)
   const { roomSession = null } = useRoom()
 
   const processAction = (name: string) => {
@@ -36,64 +36,64 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
       }
       else {
         switch (name) {
-          case "decorate":
-            setIsDecorating(true)
-            break
-          case "change_name":
-            DispatchUiEvent(new HelpNameChangeEvent(HelpNameChangeEvent.INIT))
-            break
-          case "change_looks":
-            CreateLinkEvent("avatar-editor/show")
-            break
-          case "expressions":
-            hideMenu = false
-            setMode(MODE_EXPRESSIONS)
-            break
-          case "sit":
-            roomSession.sendPostureMessage(PostureTypeEnum.POSTURE_SIT)
-            break
-          case "stand":
-            roomSession.sendPostureMessage(PostureTypeEnum.POSTURE_STAND)
-            break
-          case "wave":
-            roomSession.sendExpressionMessage(AvatarExpressionEnum.WAVE.ordinal)
-            break
-          case "blow":
-            roomSession.sendExpressionMessage(AvatarExpressionEnum.BLOW.ordinal)
-            break
-          case "laugh":
-            roomSession.sendExpressionMessage(AvatarExpressionEnum.LAUGH.ordinal)
-            break
-          case "idle":
-            roomSession.sendExpressionMessage(AvatarExpressionEnum.IDLE.ordinal)
-            break
-          case "dance_menu":
-            hideMenu = false
-            setMode(MODE_CLUB_DANCES)
-            break
-          case "dance":
-            roomSession.sendDanceMessage(1)
-            break
-          case "dance_stop":
-            roomSession.sendDanceMessage(0)
-            break
-          case "dance_1":
-          case "dance_2":
-          case "dance_3":
-          case "dance_4":
-            roomSession.sendDanceMessage(parseInt(name.charAt((name.length - 1))))
-            break
-          case "signs":
-            hideMenu = false
-            setMode(MODE_SIGNS)
-            break
-          case "back":
-            hideMenu = false
-            setMode(MODE_NORMAL)
-            break
-          case "drop_carry_item":
-            SendMessageComposer(new RoomUnitDropHandItemComposer())
-            break
+        case "decorate":
+          setIsDecorating(true)
+          break
+        case "change_name":
+          DispatchUiEvent(new HelpNameChangeEvent(HelpNameChangeEvent.INIT))
+          break
+        case "change_looks":
+          CreateLinkEvent("avatar-editor/show")
+          break
+        case "expressions":
+          hideMenu = false
+          setMode(MODE_EXPRESSIONS)
+          break
+        case "sit":
+          roomSession.sendPostureMessage(PostureTypeEnum.POSTURE_SIT)
+          break
+        case "stand":
+          roomSession.sendPostureMessage(PostureTypeEnum.POSTURE_STAND)
+          break
+        case "wave":
+          roomSession.sendExpressionMessage(AvatarExpressionEnum.WAVE.ordinal)
+          break
+        case "blow":
+          roomSession.sendExpressionMessage(AvatarExpressionEnum.BLOW.ordinal)
+          break
+        case "laugh":
+          roomSession.sendExpressionMessage(AvatarExpressionEnum.LAUGH.ordinal)
+          break
+        case "idle":
+          roomSession.sendExpressionMessage(AvatarExpressionEnum.IDLE.ordinal)
+          break
+        case "dance_menu":
+          hideMenu = false
+          setMode(MODE_CLUB_DANCES)
+          break
+        case "dance":
+          roomSession.sendDanceMessage(1)
+          break
+        case "dance_stop":
+          roomSession.sendDanceMessage(0)
+          break
+        case "dance_1":
+        case "dance_2":
+        case "dance_3":
+        case "dance_4":
+          roomSession.sendDanceMessage(parseInt(name.charAt((name.length - 1))))
+          break
+        case "signs":
+          hideMenu = false
+          setMode(MODE_SIGNS)
+          break
+        case "back":
+          hideMenu = false
+          setMode(MODE_NORMAL)
+          break
+        case "drop_carry_item":
+          SendMessageComposer(new RoomUnitDropHandItemComposer())
+          break
         }
       }
     }

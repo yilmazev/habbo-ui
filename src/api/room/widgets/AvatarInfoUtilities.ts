@@ -16,45 +16,45 @@ export class AvatarInfoUtilities {
     let userType = 0
 
     switch (category) {
-      case RoomObjectCategory.FLOOR:
-      case RoomObjectCategory.WALL: {
-        const roomObject = GetRoomEngine().getRoomObject(roomSession.roomId, objectId, category)
+    case RoomObjectCategory.FLOOR:
+    case RoomObjectCategory.WALL: {
+      const roomObject = GetRoomEngine().getRoomObject(roomSession.roomId, objectId, category)
 
-        if (!roomObject) break
+      if (!roomObject) break
 
-        if (roomObject.type.indexOf("poster") === 0) {
-          name = LocalizeText("${poster_" + parseInt(roomObject.type.replace("poster", "")) + "_name}")
-        }
-        else {
-          let furniData: IFurnitureData = null
-
-          const typeId = roomObject.model.getValue(RoomObjectVariable.FURNITURE_TYPE_ID)
-
-          if (category === RoomObjectCategory.FLOOR) {
-            furniData = GetSessionDataManager().getFloorItemData(typeId)
-          }
-
-          else if (category === RoomObjectCategory.WALL) {
-            furniData = GetSessionDataManager().getWallItemData(typeId)
-          }
-
-          if (!furniData) break
-
-          id = furniData.id
-          name = furniData.name
-        }
-        break
+      if (roomObject.type.indexOf("poster") === 0) {
+        name = LocalizeText("${poster_" + parseInt(roomObject.type.replace("poster", "")) + "_name}")
       }
-      case RoomObjectCategory.UNIT: {
-        const userData = roomSession.userDataManager.getUserDataByIndex(objectId)
+      else {
+        let furniData: IFurnitureData = null
 
-        if (!userData) break
+        const typeId = roomObject.model.getValue(RoomObjectVariable.FURNITURE_TYPE_ID)
 
-        id = userData.webID
-        name = userData.name
-        userType = userData.type
-        break
+        if (category === RoomObjectCategory.FLOOR) {
+          furniData = GetSessionDataManager().getFloorItemData(typeId)
+        }
+
+        else if (category === RoomObjectCategory.WALL) {
+          furniData = GetSessionDataManager().getWallItemData(typeId)
+        }
+
+        if (!furniData) break
+
+        id = furniData.id
+        name = furniData.name
       }
+      break
+    }
+    case RoomObjectCategory.UNIT: {
+      const userData = roomSession.userDataManager.getUserDataByIndex(objectId)
+
+      if (!userData) break
+
+      id = userData.webID
+      name = userData.name
+      userType = userData.type
+      break
+    }
     }
 
     if (!name || !name.length) return null
@@ -205,19 +205,19 @@ export class AvatarInfoUtilities {
       }
       else {
         switch (tradeMode) {
-          case RoomTradingLevelEnum.ROOM_CONTROLLER_REQUIRED: {
-            const roomController = ((userInfo.roomControllerLevel !== RoomControllerLevel.NONE) && (userInfo.roomControllerLevel !== RoomControllerLevel.GUILD_MEMBER))
-            const targetController = ((userInfo.targetRoomControllerLevel !== RoomControllerLevel.NONE) && (userInfo.targetRoomControllerLevel !== RoomControllerLevel.GUILD_MEMBER))
+        case RoomTradingLevelEnum.ROOM_CONTROLLER_REQUIRED: {
+          const roomController = ((userInfo.roomControllerLevel !== RoomControllerLevel.NONE) && (userInfo.roomControllerLevel !== RoomControllerLevel.GUILD_MEMBER))
+          const targetController = ((userInfo.targetRoomControllerLevel !== RoomControllerLevel.NONE) && (userInfo.targetRoomControllerLevel !== RoomControllerLevel.GUILD_MEMBER))
 
-            userInfo.canTrade = (roomController || targetController)
-            break
-          }
-          case RoomTradingLevelEnum.NO_TRADING:
-            userInfo.canTrade = true
-            break
-          default:
-            userInfo.canTrade = false
-            break
+          userInfo.canTrade = (roomController || targetController)
+          break
+        }
+        case RoomTradingLevelEnum.NO_TRADING:
+          userInfo.canTrade = true
+          break
+        default:
+          userInfo.canTrade = false
+          break
         }
       }
 
@@ -264,7 +264,7 @@ export class AvatarInfoUtilities {
     userInfo.roomControllerLevel = roomSession.controllerLevel
     userInfo.amIAnyRoomController = GetSessionDataManager().isModerator
     userInfo.isAmbassador = GetSessionDataManager().isAmbassador
-    userInfo.badges = [AvatarInfoUser.DEFAULT_BOT_BADGE_ID]
+    userInfo.badges = [ AvatarInfoUser.DEFAULT_BOT_BADGE_ID ]
     userInfo.figure = userData.figure
 
     return userInfo
@@ -289,7 +289,7 @@ export class AvatarInfoUtilities {
     botInfo.amIOwner = roomSession.isRoomOwner
     botInfo.roomControllerLevel = roomSession.controllerLevel
     botInfo.amIAnyRoomController = GetSessionDataManager().isModerator
-    botInfo.badges = [AvatarInfoUser.DEFAULT_BOT_BADGE_ID]
+    botInfo.badges = [ AvatarInfoUser.DEFAULT_BOT_BADGE_ID ]
     botInfo.figure = userData.figure
 
     return botInfo
@@ -377,10 +377,10 @@ export class AvatarInfoUtilities {
   private static canBeMuted(userInfo: AvatarInfoUser): boolean {
     const checkSetting = (userInfo: AvatarInfoUser, moderation: IRoomModerationSettings) => {
       switch (moderation.allowMute) {
-        case RoomModerationSettings.MODERATION_LEVEL_USER_WITH_RIGHTS:
-          return this.checkGuildSetting(userInfo)
-        default:
-          return (userInfo.roomControllerLevel >= RoomControllerLevel.ROOM_OWNER)
+      case RoomModerationSettings.MODERATION_LEVEL_USER_WITH_RIGHTS:
+        return this.checkGuildSetting(userInfo)
+      default:
+        return (userInfo.roomControllerLevel >= RoomControllerLevel.ROOM_OWNER)
       }
     }
 
@@ -390,12 +390,12 @@ export class AvatarInfoUtilities {
   private static canBeKicked(userInfo: AvatarInfoUser): boolean {
     const checkSetting = (userInfo: AvatarInfoUser, moderation: IRoomModerationSettings) => {
       switch (moderation.allowKick) {
-        case RoomModerationSettings.MODERATION_LEVEL_ALL:
-          return true
-        case RoomModerationSettings.MODERATION_LEVEL_USER_WITH_RIGHTS:
-          return this.checkGuildSetting(userInfo)
-        default:
-          return (userInfo.roomControllerLevel >= RoomControllerLevel.ROOM_OWNER)
+      case RoomModerationSettings.MODERATION_LEVEL_ALL:
+        return true
+      case RoomModerationSettings.MODERATION_LEVEL_USER_WITH_RIGHTS:
+        return this.checkGuildSetting(userInfo)
+      default:
+        return (userInfo.roomControllerLevel >= RoomControllerLevel.ROOM_OWNER)
       }
     }
 
@@ -405,10 +405,10 @@ export class AvatarInfoUtilities {
   private static canBeBanned(userInfo: AvatarInfoUser): boolean {
     const checkSetting = (userInfo: AvatarInfoUser, moderation: IRoomModerationSettings) => {
       switch (moderation.allowBan) {
-        case RoomModerationSettings.MODERATION_LEVEL_USER_WITH_RIGHTS:
-          return this.checkGuildSetting(userInfo)
-        default:
-          return (userInfo.roomControllerLevel >= RoomControllerLevel.ROOM_OWNER)
+      case RoomModerationSettings.MODERATION_LEVEL_USER_WITH_RIGHTS:
+        return this.checkGuildSetting(userInfo)
+      default:
+        return (userInfo.roomControllerLevel >= RoomControllerLevel.ROOM_OWNER)
       }
     }
 

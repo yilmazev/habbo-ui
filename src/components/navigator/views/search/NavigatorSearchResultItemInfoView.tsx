@@ -12,8 +12,8 @@ export const NavigatorSearchResultItemInfoView: FC<NavigatorSearchResultItemInfo
   const navigatorType = GetConfiguration("illumina.navigator.type")
 
   const { roomData = null } = props
-  const [isVisible, setIsVisible] = useState(false)
-  const [isOldStyle, setIsOldStyle] = useState(navigatorType === "r63" || navigatorType === "r63Large")
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ isOldStyle, setIsOldStyle ] = useState(navigatorType === "r63" || navigatorType === "r63Large")
   const elementRef = useRef<HTMLDivElement>()
 
   const isDarkMode = localStorage.getItem("isDarkMode") === "true"

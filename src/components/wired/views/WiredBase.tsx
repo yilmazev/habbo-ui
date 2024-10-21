@@ -14,9 +14,9 @@ export interface IWiredBase {
 }
 
 export const WiredBase: FC<IWiredBase> = ({ wiredType = "", requiresFurni = WiredFurniType.STUFF_SELECTION_OPTION_NONE, save = null, validate = null, children = null, hasSpecialInput = false }) => {
-  const [wiredName, setWiredName] = useState(null)
-  const [wiredDescription, setWiredDescription] = useState(null)
-  const [needsSave, setNeedsSave] = useState(false)
+  const [ wiredName, setWiredName ] = useState(null)
+  const [ wiredDescription, setWiredDescription ] = useState(null)
+  const [ needsSave, setNeedsSave ] = useState(false)
   const { trigger = null, setTrigger = null, setIntParams = null, setStringParam = null, setFurniIds = null, setAllowsFurni = null, saveWired = null } = useWired()
 
   const onClose = () => setTrigger(null)
@@ -35,7 +35,7 @@ export const WiredBase: FC<IWiredBase> = ({ wiredType = "", requiresFurni = Wire
     saveWired()
 
     setNeedsSave(false)
-  }, [needsSave, saveWired])
+  }, [ needsSave, saveWired ])
 
   useEffect(() => {
     if (!trigger) return
@@ -72,7 +72,7 @@ export const WiredBase: FC<IWiredBase> = ({ wiredType = "", requiresFurni = Wire
     }
 
     setAllowsFurni(requiresFurni)
-  }, [trigger, hasSpecialInput, requiresFurni, setIntParams, setStringParam, setFurniIds, setAllowsFurni])
+  }, [ trigger, hasSpecialInput, requiresFurni, setIntParams, setStringParam, setFurniIds, setAllowsFurni ])
 
   const WIRED_TYPE = {
     trigger: "icon-trigger",

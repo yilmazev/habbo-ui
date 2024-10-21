@@ -22,15 +22,15 @@ export const FurnitureContextMenuView: FC<{}> = props => {
     // HOPPER_NO_COSTUME = 1; HOPPER_NO_HC = 2; GATE_NO_HC = 3; STARS_NOT_CANDIDATE = 4 (not coded in Emulator); STARS_NOT_ENOUGH_USERS = 5 (not coded in Emulator);
 
     switch (parser.count) {
-      case 1:
-        simpleAlert(LocalizeText("costumehopper.costumerequired.bodytext"), null, "catalog/open/temporary_effects", LocalizeText("costumehopper.costumerequired.buy"), LocalizeText("costumehopper.costumerequired.header"), null)
-        break
-      case 2:
-        simpleAlert(LocalizeText("viphopper.viprequired.bodytext"), null, "catalog/open/habbo_club", LocalizeText("viprequired.buy.vip"), LocalizeText("viprequired.header"), null)
-        break
-      case 3:
-        simpleAlert(LocalizeText("gate.viprequired.bodytext"), null, "catalog/open/habbo_club", LocalizeText("viprequired.buy.vip"), LocalizeText("gate.viprequired.title"), null)
-        break
+    case 1:
+      simpleAlert(LocalizeText("costumehopper.costumerequired.bodytext"), null, "catalog/open/temporary_effects", LocalizeText("costumehopper.costumerequired.buy"), LocalizeText("costumehopper.costumerequired.header"), null)
+      break
+    case 2:
+      simpleAlert(LocalizeText("viphopper.viprequired.bodytext"), null, "catalog/open/habbo_club", LocalizeText("viprequired.buy.vip"), LocalizeText("viprequired.header"), null)
+      break
+    case 3:
+      simpleAlert(LocalizeText("gate.viprequired.bodytext"), null, "catalog/open/habbo_club", LocalizeText("viprequired.buy.vip"), LocalizeText("gate.viprequired.title"), null)
+      break
     }
   })
 

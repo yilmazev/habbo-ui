@@ -1,7 +1,7 @@
-import { GroupSaveInformationComposer } from "@nitrots/nitro-renderer";
-import { Dispatch, FC, SetStateAction, useCallback, useEffect, useState } from "react";
-import { CreateLinkEvent, IGroupData, LocalizeText, NotificationAlertType, SendMessageComposer } from "../../../../api";
-import { useNotification } from "../../../../hooks";
+import { GroupSaveInformationComposer } from "@nitrots/nitro-renderer"
+import { Dispatch, FC, SetStateAction, useCallback, useEffect, useState } from "react"
+import { CreateLinkEvent, IGroupData, LocalizeText, NotificationAlertType, SendMessageComposer } from "../../../../api"
+import { useNotification } from "../../../../hooks"
 
 interface GroupTabIdentityViewProps {
   groupData: IGroupData;
@@ -14,9 +14,9 @@ interface GroupTabIdentityViewProps {
 
 export const GroupTabIdentityView: FC<GroupTabIdentityViewProps> = props => {
   const { groupData = null, setGroupData = null, setCloseAction = null, onClose = null, isCreator = false, availableRooms = [] } = props
-  const [groupName, setGroupName] = useState("")
-  const [groupDescription, setGroupDescription] = useState("")
-  const [groupHomeroomId, setGroupHomeroomId] = useState(-1)
+  const [ groupName, setGroupName ] = useState("")
+  const [ groupDescription, setGroupDescription ] = useState("")
+  const [ groupHomeroomId, setGroupHomeroomId ] = useState(-1)
   const { simpleAlert = null } = useNotification()
 
   const saveIdentity = useCallback(() => {
@@ -46,19 +46,19 @@ export const GroupTabIdentityView: FC<GroupTabIdentityViewProps> = props => {
     SendMessageComposer(new GroupSaveInformationComposer(groupData.groupId, groupName, (groupDescription || "")))
 
     return true
-  }, [groupData, groupName, groupDescription, groupHomeroomId, setGroupData])
+  }, [ groupData, groupName, groupDescription, groupHomeroomId, setGroupData ])
 
   useEffect(() => {
     setGroupName(groupData.groupName || "")
     setGroupDescription(groupData.groupDescription || "")
     setGroupHomeroomId(groupData.groupHomeroomId)
-  }, [groupData])
+  }, [ groupData ])
 
   useEffect(() => {
     setCloseAction({ action: saveIdentity })
 
     return () => setCloseAction(null)
-  }, [setCloseAction, saveIdentity])
+  }, [ setCloseAction, saveIdentity ])
 
   if (!groupData) return null
 

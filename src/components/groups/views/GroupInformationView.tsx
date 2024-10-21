@@ -4,7 +4,7 @@ import { CatalogPageName, CreateLinkEvent, GetGroupManager, GetGroupMembers, Get
 import { Button, GridProps, LayoutBadgeImageView } from "../../../common"
 import { useNotification } from "../../../hooks"
 
-const STATES: string[] = ["regular", "exclusive", "private"]
+const STATES: string[] = [ "regular", "exclusive", "private" ]
 
 interface GroupInformationViewProps extends GridProps {
   groupInformation: GroupInformationParser;
@@ -81,24 +81,24 @@ export const GroupInformationView: FC<GroupInformationViewProps> = props => {
 
   const handleAction = (action: string) => {
     switch (action) {
-      case "members":
-        GetGroupMembers(groupInformation.id)
-        break
-      case "members_pending":
-        GetGroupMembers(groupInformation.id, 2)
-        break
-      case "manage":
-        GetGroupManager(groupInformation.id)
-        break
-      case "homeroom":
-        TryVisitRoom(groupInformation.roomId)
-        break
-      case "furniture":
-        CreateLinkEvent("catalog/open/" + CatalogPageName.GUILD_CUSTOM_FURNI)
-        break
-      case "popular_groups":
-        CreateLinkEvent("navigator/search/groups")
-        break
+    case "members":
+      GetGroupMembers(groupInformation.id)
+      break
+    case "members_pending":
+      GetGroupMembers(groupInformation.id, 2)
+      break
+    case "manage":
+      GetGroupManager(groupInformation.id)
+      break
+    case "homeroom":
+      TryVisitRoom(groupInformation.roomId)
+      break
+    case "furniture":
+      CreateLinkEvent("catalog/open/" + CatalogPageName.GUILD_CUSTOM_FURNI)
+      break
+    case "popular_groups":
+      CreateLinkEvent("navigator/search/groups")
+      break
     }
   }
 
@@ -111,8 +111,8 @@ export const GroupInformationView: FC<GroupInformationViewProps> = props => {
           <div className="mb-3.5 w-[70px] overflow-hidden">
             <LayoutBadgeImageView className="!size-[70px] scale-[1.8] bg-center bg-no-repeat" badgeCode={groupInformation.badge} isGroup={true} />
           </div>
-          <p className="mb-1 cursor-pointer text-center text-sm font-semibold !leading-3 underline [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]" onClick={() => handleAction("members")}>{LocalizeText("group.membercount", ["totalMembers"], [groupInformation.membersCount.toString()])}</p>
-          {(groupInformation.pendingRequestsCount > 0) && <p className="mb-1 cursor-pointer text-center text-sm font-semibold !leading-3 underline [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]" onClick={() => handleAction("members_pending")}>{LocalizeText("group.pendingmembercount", ["amount"], [groupInformation.pendingRequestsCount.toString()])}</p>}
+          <p className="mb-1 cursor-pointer text-center text-sm font-semibold !leading-3 underline [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]" onClick={() => handleAction("members")}>{LocalizeText("group.membercount", [ "totalMembers" ], [ groupInformation.membersCount.toString() ])}</p>
+          {(groupInformation.pendingRequestsCount > 0) && <p className="mb-1 cursor-pointer text-center text-sm font-semibold !leading-3 underline [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]" onClick={() => handleAction("members_pending")}>{LocalizeText("group.pendingmembercount", [ "amount" ], [ groupInformation.pendingRequestsCount.toString() ])}</p>}
           {(isMod || isRealOwner) && <p className="mb-[3px] cursor-pointer text-center text-sm !leading-3 underline" onClick={() => handleAction("manage")}>{LocalizeText("group.manage")}</p>}
           {(isMod || isRealOwner) && <p className="mb-[3px] cursor-pointer text-center text-sm !leading-3 underline" onClick={deleteGroup}>{LocalizeText("group.delete")}</p>}
         </div>
@@ -123,7 +123,7 @@ export const GroupInformationView: FC<GroupInformationViewProps> = props => {
               {groupInformation.canMembersDecorate && <i className="block size-[15px] bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-294px_-125px]" />}
               <p className="text-sm font-semibold [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{groupInformation.title}</p>
             </div>
-            <p className="mb-[3px] truncate text-clip text-xs !leading-3">{LocalizeText("group.created", ["date", "owner"], [groupInformation.createdAt, groupInformation.ownerName])}</p>
+            <p className="mb-[3px] truncate text-clip text-xs !leading-3">{LocalizeText("group.created", [ "date", "owner" ], [ groupInformation.createdAt, groupInformation.ownerName ])}</p>
             <p className="illumina-scrollbar mb-1.5 h-[52px] break-all text-sm !leading-3">{groupInformation.description}</p>
           </div>
           <div className="mb-[25px]">

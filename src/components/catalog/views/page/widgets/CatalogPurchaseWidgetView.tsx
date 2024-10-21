@@ -16,7 +16,7 @@ interface CatalogPurchaseWidgetViewProps {
 
 export const CatalogPurchaseWidgetView: FC<CatalogPurchaseWidgetViewProps> = props => {
   const { noGiftOption = false, purchaseCallback = null, isPet = false } = props
-  const [purchaseState, setPurchaseState] = useState(CatalogPurchaseState.NONE)
+  const [ purchaseState, setPurchaseState ] = useState(CatalogPurchaseState.NONE)
   const { currentOffer = null, purchaseOptions = null, setPurchaseOptions = null } = useCatalog()
   const { getCurrencyAmount = null } = usePurse()
   const { showPurchaseAlert = null } = useNotification()
@@ -25,18 +25,18 @@ export const CatalogPurchaseWidgetView: FC<CatalogPurchaseWidgetViewProps> = pro
 
   const onCatalogEvent = useCallback((event: CatalogEvent) => {
     switch (event.type) {
-      case CatalogPurchasedEvent.PURCHASE_SUCCESS:
-        setPurchaseState(CatalogPurchaseState.NONE)
-        return
-      case CatalogPurchaseFailureEvent.PURCHASE_FAILED:
-        setPurchaseState(CatalogPurchaseState.FAILED)
-        return
-      case CatalogPurchaseNotAllowedEvent.NOT_ALLOWED:
-        setPurchaseState(CatalogPurchaseState.FAILED)
-        return
-      case CatalogPurchaseSoldOutEvent.SOLD_OUT:
-        setPurchaseState(CatalogPurchaseState.SOLD_OUT)
-        return
+    case CatalogPurchasedEvent.PURCHASE_SUCCESS:
+      setPurchaseState(CatalogPurchaseState.NONE)
+      return
+    case CatalogPurchaseFailureEvent.PURCHASE_FAILED:
+      setPurchaseState(CatalogPurchaseState.FAILED)
+      return
+    case CatalogPurchaseNotAllowedEvent.NOT_ALLOWED:
+      setPurchaseState(CatalogPurchaseState.FAILED)
+      return
+    case CatalogPurchaseSoldOutEvent.SOLD_OUT:
+      setPurchaseState(CatalogPurchaseState.SOLD_OUT)
+      return
     }
   }, [])
 
@@ -57,7 +57,7 @@ export const CatalogPurchaseWidgetView: FC<CatalogPurchaseWidgetViewProps> = pro
     }
 
     return false
-  }, [currentOffer, purchaseOptions])
+  }, [ currentOffer, purchaseOptions ])
 
   const purchase = (isGift: boolean = false) => {
     if (!currentOffer) return
@@ -122,17 +122,17 @@ export const CatalogPurchaseWidgetView: FC<CatalogPurchaseWidgetViewProps> = pro
     if (pricePoints > getCurrencyAmount(currentOffer.activityPointType)) return <Button className="w-full" disabled>{LocalizeText("catalog.alert.notenough.activitypoints.title." + currentOffer.activityPointType)}</Button>
 
     switch (purchaseState) {
-      case CatalogPurchaseState.CONFIRM:
-        return <Button variant="success" className="w-full" onClick={event => purchase()}>{LocalizeText("catalog.marketplace.confirm_title")}</Button>
-      case CatalogPurchaseState.PURCHASE:
-        return <Button className="w-full" disabled>{LocalizeText("generic.loading")}</Button>
-      case CatalogPurchaseState.FAILED:
-        return <Button className="w-full">{LocalizeText("generic.failed")}</Button>
-      case CatalogPurchaseState.SOLD_OUT:
-        return <Button className="w-full">{LocalizeText("generic.failed") + " - " + LocalizeText("catalog.alert.limited_edition_sold_out.title")}</Button>
-      case CatalogPurchaseState.NONE:
-      default:
-        return <Button className="w-full" disabled={(purchaseOptions.extraParamRequired && (!purchaseOptions.extraData || !purchaseOptions.extraData.length))} onClick={event => setPurchaseState(CatalogPurchaseState.CONFIRM)}>{LocalizeText("catalog.purchase_confirmation." + (currentOffer.isRentOffer ? "rent" : "buy"))}</Button>
+    case CatalogPurchaseState.CONFIRM:
+      return <Button variant="success" className="w-full" onClick={event => purchase()}>{LocalizeText("catalog.marketplace.confirm_title")}</Button>
+    case CatalogPurchaseState.PURCHASE:
+      return <Button className="w-full" disabled>{LocalizeText("generic.loading")}</Button>
+    case CatalogPurchaseState.FAILED:
+      return <Button className="w-full">{LocalizeText("generic.failed")}</Button>
+    case CatalogPurchaseState.SOLD_OUT:
+      return <Button className="w-full">{LocalizeText("generic.failed") + " - " + LocalizeText("catalog.alert.limited_edition_sold_out.title")}</Button>
+    case CatalogPurchaseState.NONE:
+    default:
+      return <Button className="w-full" disabled={(purchaseOptions.extraParamRequired && (!purchaseOptions.extraData || !purchaseOptions.extraData.length))} onClick={event => setPurchaseState(CatalogPurchaseState.CONFIRM)}>{LocalizeText("catalog.purchase_confirmation." + (currentOffer.isRentOffer ? "rent" : "buy"))}</Button>
     }
   }
 
@@ -140,7 +140,7 @@ export const CatalogPurchaseWidgetView: FC<CatalogPurchaseWidgetViewProps> = pro
     if (!currentOffer) return
 
     setPurchaseState(CatalogPurchaseState.NONE)
-  }, [currentOffer, setPurchaseOptions])
+  }, [ currentOffer, setPurchaseOptions ])
 
   const PurchaseDialog = () => (
     <LayoutNotificationAlertView onClose={() => setPurchaseState(CatalogPurchaseState.NONE)} title={LocalizeText("catalog.purchase_confirmation.title")} style={{ width: 325 }}>

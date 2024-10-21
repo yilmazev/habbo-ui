@@ -8,9 +8,9 @@ import { FloorplanEditor } from "../common/FloorplanEditor"
 
 export const FloorplanCanvasView: FC<ColumnProps> = props => {
   const { gap = 1, children = null, ...rest } = props
-  const [occupiedTilesReceived, setOccupiedTilesReceived] = useState(false)
-  const [entryTileReceived, setEntryTileReceived] = useState(false)
-  const [isZoomedIn, setIsZoomedIn] = useState(false)
+  const [ occupiedTilesReceived, setOccupiedTilesReceived ] = useState(false)
+  const [ entryTileReceived, setEntryTileReceived ] = useState(false)
+  const [ isZoomedIn, setIsZoomedIn ] = useState(false)
   const { originalFloorplanSettings = null, setOriginalFloorplanSettings = null, setVisualizationSettings = null } = useFloorplanEditorContext()
   const elementRef = useRef<HTMLDivElement>(null)
 
@@ -39,7 +39,7 @@ export const FloorplanCanvasView: FC<ColumnProps> = props => {
     setOriginalFloorplanSettings(prevValue => {
       const newValue = { ...prevValue }
 
-      newValue.entryPoint = [parser.x, parser.y]
+      newValue.entryPoint = [ parser.x, parser.y ]
       newValue.entryPointDir = parser.direction
 
       return newValue
@@ -87,13 +87,13 @@ export const FloorplanCanvasView: FC<ColumnProps> = props => {
         }
       })
     }
-  }, [originalFloorplanSettings.thicknessFloor, originalFloorplanSettings.thicknessWall, originalFloorplanSettings.wallHeight, setVisualizationSettings])
+  }, [ originalFloorplanSettings.thicknessFloor, originalFloorplanSettings.thicknessWall, originalFloorplanSettings.wallHeight, setVisualizationSettings ])
 
   useEffect(() => {
     if (!entryTileReceived || !occupiedTilesReceived) return
 
     FloorplanEditor.instance.renderTiles()
-  }, [entryTileReceived, occupiedTilesReceived])
+  }, [ entryTileReceived, occupiedTilesReceived ])
 
   useEffect(() => {
     SendMessageComposer(new GetRoomEntryTileMessageComposer())
@@ -108,7 +108,7 @@ export const FloorplanCanvasView: FC<ColumnProps> = props => {
     const initialScale = isZoomedIn ? 1 : 0.6
     FloorplanEditor.instance.tilemapRenderer.scale.set(initialScale)
     FloorplanEditor.instance.renderTiles()
-  }, [isZoomedIn])
+  }, [ isZoomedIn ])
 
   return (
     <div className="relative flex overflow-hidden">

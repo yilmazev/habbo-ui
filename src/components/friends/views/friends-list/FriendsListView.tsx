@@ -8,14 +8,14 @@ import { FriendsRoomInviteView } from "./FriendsListRoomInviteView"
 import { FriendsListGroupView } from "./friends-list-group/FriendsListGroupView"
 
 export const FriendsListView: FC<{}> = props => {
-  const [isVisible, setIsVisible] = useState(false)
-  const [isRequestVisible, setIsRequestVisible] = useState(false)
-  const [searchValue, setSearchValue] = useState("")
-  const [friendResults, setFriendResults] = useState<HabboSearchResultData[]>(null)
-  const [otherResults, setOtherResults] = useState<HabboSearchResultData[]>(null)
-  const [selectedFriendsIds, setSelectedFriendsIds] = useState<number[]>([])
-  const [showRoomInvite, setShowRoomInvite] = useState(false)
-  const [showRemoveFriendsConfirmation, setShowRemoveFriendsConfirmation] = useState(false)
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ isRequestVisible, setIsRequestVisible ] = useState(false)
+  const [ searchValue, setSearchValue ] = useState("")
+  const [ friendResults, setFriendResults ] = useState<HabboSearchResultData[]>(null)
+  const [ otherResults, setOtherResults ] = useState<HabboSearchResultData[]>(null)
+  const [ selectedFriendsIds, setSelectedFriendsIds ] = useState<number[]>([])
+  const [ showRoomInvite, setShowRoomInvite ] = useState(false)
+  const [ showRemoveFriendsConfirmation, setShowRemoveFriendsConfirmation ] = useState(false)
   const { onlineFriends = [], offlineFriends = [], requests = [], requestFriend = null, requestResponse = null } = useFriends()
 
   const removeFriendsText = useMemo(() => {
@@ -33,14 +33,14 @@ export const FriendsListView: FC<{}> = props => {
       userNames.push(existingFriend.name)
     }
 
-    return LocalizeText("friendlist.removefriendconfirm.userlist", ["user_names"], [userNames.join(", ")])
-  }, [offlineFriends, onlineFriends, selectedFriendsIds])
+    return LocalizeText("friendlist.removefriendconfirm.userlist", [ "user_names" ], [ userNames.join(", ") ])
+  }, [ offlineFriends, onlineFriends, selectedFriendsIds ])
 
   const selectFriend = useCallback((userId: number) => {
     if (userId < 0) return
 
     setSelectedFriendsIds(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
 
       const existingUserIdIndex: number = newValue.indexOf(userId)
 
@@ -53,7 +53,7 @@ export const FriendsListView: FC<{}> = props => {
 
       return newValue
     })
-  }, [setSelectedFriendsIds])
+  }, [ setSelectedFriendsIds ])
 
   const sendRoomInvite = (message: string) => {
     if (!selectedFriendsIds.length || !message || !message.length || (message.length > 255)) return
@@ -92,7 +92,7 @@ export const FriendsListView: FC<{}> = props => {
     }, 500)
 
     return () => clearTimeout(timeout)
-  }, [searchValue])
+  }, [ searchValue ])
 
   useEffect(() => {
     const linkTracker: ILinkEventTracker = {
@@ -102,19 +102,19 @@ export const FriendsListView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-          case "show":
-            setIsVisible(true)
-            return
-          case "hide":
-            setIsVisible(false)
-            return
-          case "toggle":
-            setIsVisible(prevValue => !prevValue)
-            return
-          case "request":
-            if (parts.length < 4) return
+        case "show":
+          setIsVisible(true)
+          return
+        case "hide":
+          setIsVisible(false)
+          return
+        case "toggle":
+          setIsVisible(prevValue => !prevValue)
+          return
+        case "request":
+          if (parts.length < 4) return
 
-            requestFriend(parseInt(parts[2]), parts[3])
+          requestFriend(parseInt(parts[2]), parts[3])
         }
       },
       eventUrlPrefix: "friends/"
@@ -123,7 +123,7 @@ export const FriendsListView: FC<{}> = props => {
     AddEventLinkTracker(linkTracker)
 
     return () => RemoveLinkEventTracker(linkTracker)
-  }, [requestFriend])
+  }, [ requestFriend ])
 
   if (!isVisible) return null
 
@@ -176,14 +176,14 @@ export const FriendsListView: FC<{}> = props => {
               {searchValue?.length > 0 && !isRequestVisible && <div className="illumina-scrollbar h-[250px]">
                 <div className="mb-3">
                   <div className="mb-1.5 flex items-center gap-2">
-                    <p className="text-[13px] font-semibold !leading-3 [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("friendlist.search.friendscaption", ["cnt"], [friendResults?.length.toString()])}</p>
+                    <p className="text-[13px] font-semibold !leading-3 [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("friendlist.search.friendscaption", [ "cnt" ], [ friendResults?.length.toString() ])}</p>
                     <div className="h-0.5 flex-1 border-b border-white bg-[#CCCCCC] dark:border-[#36322C] dark:bg-black" />
                   </div>
                   <FriendsListGroupView searchList={friendResults} />
                 </div>
                 <div>
                   <div className="mb-1.5 flex items-center gap-2">
-                    <p className="text-[13px] font-semibold !leading-3 [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("friendlist.search.otherscaption", ["cnt"], [otherResults?.length.toString()])}</p>
+                    <p className="text-[13px] font-semibold !leading-3 [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("friendlist.search.otherscaption", [ "cnt" ], [ otherResults?.length.toString() ])}</p>
                     <div className="h-0.5 flex-1 border-b border-white bg-[#CCCCCC] dark:border-[#36322C] dark:bg-black" />
                   </div>
                   <FriendsListGroupView searchListOther={otherResults} />

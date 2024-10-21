@@ -18,7 +18,7 @@ export const PurchaseViewProductWidgetView: FC<PurchaseViewProductWidgetViewProp
     }
 
     return currentOffer.product.getIconUrl(currentOffer)
-  }, [currentOffer])
+  }, [ currentOffer ])
 
   if (currentOffer.pricingModel === Offer.PRICING_MODEL_BUNDLE) {
     return (

@@ -1,7 +1,7 @@
-import { ISongInfo } from "@nitrots/nitro-renderer";
-import { FC, useState } from "react";
-import { GetConfiguration, GetDiskColor, LocalizeText } from "../../../../../api";
-import { Base, Button, Flex, Text } from "../../../../../common";
+import { ISongInfo } from "@nitrots/nitro-renderer"
+import { FC, useState } from "react"
+import { GetConfiguration, GetDiskColor, LocalizeText } from "../../../../../api"
+import { Base, Button, Flex, Text } from "../../../../../common"
 
 export interface SongPlaylistViewProps {
   furniId: number;
@@ -13,7 +13,7 @@ export interface SongPlaylistViewProps {
 
 export const SongPlaylistView: FC<SongPlaylistViewProps> = props => {
   const { furniId = -1, playlist = null, currentPlayingIndex = -1, removeFromPlaylist = null, togglePlayPause = null } = props
-  const [selectedItem, setSelectedItem] = useState(-1)
+  const [ selectedItem, setSelectedItem ] = useState(-1)
 
   const action = (index: number) => {
     if (selectedItem === index) removeFromPlaylist(index)
@@ -44,7 +44,7 @@ export const SongPlaylistView: FC<SongPlaylistViewProps> = props => {
         <h5>{LocalizeText("playlist.editor.add.songs.to.your.playlist")}</h5>
         <div>{LocalizeText("playlist.editor.text.click.song.to.choose.click.again.to.move")}</div>
       </div>
-        <img src={GetConfiguration("image.library.url") + "playlist/background_add_songs.gif"} className="add-songs" /></>
+      <img src={GetConfiguration("image.library.url") + "playlist/background_add_songs.gif"} className="add-songs" /></>
     }
     {(playlist && playlist.length > 0) &&
       <>

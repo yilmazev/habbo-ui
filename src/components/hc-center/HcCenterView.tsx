@@ -5,8 +5,8 @@ import { Button, LayoutAvatarImage, NitroCardContentView, NitroCardHeaderView, N
 import { useInventoryBadges, useMessageEvent, usePurse, useSessionInfo } from "../../hooks"
 
 export const HcCenterView: FC<{}> = props => {
-  const [isVisible, setIsVisible] = useState(false)
-  const [kickbackData, setKickbackData] = useState<ScrKickbackData>(null)
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ kickbackData, setKickbackData ] = useState<ScrKickbackData>(null)
   const { userFigure = null } = useSessionInfo()
   const { purse = null, clubStatus = null } = usePurse()
   const { activate = null, deactivate = null } = useInventoryBadges()
@@ -25,12 +25,12 @@ export const HcCenterView: FC<{}> = props => {
 
   const getInfoText = () => {
     switch (clubStatus) {
-      case ClubStatus.ACTIVE:
-        return LocalizeText(`hccenter.status.${clubStatus}.info`, ["timeleft", "joindate", "streakduration"], [getClubText(), kickbackData?.firstSubscriptionDate, FriendlyTime.shortFormat(kickbackData?.currentHcStreak * 86400)])
-      case ClubStatus.EXPIRED:
-        return LocalizeText(`hccenter.status.${clubStatus}.info`, ["joindate"], [kickbackData?.firstSubscriptionDate])
-      default:
-        return LocalizeText(`hccenter.status.${clubStatus}.info`)
+    case ClubStatus.ACTIVE:
+      return LocalizeText(`hccenter.status.${clubStatus}.info`, [ "timeleft", "joindate", "streakduration" ], [ getClubText(), kickbackData?.firstSubscriptionDate, FriendlyTime.shortFormat(kickbackData?.currentHcStreak * 86400) ])
+    case ClubStatus.EXPIRED:
+      return LocalizeText(`hccenter.status.${clubStatus}.info`, [ "joindate" ], [ kickbackData?.firstSubscriptionDate ])
+    default:
+      return LocalizeText(`hccenter.status.${clubStatus}.info`)
     }
   }
 
@@ -48,15 +48,15 @@ export const HcCenterView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-          case "open":
-            if (parts.length > 2) {
-              switch (parts[2]) {
-                case "hccenter":
-                  setIsVisible(true)
-                  break
-              }
+        case "open":
+          if (parts.length > 2) {
+            switch (parts[2]) {
+            case "hccenter":
+              setIsVisible(true)
+              break
             }
-            return
+          }
+          return
         }
       },
       eventUrlPrefix: "habboUI/"
@@ -73,7 +73,7 @@ export const HcCenterView: FC<{}> = props => {
     const id = activate()
 
     return () => deactivate(id)
-  }, [isVisible, activate, deactivate])
+  }, [ isVisible, activate, deactivate ])
 
   useEffect(() => {
     SendMessageComposer(new ScrGetKickbackInfoMessageComposer())

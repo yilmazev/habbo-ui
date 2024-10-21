@@ -11,14 +11,14 @@ interface NavigatorRoomCreatorViewProps extends ColumnProps {
 
 export const NavigatorRoomCreatorView: FC<NavigatorRoomCreatorViewProps> = props => {
   const { onCloseClick = null } = props
-  const [maxVisitorsList, setMaxVisitorsList] = useState<number[]>(null)
-  const [name, setName] = useState(null)
-  const [description, setDescription] = useState(null)
-  const [category, setCategory] = useState(null)
-  const [visitorsCount, setVisitorsCount] = useState(null)
-  const [tradesSetting, setTradesSetting] = useState(0)
-  const [roomModels, setRoomModels] = useState<IRoomModel[]>([])
-  const [selectedModelName, setSelectedModelName] = useState("")
+  const [ maxVisitorsList, setMaxVisitorsList ] = useState<number[]>(null)
+  const [ name, setName ] = useState(null)
+  const [ description, setDescription ] = useState(null)
+  const [ category, setCategory ] = useState(null)
+  const [ visitorsCount, setVisitorsCount ] = useState(null)
+  const [ tradesSetting, setTradesSetting ] = useState(0)
+  const [ roomModels, setRoomModels ] = useState<IRoomModel[]>([])
+  const [ selectedModelName, setSelectedModelName ] = useState("")
   const { categories = null } = useNavigator()
 
   const uiKey: string = GetConfiguration("illumina.key")
@@ -45,11 +45,11 @@ export const NavigatorRoomCreatorView: FC<NavigatorRoomCreatorViewProps> = props
       setMaxVisitorsList(list)
       setVisitorsCount(list[0])
     }
-  }, [maxVisitorsList])
+  }, [ maxVisitorsList ])
 
   useEffect(() => {
     if (categories && categories.length) setCategory(categories[0].id)
-  }, [categories])
+  }, [ categories ])
 
   useEffect(() => {
     const models = GetConfiguration<IRoomModel[]>("navigator.room.models")

@@ -5,7 +5,7 @@ import { CloneObject, ClubStatus, GetConfiguration, IPurse, PlaySound, Purse, Se
 import { useMessageEvent } from "../events"
 
 const usePurseState = () => {
-  const [purse, setPurse] = useState<IPurse>(new Purse())
+  const [ purse, setPurse ] = useState<IPurse>(new Purse())
   const hcDisabled = useMemo(() => GetConfiguration("hc.disabled", false), [])
   const helpAndSettingsDisabled = useMemo(() => GetConfiguration("illumina.help_settings.disabled", false), [])
 
@@ -15,12 +15,12 @@ const usePurseState = () => {
     if ((purse.pastVipDays > 0) || (purse.pastVipDays > 0)) return ClubStatus.EXPIRED
 
     return ClubStatus.NONE
-  }, [purse, hcDisabled])
+  }, [ purse, hcDisabled ])
 
   const getCurrencyAmount = (type: number) => {
     if (type === -1) return purse.credits
 
-    for (const [key, value] of purse.activityPoints.entries()) {
+    for (const [ key, value ] of purse.activityPoints.entries()) {
       if (key !== type) continue
 
       return value
@@ -101,7 +101,7 @@ const usePurseState = () => {
     const interval = setInterval(() => SendMessageComposer(new UserSubscriptionComposer("habbo_club")), 50000)
 
     return () => clearInterval(interval)
-  }, [hcDisabled])
+  }, [ hcDisabled ])
 
   useEffect(() => {
     SendMessageComposer(new UserCurrencyComposer())

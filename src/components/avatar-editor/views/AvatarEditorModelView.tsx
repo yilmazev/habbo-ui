@@ -4,7 +4,7 @@ import { Button } from "../../../common"
 import { AvatarEditorFigureSetView } from "./figure-set/AvatarEditorFigureSetView"
 import { AvatarEditorPaletteSetView } from "./palette-set/AvatarEditorPaletteSetView"
 
-const CATEGORY_FOOTBALL_GATE = ["ch", "cp", "lg", "sh"]
+const CATEGORY_FOOTBALL_GATE = [ "ch", "cp", "lg", "sh" ]
 
 export interface AvatarEditorModelViewProps {
   model: IAvatarEditorCategoryModel;
@@ -15,8 +15,8 @@ export interface AvatarEditorModelViewProps {
 
 export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props => {
   const { model = null, gender = null, isFromFootballGate = false, setGender = null } = props
-  const [activeCategory, setActiveCategory] = useState<CategoryData>(null)
-  const [maxPaletteCount, setMaxPaletteCount] = useState(1)
+  const [ activeCategory, setActiveCategory ] = useState<CategoryData>(null)
+  const [ maxPaletteCount, setMaxPaletteCount ] = useState(1)
 
   const selectCategory = useCallback((name: string) => {
     const category = model.categories.get(name)
@@ -34,7 +34,7 @@ export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props => {
 
       break
     }
-  }, [model])
+  }, [ model ])
 
   useEffect(() => {
     model.init()
@@ -44,7 +44,7 @@ export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props => {
 
       break
     }
-  }, [model, selectCategory])
+  }, [ model, selectCategory ])
 
   if (!model || !activeCategory) return null
 

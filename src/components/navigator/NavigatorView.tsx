@@ -11,15 +11,15 @@ import { NavigatorSearchResultView } from "./views/search/NavigatorSearchResultV
 import { NavigatorSearchView } from "./views/search/NavigatorSearchView"
 
 export const NavigatorView: FC<{}> = props => {
-  const [selectedResult, setSelectedResult] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
-  const [isReady, setIsReady] = useState(false)
-  const [isCreatorOpen, setCreatorOpen] = useState(false)
-  const [isRoomInfoOpen, setRoomInfoOpen] = useState(false)
-  const [isRoomLinkOpen, setRoomLinkOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [needsInit, setNeedsInit] = useState(true)
-  const [needsSearch, setNeedsSearch] = useState(false)
+  const [ selectedResult, setSelectedResult ] = useState(0)
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ isReady, setIsReady ] = useState(false)
+  const [ isCreatorOpen, setCreatorOpen ] = useState(false)
+  const [ isRoomInfoOpen, setRoomInfoOpen ] = useState(false)
+  const [ isRoomLinkOpen, setRoomLinkOpen ] = useState(false)
+  const [ isLoading, setIsLoading ] = useState(false)
+  const [ needsInit, setNeedsInit ] = useState(true)
+  const [ needsSearch, setNeedsSearch ] = useState(false)
   const { searchResult = null, topLevelContext = null, topLevelContexts = null, navigatorData = null } = useNavigator()
   const pendingSearch = useRef<{ value: string, code: string }>(null)
   const elementRef = useRef<HTMLDivElement>()
@@ -78,7 +78,7 @@ export const NavigatorView: FC<{}> = props => {
     if (!topLevelContext) return
 
     sendSearch("", topLevelContext.code)
-  }, [isReady, searchResult, topLevelContext, sendSearch])
+  }, [ isReady, searchResult, topLevelContext, sendSearch ])
 
   useEffect(() => {
     const linkTracker: ILinkEventTracker = {
@@ -88,64 +88,64 @@ export const NavigatorView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-          case "show": {
-            setIsVisible(true)
-            setNeedsSearch(true)
-            return
-          }
-          case "hide":
+        case "show": {
+          setIsVisible(true)
+          setNeedsSearch(true)
+          return
+        }
+        case "hide":
+          setIsVisible(false)
+          return
+        case "toggle": {
+          if (isVisible) {
             setIsVisible(false)
-            return
-          case "toggle": {
-            if (isVisible) {
-              setIsVisible(false)
 
-              return
-            }
+            return
+          }
+
+          setIsVisible(true)
+          setNeedsSearch(true)
+          return
+        }
+        case "toggle-room-info":
+          setRoomInfoOpen(value => !value)
+          return
+        case "toggle-room-link":
+          setRoomLinkOpen(value => !value)
+          return
+        case "goto":
+          if (parts.length <= 2) return
+
+          switch (parts[2]) {
+          case "home":
+            if (navigatorData.homeRoomId <= 0) return
+
+            TryVisitRoom(navigatorData.homeRoomId)
+            break
+          default: {
+            const roomId = parseInt(parts[2])
+
+            TryVisitRoom(roomId)
+          }
+          }
+          return
+        case "create":
+          setCreatorOpen(true)
+          return
+        case "search":
+          if (parts.length > 2) {
+            const topLevelContextCode = parts[2]
+
+            let searchValue = ""
+
+            if (parts.length > 3) searchValue = parts[3]
+
+            pendingSearch.current = { value: searchValue, code: topLevelContextCode }
 
             setIsVisible(true)
             setNeedsSearch(true)
-            return
           }
-          case "toggle-room-info":
-            setRoomInfoOpen(value => !value)
-            return
-          case "toggle-room-link":
-            setRoomLinkOpen(value => !value)
-            return
-          case "goto":
-            if (parts.length <= 2) return
-
-            switch (parts[2]) {
-              case "home":
-                if (navigatorData.homeRoomId <= 0) return
-
-                TryVisitRoom(navigatorData.homeRoomId)
-                break
-              default: {
-                const roomId = parseInt(parts[2])
-
-                TryVisitRoom(roomId)
-              }
-            }
-            return
-          case "create":
-            setCreatorOpen(true)
-            return
-          case "search":
-            if (parts.length > 2) {
-              const topLevelContextCode = parts[2]
-
-              let searchValue = ""
-
-              if (parts.length > 3) searchValue = parts[3]
-
-              pendingSearch.current = { value: searchValue, code: topLevelContextCode }
-
-              setIsVisible(true)
-              setNeedsSearch(true)
-            }
-            return
+          return
         }
       },
       eventUrlPrefix: "navigator/"
@@ -154,7 +154,7 @@ export const NavigatorView: FC<{}> = props => {
     AddEventLinkTracker(linkTracker)
 
     return () => RemoveLinkEventTracker(linkTracker)
-  }, [isVisible, navigatorData])
+  }, [ isVisible, navigatorData ])
 
   useEffect(() => {
     if (!searchResult) return
@@ -162,7 +162,7 @@ export const NavigatorView: FC<{}> = props => {
     setIsLoading(false)
 
     if (elementRef && elementRef.current) elementRef.current.scrollTop = 0
-  }, [searchResult])
+  }, [ searchResult ])
 
   useEffect(() => {
     if (!isVisible || !isReady || !needsSearch) return
@@ -170,13 +170,13 @@ export const NavigatorView: FC<{}> = props => {
     reloadCurrentSearch()
 
     setNeedsSearch(false)
-  }, [isVisible, isReady, needsSearch, reloadCurrentSearch])
+  }, [ isVisible, isReady, needsSearch, reloadCurrentSearch ])
 
   useEffect(() => {
     if (isReady || !topLevelContext) return
 
     setIsReady(true)
-  }, [isReady, topLevelContext])
+  }, [ isReady, topLevelContext ])
 
   useEffect(() => {
     if (!isVisible || !needsInit) return
@@ -184,7 +184,7 @@ export const NavigatorView: FC<{}> = props => {
     SendMessageComposer(new NavigatorInitComposer())
 
     setNeedsInit(false)
-  }, [isVisible, needsInit])
+  }, [ isVisible, needsInit ])
 
   useEffect(() => {
     LegacyExternalInterface.addCallback(HabboWebTools.OPENROOM, (k: string, _arg_2: boolean = false, _arg_3: string = null) => SendMessageComposer(new ConvertGlobalRoomIdMessageComposer(k)))

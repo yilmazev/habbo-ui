@@ -14,11 +14,11 @@ const DISABLED: number = 6
 
 export const NameChangeInputView: FC<NameChangeLayoutViewProps> = props => {
   const { onAction = null } = props
-  const [newUsername, setNewUsername] = useState("")
-  const [canProceed, setCanProceed] = useState(false)
-  const [isChecking, setIsChecking] = useState(false)
-  const [errorCode, setErrorCode] = useState(null)
-  const [suggestions, setSuggestions] = useState<string[]>([])
+  const [ newUsername, setNewUsername ] = useState("")
+  const [ canProceed, setCanProceed ] = useState(false)
+  const [ isChecking, setIsChecking ] = useState(false)
+  const [ errorCode, setErrorCode ] = useState(null)
+  const [ suggestions, setSuggestions ] = useState<string[]>([])
 
   const check = () => {
     if (newUsername === "") return
@@ -46,24 +46,24 @@ export const NameChangeInputView: FC<NameChangeLayoutViewProps> = props => {
     if (!parser) return
 
     switch (parser.resultCode) {
-      case AVAILABLE:
-        setCanProceed(true)
-        break
-      case TOO_SHORT:
-        setErrorCode("short")
-        break
-      case TOO_LONG:
-        setErrorCode("long")
-        break
-      case NOT_VALID:
-        setErrorCode("invalid")
-        break
-      case TAKEN_WITH_SUGGESTIONS:
-        setSuggestions(parser.nameSuggestions)
-        setErrorCode("taken")
-        break
-      case DISABLED:
-        setErrorCode("change_not_allowed")
+    case AVAILABLE:
+      setCanProceed(true)
+      break
+    case TOO_SHORT:
+      setErrorCode("short")
+      break
+    case TOO_LONG:
+      setErrorCode("long")
+      break
+    case NOT_VALID:
+      setErrorCode("invalid")
+      break
+    case TAKEN_WITH_SUGGESTIONS:
+      setSuggestions(parser.nameSuggestions)
+      setErrorCode("taken")
+      break
+    case DISABLED:
+      setErrorCode("change_not_allowed")
     }
   })
 
@@ -79,9 +79,9 @@ export const NameChangeInputView: FC<NameChangeLayoutViewProps> = props => {
           {isChecking &&
             <p className="text-sm">{LocalizeText("help.tutorial.name.wait_while_checking")}</p>}
           {errorCode &&
-            <p className="text-sm">{LocalizeText(`help.tutorial.name.${errorCode}`, ["name"], [newUsername])}</p>}
+            <p className="text-sm">{LocalizeText(`help.tutorial.name.${errorCode}`, [ "name" ], [ newUsername ])}</p>}
           {canProceed &&
-            <p className="text-sm">{LocalizeText("help.tutorial.name.available", ["name"], [newUsername])}</p>}
+            <p className="text-sm">{LocalizeText("help.tutorial.name.available", [ "name" ], [ newUsername ])}</p>}
           {suggestions &&
             <div className="flex flex-wrap gap-x-[9px] gap-y-[3px] pt-1">
               {suggestions.map((suggestion, index) => <div key={index} className="cursor-pointer bg-[#C1EAF6] p-0.5 pt-[3px] text-sm hover:bg-[#9DD5E5] dark:bg-[#191512] dark:hover:bg-[#33312b]" onClick={() => handleUsernameChange(suggestion)}>{suggestion}</div>)}

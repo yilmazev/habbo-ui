@@ -11,8 +11,8 @@ interface CatalogBadgeSelectorWidgetViewProps extends AutoGridProps {
 
 export const CatalogBadgeSelectorWidgetView: FC<CatalogBadgeSelectorWidgetViewProps> = props => {
   const { columnCount = 5, ...rest } = props
-  const [isVisible, setIsVisible] = useState(false)
-  const [currentBadgeCode, setCurrentBadgeCode] = useState(null)
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ currentBadgeCode, setCurrentBadgeCode ] = useState(null)
   const { currentOffer = null, setPurchaseOptions = null } = useCatalog()
   const { badgeCodes = [], activate = null, deactivate = null } = useInventoryBadges()
 
@@ -21,10 +21,10 @@ export const CatalogBadgeSelectorWidgetView: FC<CatalogBadgeSelectorWidgetViewPr
 
     const stuffData = new StringDataType()
 
-    stuffData.setValue(["0", currentBadgeCode, "", ""])
+    stuffData.setValue([ "0", currentBadgeCode, "", "" ])
 
     return stuffData
-  }, [currentBadgeCode])
+  }, [ currentBadgeCode ])
 
   useEffect(() => {
     if (!currentOffer) return
@@ -38,7 +38,7 @@ export const CatalogBadgeSelectorWidgetView: FC<CatalogBadgeSelectorWidgetViewPr
 
       return newValue
     })
-  }, [currentOffer, previewStuffData, setPurchaseOptions])
+  }, [ currentOffer, previewStuffData, setPurchaseOptions ])
 
   useEffect(() => {
     if (!isVisible) return
@@ -46,7 +46,7 @@ export const CatalogBadgeSelectorWidgetView: FC<CatalogBadgeSelectorWidgetViewPr
     const id = activate()
 
     return () => deactivate(id)
-  }, [isVisible, activate, deactivate])
+  }, [ isVisible, activate, deactivate ])
 
   useEffect(() => {
     setIsVisible(true)

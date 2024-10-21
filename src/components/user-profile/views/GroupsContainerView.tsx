@@ -1,7 +1,7 @@
-import { GroupInformationComposer, GroupInformationParser, HabboGroupEntryData } from "@nitrots/nitro-renderer";
-import { FC, useEffect, useState } from "react";
-import { GetGroupInformation, LocalizeText, SendMessageComposer, ToggleFavoriteGroup } from "../../../api";
-import { GridProps, LayoutBadgeImageView } from "../../../common";
+import { GroupInformationComposer, GroupInformationParser, HabboGroupEntryData } from "@nitrots/nitro-renderer"
+import { FC, useEffect, useState } from "react"
+import { GetGroupInformation, LocalizeText, SendMessageComposer, ToggleFavoriteGroup } from "../../../api"
+import { GridProps, LayoutBadgeImageView } from "../../../common"
 
 interface GroupsContainerViewProps extends GridProps {
   itsMe: boolean;
@@ -10,14 +10,14 @@ interface GroupsContainerViewProps extends GridProps {
 
 export const GroupsContainerView: FC<GroupsContainerViewProps> = props => {
   const { itsMe = null, groups = null, ...rest } = props
-  const [selectedGroupId, setSelectedGroupId] = useState(null)
-  const [groupInformation, setGroupInformation] = useState<GroupInformationParser>(null)
+  const [ selectedGroupId, setSelectedGroupId ] = useState(null)
+  const [ groupInformation, setGroupInformation ] = useState<GroupInformationParser>(null)
 
   useEffect(() => {
     if (!selectedGroupId) return
 
     SendMessageComposer(new GroupInformationComposer(selectedGroupId, false))
-  }, [selectedGroupId])
+  }, [ selectedGroupId ])
 
   useEffect(() => {
     setGroupInformation(null)
@@ -31,7 +31,7 @@ export const GroupsContainerView: FC<GroupsContainerViewProps> = props => {
         return groups[0].groupId
       })
     }
-  }, [groups])
+  }, [ groups ])
 
   if (!groups || !groups.length) return (
     <p className="!dark:text-[#cccccc] text-xs font-semibold !leading-3 text-[#1B1B1B]  [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">

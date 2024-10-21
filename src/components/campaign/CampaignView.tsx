@@ -5,10 +5,10 @@ import { useMessageEvent } from "../../hooks"
 import { CalendarView } from "./CalendarView"
 
 export const CampaignView: FC<{}> = props => {
-  const [calendarData, setCalendarData] = useState<CampaignCalendarData>(null)
-  const [lastOpenAttempt, setLastOpenAttempt] = useState(-1)
-  const [receivedProducts, setReceivedProducts] = useState<Map<number, CalendarItem>>(new Map())
-  const [isCalendarOpen, setCalendarOpen] = useState(false)
+  const [ calendarData, setCalendarData ] = useState<CampaignCalendarData>(null)
+  const [ lastOpenAttempt, setLastOpenAttempt ] = useState(-1)
+  const [ receivedProducts, setReceivedProducts ] = useState<Map<number, CalendarItem>>(new Map())
+  const [ isCalendarOpen, setCalendarOpen ] = useState(false)
 
   const openPackage = (id: number, asStaff = false) => {
     if (!calendarData) return
@@ -66,9 +66,9 @@ export const CampaignView: FC<{}> = props => {
         if (value.length < 2) return
 
         switch (value[1]) {
-          case "calendar":
-            setCalendarOpen(true)
-            break
+        case "calendar":
+          setCalendarOpen(true)
+          break
         }
       },
       eventUrlPrefix: "openView/"

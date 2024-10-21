@@ -10,8 +10,8 @@ export interface CatalogRedeemVoucherViewProps {
 
 export const CatalogRedeemVoucherView: FC<CatalogRedeemVoucherViewProps> = props => {
   const { text = null } = props
-  const [voucher, setVoucher] = useState("")
-  const [isWaiting, setIsWaiting] = useState(false)
+  const [ voucher, setVoucher ] = useState("")
+  const [ isWaiting, setIsWaiting ] = useState(false)
   const { simpleAlert = null } = useNotification()
 
   const redeemVoucher = () => {
@@ -27,7 +27,7 @@ export const CatalogRedeemVoucherView: FC<CatalogRedeemVoucherViewProps> = props
 
     let message = LocalizeText("catalog.alert.voucherredeem.ok.description")
 
-    if (parser.productName) message = LocalizeText("catalog.alert.voucherredeem.ok.description.furni", ["productName", "productDescription"], [parser.productName, parser.productDescription])
+    if (parser.productName) message = LocalizeText("catalog.alert.voucherredeem.ok.description.furni", [ "productName", "productDescription" ], [ parser.productName, parser.productDescription ])
 
     simpleAlert(message, NotificationAlertType.ALERT, null, null, LocalizeText("catalog.alert.voucherredeem.ok.title"))
 

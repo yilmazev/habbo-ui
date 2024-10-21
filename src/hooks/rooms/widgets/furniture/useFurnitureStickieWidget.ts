@@ -5,12 +5,12 @@ import { useRoomEngineEvent } from "../../../events"
 import { useFurniRemovedEvent } from "../../engine"
 
 const useFurnitureStickieWidgetState = () => {
-  const [objectId, setObjectId] = useState(-1)
-  const [category, setCategory] = useState(-1)
-  const [color, setColor] = useState("0")
-  const [text, setText] = useState("")
-  const [type, setType] = useState("")
-  const [canModify, setCanModify] = useState(false)
+  const [ objectId, setObjectId ] = useState(-1)
+  const [ category, setCategory ] = useState(-1)
+  const [ color, setColor ] = useState("0")
+  const [ text, setText ] = useState("")
+  const [ type, setType ] = useState("")
+  const [ canModify, setCanModify ] = useState(false)
 
   const onClose = () => {
     setObjectId(-1)

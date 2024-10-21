@@ -1,7 +1,7 @@
-import { GuideSessionFeedbackMessageComposer } from "@nitrots/nitro-renderer";
-import { FC } from "react";
-import { LocalizeText, SendMessageComposer } from "../../../api";
-import { Button, LayoutAvatarImage } from "../../../common";
+import { GuideSessionFeedbackMessageComposer } from "@nitrots/nitro-renderer"
+import { FC } from "react"
+import { LocalizeText, SendMessageComposer } from "../../../api"
+import { Button, LayoutAvatarImage } from "../../../common"
 
 interface GuideToolUserFeedbackViewProps {
   userName: string;

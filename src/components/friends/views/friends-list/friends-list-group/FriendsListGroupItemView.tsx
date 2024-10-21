@@ -16,7 +16,7 @@ export interface FriendsListGroupItemViewProps {
 
 export const FriendsListGroupItemView: FC<FriendsListGroupItemViewProps> = props => {
   const { friend = null, request = null, searchFriend = null, isSearch = false, isFriend = false, selected = false, selectFriend = null } = props
-  const [isRelationshipOpen, setIsRelationshipOpen] = useState(false)
+  const [ isRelationshipOpen, setIsRelationshipOpen ] = useState(false)
   const { followFriend = null, updateRelationship = null, canRequestFriend = null, requestFriend = null, requestResponse = null } = useFriends()
 
   const relationshipRef = useRef(null)
@@ -49,10 +49,10 @@ export const FriendsListGroupItemView: FC<FriendsListGroupItemViewProps> = props
     if (!friend) return "!bg-none"
 
     switch (friend.relationshipStatus) {
-      case MessengerFriend.RELATIONSHIP_HEART: return "bg-[-292px_-23px]"
-      case MessengerFriend.RELATIONSHIP_SMILE: return "bg-[-320px_-23px]"
-      case MessengerFriend.RELATIONSHIP_BOBBA: return "bg-[-306px_-23px]"
-      default: return "!bg-none"
+    case MessengerFriend.RELATIONSHIP_HEART: return "bg-[-292px_-23px]"
+    case MessengerFriend.RELATIONSHIP_SMILE: return "bg-[-320px_-23px]"
+    case MessengerFriend.RELATIONSHIP_BOBBA: return "bg-[-306px_-23px]"
+    default: return "!bg-none"
     }
   }
 

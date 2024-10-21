@@ -1,6 +1,6 @@
-import { FC, useMemo } from "react";
-import { BaseProps } from "../../Base";
-import { LayoutLimitedEditionStyledNumberView } from "./LayoutLimitedEditionStyledNumberView";
+import { FC, useMemo } from "react"
+import { BaseProps } from "../../Base"
+import { LayoutLimitedEditionStyledNumberView } from "./LayoutLimitedEditionStyledNumberView"
 
 interface LayoutLimitedEditionCompactPlateViewProps extends BaseProps<HTMLDivElement> {
   uniqueNumber: number;
@@ -11,12 +11,12 @@ export const LayoutLimitedEditionCompactPlateView: FC<LayoutLimitedEditionCompac
   const { uniqueNumber = 0, uniqueSeries = 0, classNames = [], className = "", children = null, ...rest } = props
 
   const getClassNames = useMemo(() => {
-    const newClassNames: string[] = ["bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-74px_-143px] w-[34px] h-[37px] flex flex-col justify-end items-center z-10"]
+    const newClassNames: string[] = [ "bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-74px_-143px] w-[34px] h-[37px] flex flex-col justify-end items-center z-10" ]
 
     if (classNames.length) newClassNames.push(...classNames)
 
     return newClassNames
-  }, [classNames])
+  }, [ classNames ])
 
   const getClassName = useMemo(() => {
     let newClassName = getClassNames.join(" ")
@@ -24,7 +24,7 @@ export const LayoutLimitedEditionCompactPlateView: FC<LayoutLimitedEditionCompac
     if (className.length) newClassName += (" " + className)
 
     return newClassName.trim()
-  }, [getClassNames, className])
+  }, [ getClassNames, className ])
 
   return (
     <div className={getClassName} {...rest}>

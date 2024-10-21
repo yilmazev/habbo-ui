@@ -28,7 +28,7 @@ export const ToolbarMeView: FC<PropsWithChildren<ToolbarMeViewProps>> = props =>
     document.addEventListener("click", onClick)
 
     return () => document.removeEventListener(MouseEventType.MOUSE_CLICK, onClick)
-  }, [setMeExpanded])
+  }, [ setMeExpanded ])
 
   return (
     <div ref={elementRef} className="illumina-toolbar-me absolute bottom-[60px] left-2.5 z-20 flex items-center gap-4 px-3.5 pb-1 pt-2">

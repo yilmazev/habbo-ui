@@ -20,7 +20,7 @@ export const ChatWidgetView: FC<{}> = props => {
 
       return prevValue
     })
-  }, [setChatMessages])
+  }, [ setChatMessages ])
 
   const checkOverlappingChats = useCallback((chat: ChatBubbleMessage, moved: number, tempChats: ChatBubbleMessage[]) => {
     for (let i = (chatMessages.indexOf(chat) - 1); i >= 0; i--) {
@@ -39,13 +39,13 @@ export const ChatWidgetView: FC<{}> = props => {
         checkOverlappingChats(collides, amount, tempChats)
       }
     }
-  }, [chatMessages])
+  }, [ chatMessages ])
 
   const makeRoom = useCallback((chat: ChatBubbleMessage) => {
     if (chatSettings.mode === RoomChatSettings.CHAT_MODE_FREE_FLOW) {
       chat.skipMovement = true
 
-      checkOverlappingChats(chat, 0, [chat])
+      checkOverlappingChats(chat, 0, [ chat ])
 
       removeHiddenChats()
     }
@@ -69,7 +69,7 @@ export const ChatWidgetView: FC<{}> = props => {
         removeHiddenChats()
       }
     }
-  }, [chatSettings, checkOverlappingChats, removeHiddenChats, setChatMessages])
+  }, [ chatSettings, checkOverlappingChats, removeHiddenChats, setChatMessages ])
 
   useEffect(() => {
     const resize = (event: UIEvent = null) => {
@@ -96,7 +96,7 @@ export const ChatWidgetView: FC<{}> = props => {
     return () => {
       window.removeEventListener("resize", resize)
     }
-  }, [setChatMessages])
+  }, [ setChatMessages ])
 
   useEffect(() => {
     const moveAllChatsUp = (amount: number) => {
@@ -126,7 +126,7 @@ export const ChatWidgetView: FC<{}> = props => {
     return () => {
       worker.postMessage({ action: "STOP" })
     }
-  }, [getScrollSpeed, removeHiddenChats, setChatMessages])
+  }, [ getScrollSpeed, removeHiddenChats, setChatMessages ])
 
   return (
     <div ref={elementRef} className="pointer-events-none absolute top-0 z-20 flex min-h-px w-full items-center justify-center rounded-none bg-transparent shadow-none">

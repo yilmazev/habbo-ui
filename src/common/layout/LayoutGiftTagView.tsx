@@ -1,6 +1,6 @@
-import { FC, useState } from "react";
-import { LocalizeText } from "../../api";
-import { LayoutAvatarImage } from "./LayoutAvatarImage";
+import { FC, useState } from "react"
+import { LocalizeText } from "../../api"
+import { LayoutAvatarImage } from "./LayoutAvatarImage"
 
 interface LayoutGiftTagViewProps {
   figure?: string;
@@ -12,7 +12,7 @@ interface LayoutGiftTagViewProps {
 
 export const LayoutGiftTagView: FC<LayoutGiftTagViewProps> = (props) => {
   const { figure = null, userName = null, message = null, editable = false, onChange = null } = props
-  const [inputValue, setInputValue] = useState(message || "")
+  const [ inputValue, setInputValue ] = useState(message || "")
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const lines = e.target.value.split("\n")
@@ -63,7 +63,7 @@ export const LayoutGiftTagView: FC<LayoutGiftTagViewProps> = (props) => {
         )}
         {userName && (
           <p className="pr-1 text-right text-sm italic text-black">
-            {LocalizeText("catalog.gift_wrapping_new.message_from", ["name"], [userName])}
+            {LocalizeText("catalog.gift_wrapping_new.message_from", [ "name" ], [ userName ])}
           </p>
         )}
       </div>

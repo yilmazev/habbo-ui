@@ -13,14 +13,14 @@ const TAB_FURNITURE: string = "furnis"
 const TAB_PETS: string = "pets"
 const TAB_BADGES: string = "badges"
 const TAB_BOTS: string = "bots"
-const TABS = [TAB_FURNITURE, TAB_PETS, TAB_BADGES, TAB_BOTS]
-const UNSEEN_CATEGORIES = [UnseenItemCategory.FURNI, UnseenItemCategory.PET, UnseenItemCategory.BADGE, UnseenItemCategory.BOT]
+const TABS = [ TAB_FURNITURE, TAB_PETS, TAB_BADGES, TAB_BOTS ]
+const UNSEEN_CATEGORIES = [ UnseenItemCategory.FURNI, UnseenItemCategory.PET, UnseenItemCategory.BADGE, UnseenItemCategory.BOT ]
 
 export const InventoryView: FC<{}> = props => {
-  const [isVisible, setIsVisible] = useState(false)
-  const [currentTab, setCurrentTab] = useState(TABS[0])
-  const [roomSession, setRoomSession] = useState<IRoomSession>(null)
-  const [roomPreviewer, setRoomPreviewer] = useState<RoomPreviewer>(null)
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ currentTab, setCurrentTab ] = useState(TABS[0])
+  const [ roomSession, setRoomSession ] = useState<IRoomSession>(null)
+  const [ roomPreviewer, setRoomPreviewer ] = useState<RoomPreviewer>(null)
   const { isTrading = false, stopTrading = null } = useInventoryTrade()
   const { getCount = null, resetCategory = null } = useInventoryUnseenTracker()
 
@@ -43,13 +43,13 @@ export const InventoryView: FC<{}> = props => {
     RoomSessionEvent.ENDED
   ], event => {
     switch (event.type) {
-      case RoomSessionEvent.CREATED:
-        setRoomSession(event.session)
-        return
-      case RoomSessionEvent.ENDED:
-        setRoomSession(null)
-        setIsVisible(false)
-        return
+    case RoomSessionEvent.CREATED:
+      setRoomSession(event.session)
+      return
+    case RoomSessionEvent.ENDED:
+      setRoomSession(null)
+      setIsVisible(false)
+      return
     }
   })
 
@@ -67,15 +67,15 @@ export const InventoryView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-          case "show":
-            setIsVisible(true)
-            return
-          case "hide":
-            setIsVisible(false)
-            return
-          case "toggle":
-            setIsVisible(prevValue => !prevValue)
-            return
+        case "show":
+          setIsVisible(true)
+          return
+        case "hide":
+          setIsVisible(false)
+          return
+        case "toggle":
+          setIsVisible(prevValue => !prevValue)
+          return
         }
       },
       eventUrlPrefix: "inventory/"
@@ -100,7 +100,7 @@ export const InventoryView: FC<{}> = props => {
 
   useEffect(() => {
     if (!isVisible && isTrading) setIsVisible(true)
-  }, [isVisible, isTrading])
+  }, [ isVisible, isTrading ])
 
   if (!isVisible) return null
 

@@ -14,9 +14,9 @@ const MODE_PURCHASABLE_CLOTHING: number = 0
 
 export const PurchasableClothingConfirmView: FC<PurchasableClothingConfirmViewProps> = props => {
   const { objectId = -1, onClose = null } = props
-  const [mode, setMode] = useState(MODE_DEFAULT)
-  const [gender, setGender] = useState(FigureData.MALE)
-  const [newFigure, setNewFigure] = useState(null)
+  const [ mode, setMode ] = useState(MODE_DEFAULT)
+  const [ gender, setGender ] = useState(FigureData.MALE)
+  const [ newFigure, setNewFigure ] = useState(null)
   const { roomSession = null } = useRoom()
 
   const useProduct = () => {
@@ -38,16 +38,16 @@ export const PurchasableClothingConfirmView: FC<PurchasableClothingConfirmViewPr
 
       if (furniData) {
         switch (furniData.specialType) {
-          case FurniCategory.FIGURE_PURCHASABLE_SET:
-            mode = MODE_PURCHASABLE_CLOTHING
+        case FurniCategory.FIGURE_PURCHASABLE_SET:
+          mode = MODE_PURCHASABLE_CLOTHING
 
-            const setIds = furniData.customParams.split(",").map(part => parseInt(part))
+          const setIds = furniData.customParams.split(",").map(part => parseInt(part))
 
-            for (const setId of setIds) {
-              if (GetAvatarRenderManager().isValidFigureSetForGender(setId, gender)) validSets.push(setId)
-            }
+          for (const setId of setIds) {
+            if (GetAvatarRenderManager().isValidFigureSetForGender(setId, gender)) validSets.push(setId)
+          }
 
-            break
+          break
         }
       }
     }
@@ -64,7 +64,7 @@ export const PurchasableClothingConfirmView: FC<PurchasableClothingConfirmViewPr
     // if owns clothing, change to it
 
     setMode(mode)
-  }, [roomSession, objectId, onClose])
+  }, [ roomSession, objectId, onClose ])
 
   if (mode === MODE_DEFAULT) return null
 

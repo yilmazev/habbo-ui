@@ -12,34 +12,34 @@ const DUMMY_PAGE_ID_FOR_OFFER_SEARCH = -12345678
 const DRAG_AND_DROP_ENABLED = true
 
 const useCatalogState = () => {
-  const [isVisible, setIsVisible] = useState(false)
-  const [isBusy, setIsBusy] = useState(false)
-  const [pageId, setPageId] = useState(-1)
-  const [previousPageId, setPreviousPageId] = useState(-1)
-  const [currentType, setCurrentType] = useState(CatalogType.NORMAL)
-  const [rootNode, setRootNode] = useState<ICatalogNode>(null)
-  const [offersToNodes, setOffersToNodes] = useState<Map<number, ICatalogNode[]>>(null)
-  const [currentPage, setCurrentPage] = useState<ICatalogPage>(null)
-  const [currentOffer, setCurrentOffer] = useState<IPurchasableOffer>(null)
-  const [activeNodes, setActiveNodes] = useState<ICatalogNode[]>([])
-  const [searchResult, setSearchResult] = useState<SearchResult>(null)
-  const [frontPageItems, setFrontPageItems] = useState<FrontPageItem[]>([])
-  const [roomPreviewer, setRoomPreviewer] = useState<RoomPreviewer>(null)
-  const [purchasePreviewer, setPurchasePreviewer] = useState<RoomPreviewer>(null)
-  const [navigationHidden, setNavigationHidden] = useState(false)
-  const [purchaseOptions, setPurchaseOptions] = useState<IPurchaseOptions>({ quantity: 1, extraData: null, extraParamRequired: false, previewStuffData: null })
-  const [catalogOptions, setCatalogOptions] = useState<ICatalogOptions>({})
-  const [objectMoverRequested, setObjectMoverRequested] = useState(false)
-  const [catalogPlaceMultipleObjects, setCatalogPlaceMultipleObjects] = useCatalogPlaceMultipleItems()
-  const [catalogSkipPurchaseConfirmation, setCatalogSkipPurchaseConfirmation] = useCatalogSkipPurchaseConfirmation()
-  const [purchasableOffer, setPurchaseableOffer] = useState<IPurchasableOffer>(null)
-  const [placedObjectPurchaseData, setPlacedObjectPurchaseData] = useState<PlacedObjectPurchaseData>(null)
-  const [furniCount, setFurniCount] = useState(0)
-  const [furniLimit, setFurniLimit] = useState(0)
-  const [maxFurniLimit, setMaxFurniLimit] = useState(0)
-  const [secondsLeft, setSecondsLeft] = useState(0)
-  const [updateTime, setUpdateTime] = useState(0)
-  const [secondsLeftWithGrace, setSecondsLeftWithGrace] = useState(0)
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ isBusy, setIsBusy ] = useState(false)
+  const [ pageId, setPageId ] = useState(-1)
+  const [ previousPageId, setPreviousPageId ] = useState(-1)
+  const [ currentType, setCurrentType ] = useState(CatalogType.NORMAL)
+  const [ rootNode, setRootNode ] = useState<ICatalogNode>(null)
+  const [ offersToNodes, setOffersToNodes ] = useState<Map<number, ICatalogNode[]>>(null)
+  const [ currentPage, setCurrentPage ] = useState<ICatalogPage>(null)
+  const [ currentOffer, setCurrentOffer ] = useState<IPurchasableOffer>(null)
+  const [ activeNodes, setActiveNodes ] = useState<ICatalogNode[]>([])
+  const [ searchResult, setSearchResult ] = useState<SearchResult>(null)
+  const [ frontPageItems, setFrontPageItems ] = useState<FrontPageItem[]>([])
+  const [ roomPreviewer, setRoomPreviewer ] = useState<RoomPreviewer>(null)
+  const [ purchasePreviewer, setPurchasePreviewer ] = useState<RoomPreviewer>(null)
+  const [ navigationHidden, setNavigationHidden ] = useState(false)
+  const [ purchaseOptions, setPurchaseOptions ] = useState<IPurchaseOptions>({ quantity: 1, extraData: null, extraParamRequired: false, previewStuffData: null })
+  const [ catalogOptions, setCatalogOptions ] = useState<ICatalogOptions>({})
+  const [ objectMoverRequested, setObjectMoverRequested ] = useState(false)
+  const [ catalogPlaceMultipleObjects, setCatalogPlaceMultipleObjects ] = useCatalogPlaceMultipleItems()
+  const [ catalogSkipPurchaseConfirmation, setCatalogSkipPurchaseConfirmation ] = useCatalogSkipPurchaseConfirmation()
+  const [ purchasableOffer, setPurchaseableOffer ] = useState<IPurchasableOffer>(null)
+  const [ placedObjectPurchaseData, setPlacedObjectPurchaseData ] = useState<PlacedObjectPurchaseData>(null)
+  const [ furniCount, setFurniCount ] = useState(0)
+  const [ furniLimit, setFurniLimit ] = useState(0)
+  const [ maxFurniLimit, setMaxFurniLimit ] = useState(0)
+  const [ secondsLeft, setSecondsLeft ] = useState(0)
+  const [ updateTime, setUpdateTime ] = useState(0)
+  const [ secondsLeftWithGrace, setSecondsLeftWithGrace ] = useState(0)
   const { simpleAlert = null } = useNotification()
   const requestedPage = useRef(new RequestedPage())
 
@@ -83,7 +83,7 @@ const useCatalogState = () => {
     }
 
     return BuilderFurniPlaceableStatus.OKAY
-  }, [furniCount, furniLimit, secondsLeft])
+  }, [ furniCount, furniLimit, secondsLeft ])
 
   const isDraggable = useCallback((offer: IPurchasableOffer) => {
     const roomSession = GetRoomSession()
@@ -91,7 +91,7 @@ const useCatalogState = () => {
     if (((DRAG_AND_DROP_ENABLED && roomSession && offer.page && (offer.page.layoutCode !== "sold_ltd_items") && (currentType === CatalogType.NORMAL) && (roomSession.isRoomOwner || (roomSession.isGuildRoom && (roomSession.controllerLevel >= RoomControllerLevel.GUILD_MEMBER)))) || ((currentType === CatalogType.BUILDER) && (getBuilderFurniPlaceableStatus(offer) === BuilderFurniPlaceableStatus.OKAY))) && (offer.pricingModel !== Offer.PRICING_MODEL_BUNDLE) && (offer.product.productType !== ProductTypeEnum.EFFECT) && (offer.product.productType !== ProductTypeEnum.HABBO_CLUB)) return true
 
     return false
-  }, [currentType, getBuilderFurniPlaceableStatus])
+  }, [ currentType, getBuilderFurniPlaceableStatus ])
 
   const requestOfferToMover = useCallback((offer: IPurchasableOffer) => {
     if (!isDraggable(offer)) return
@@ -103,12 +103,12 @@ const useCatalogState = () => {
     let category = 0
 
     switch (product.productType) {
-      case ProductTypeEnum.FLOOR:
-        category = RoomObjectCategory.FLOOR
-        break
-      case ProductTypeEnum.WALL:
-        category = RoomObjectCategory.WALL
-        break
+    case ProductTypeEnum.FLOOR:
+      category = RoomObjectCategory.FLOOR
+      break
+    case ProductTypeEnum.WALL:
+      category = RoomObjectCategory.WALL
+      break
     }
 
     if (GetRoomEngine().processRoomObjectPlacement(RoomObjectPlacementSource.CATALOG, -(offer.offerId), category, product.productClassId, product.extraParam)) {
@@ -117,7 +117,7 @@ const useCatalogState = () => {
 
       setIsVisible(false)
     }
-  }, [isDraggable])
+  }, [ isDraggable ])
 
   const resetRoomPaint = useCallback((planeType: string, type: string) => {
     const roomEngine = GetRoomEngine()
@@ -131,18 +131,18 @@ const useCatalogState = () => {
     landscapeType = (landscapeType && landscapeType.length) ? landscapeType : "1.1"
 
     switch (planeType) {
-      case "floor":
-        roomEngine.updateRoomInstancePlaneType(roomEngine.activeRoomId, type, wallType, landscapeType, true)
-        return
-      case "wallpaper":
-        roomEngine.updateRoomInstancePlaneType(roomEngine.activeRoomId, floorType, type, landscapeType, true)
-        return
-      case "landscape":
-        roomEngine.updateRoomInstancePlaneType(roomEngine.activeRoomId, floorType, wallType, type, true)
-        return
-      default:
-        roomEngine.updateRoomInstancePlaneType(roomEngine.activeRoomId, floorType, wallType, landscapeType, true)
-        return
+    case "floor":
+      roomEngine.updateRoomInstancePlaneType(roomEngine.activeRoomId, type, wallType, landscapeType, true)
+      return
+    case "wallpaper":
+      roomEngine.updateRoomInstancePlaneType(roomEngine.activeRoomId, floorType, type, landscapeType, true)
+      return
+    case "landscape":
+      roomEngine.updateRoomInstancePlaneType(roomEngine.activeRoomId, floorType, wallType, type, true)
+      return
+    default:
+      roomEngine.updateRoomInstancePlaneType(roomEngine.activeRoomId, floorType, wallType, landscapeType, true)
+      return
     }
   }, [])
 
@@ -153,7 +153,7 @@ const useCatalogState = () => {
 
     setObjectMoverRequested(false)
     setPurchaseableOffer(null)
-  }, [purchasableOffer])
+  }, [ purchasableOffer ])
 
   const resetObjectMover = useCallback((flag: boolean = true) => {
     setObjectMoverRequested(prevValue => {
@@ -171,32 +171,32 @@ const useCatalogState = () => {
     setPlacedObjectPurchaseData(prevValue => {
       if (prevValue) {
         switch (prevValue.category) {
-          case RoomObjectCategory.FLOOR:
-            GetRoomEngine().removeRoomObjectFloor(prevValue.roomId, prevValue.objectId)
-            break
-          case RoomObjectCategory.WALL: {
+        case RoomObjectCategory.FLOOR:
+          GetRoomEngine().removeRoomObjectFloor(prevValue.roomId, prevValue.objectId)
+          break
+        case RoomObjectCategory.WALL: {
 
-            switch (prevValue.furniData.className) {
-              case "floor":
-              case "wallpaper":
-              case "landscape":
-                resetRoomPaint("reset", "")
-                break
-              default:
-                GetRoomEngine().removeRoomObjectWall(prevValue.roomId, prevValue.objectId)
-                break
-            }
+          switch (prevValue.furniData.className) {
+          case "floor":
+          case "wallpaper":
+          case "landscape":
+            resetRoomPaint("reset", "")
+            break
+          default:
+            GetRoomEngine().removeRoomObjectWall(prevValue.roomId, prevValue.objectId)
             break
           }
-          default:
-            GetRoomEngine().deleteRoomObject(prevValue.objectId, prevValue.category)
-            break
+          break
+        }
+        default:
+          GetRoomEngine().deleteRoomObject(prevValue.objectId, prevValue.category)
+          break
         }
       }
 
       return null
     })
-  }, [resetObjectMover, resetRoomPaint])
+  }, [ resetObjectMover, resetRoomPaint ])
 
   const getNodeById = useCallback((id: number, node: ICatalogNode) => {
     if ((node.pageId === id) && (node !== rootNode)) return node
@@ -208,7 +208,7 @@ const useCatalogState = () => {
     }
 
     return null
-  }, [rootNode])
+  }, [ rootNode ])
 
   const getNodeByName = useCallback((name: string, node: ICatalogNode) => {
     if ((node.pageName === name) && (node !== rootNode)) return node
@@ -220,7 +220,7 @@ const useCatalogState = () => {
     }
 
     return null
-  }, [rootNode])
+  }, [ rootNode ])
 
   const getNodesByOfferId = useCallback((offerId: number, flag: boolean = false) => {
     if (!offersToNodes || !offersToNodes.size) return null
@@ -235,7 +235,7 @@ const useCatalogState = () => {
     }
 
     return offersToNodes.get(offerId)
-  }, [offersToNodes])
+  }, [ offersToNodes ])
 
   const loadCatalogPage = useCallback((pageId: number, offerId: number) => {
     if (pageId < 0) return
@@ -244,7 +244,7 @@ const useCatalogState = () => {
     setPageId(pageId)
 
     if (pageId > -1) SendMessageComposer(new GetCatalogPageComposer(pageId, offerId, currentType))
-  }, [currentType])
+  }, [ currentType ])
 
   const showCatalogPage = useCallback((pageId: number, layoutCode: string, localization: IPageLocalization, offers: IPurchasableOffer[], offerId: number, acceptSeasonCurrencyAsCredits: boolean) => {
     const catalogPage = (new CatalogPage(pageId, layoutCode, localization, offers, acceptSeasonCurrencyAsCredits) as ICatalogPage)
@@ -316,7 +316,7 @@ const useCatalogState = () => {
     })
 
     if (targetNode.pageId > -1) loadCatalogPage(targetNode.pageId, offerId)
-  }, [setActiveNodes, loadCatalogPage, cancelObjectMover])
+  }, [ setActiveNodes, loadCatalogPage, cancelObjectMover ])
 
   const openPageById = useCallback((id: number) => {
     if (id !== -1) setSearchResult(null)
@@ -331,7 +331,7 @@ const useCatalogState = () => {
 
       if (node) activateNode(node)
     }
-  }, [isVisible, rootNode, getNodeById, activateNode])
+  }, [ isVisible, rootNode, getNodeById, activateNode ])
 
   const openPageByName = useCallback((name: string) => {
     setSearchResult(null)
@@ -346,7 +346,7 @@ const useCatalogState = () => {
 
       if (node) activateNode(node)
     }
-  }, [isVisible, rootNode, getNodeByName, activateNode])
+  }, [ isVisible, rootNode, getNodeByName, activateNode ])
 
   const openPageByOfferId = useCallback((offerId: number) => {
     setSearchResult(null)
@@ -363,7 +363,7 @@ const useCatalogState = () => {
 
       activateNode(nodes[0], offerId)
     }
-  }, [isVisible, getNodesByOfferId, activateNode])
+  }, [ isVisible, getNodesByOfferId, activateNode ])
 
   const refreshBuilderStatus = useCallback(() => {
 
@@ -378,7 +378,7 @@ const useCatalogState = () => {
 
       for (const offerId of catalogNode.offerIds) {
         if (offers.has(offerId)) offers.get(offerId).push(catalogNode)
-        else offers.set(offerId, [catalogNode])
+        else offers.set(offerId, [ catalogNode ])
       }
 
       depth++
@@ -621,14 +621,14 @@ const useCatalogState = () => {
 
     if (event.category === RoomObjectCategory.WALL) {
       switch (product.furnitureData.className) {
-        case "floor":
-        case "wallpaper":
-        case "landscape":
-          placed = (event.placedOnFloor || event.placedOnWall)
-          break
-        default:
-          placed = event.placedInRoom
-          break
+      case "floor":
+      case "wallpaper":
+      case "landscape":
+        placed = (event.placedOnFloor || event.placedOnWall)
+        break
+      default:
+        placed = event.placedInRoom
+        break
       }
     }
     else {
@@ -644,60 +644,60 @@ const useCatalogState = () => {
     setPlacedObjectPurchaseData(new PlacedObjectPurchaseData(event.roomId, event.objectId, event.category, event.wallLocation, event.x, event.y, event.direction, purchasableOffer))
 
     switch (currentType) {
-      case CatalogType.NORMAL: {
-        switch (event.category) {
-          case RoomObjectCategory.FLOOR:
-            GetRoomEngine().addFurnitureFloor(event.roomId, event.objectId, product.productClassId, new Vector3d(event.x, event.y, event.z), new Vector3d(event.direction), 0, new LegacyDataType())
-            break
-          case RoomObjectCategory.WALL: {
-            switch (product.furnitureData.className) {
-              case "floor":
-              case "wallpaper":
-              case "landscape":
-                resetRoomPaint(product.furnitureData.className, product.extraParam)
-                break
-              default:
-                GetRoomEngine().addFurnitureWall(event.roomId, event.objectId, product.productClassId, new Vector3d(event.x, event.y, event.z), new Vector3d(event.direction * 45), 0, event.instanceData, 0)
-                break
-            }
-          }
-        }
-
-        const roomObject = GetRoomEngine().getRoomObject(event.roomId, event.objectId, event.category)
-
-        if (roomObject) roomObject.model.setValue(RoomObjectVariable.FURNITURE_ALPHA_MULTIPLIER, 0.5)
-
-        if (catalogSkipPurchaseConfirmation) {
-          SendMessageComposer(new PurchaseFromCatalogComposer(pageId, purchasableOffer.offerId, product.extraParam, 1))
-
-          if (catalogPlaceMultipleObjects) requestOfferToMover(purchasableOffer)
-        }
-        else {
-          // confirm
-
-          if (catalogPlaceMultipleObjects) requestOfferToMover(purchasableOffer)
-        }
+    case CatalogType.NORMAL: {
+      switch (event.category) {
+      case RoomObjectCategory.FLOOR:
+        GetRoomEngine().addFurnitureFloor(event.roomId, event.objectId, product.productClassId, new Vector3d(event.x, event.y, event.z), new Vector3d(event.direction), 0, new LegacyDataType())
         break
+      case RoomObjectCategory.WALL: {
+        switch (product.furnitureData.className) {
+        case "floor":
+        case "wallpaper":
+        case "landscape":
+          resetRoomPaint(product.furnitureData.className, product.extraParam)
+          break
+        default:
+          GetRoomEngine().addFurnitureWall(event.roomId, event.objectId, product.productClassId, new Vector3d(event.x, event.y, event.z), new Vector3d(event.direction * 45), 0, event.instanceData, 0)
+          break
+        }
       }
-      case CatalogType.BUILDER: {
-        let pageId = purchasableOffer.page.pageId
+      }
 
-        if (pageId === DUMMY_PAGE_ID_FOR_OFFER_SEARCH) {
-          pageId = -1
-        }
+      const roomObject = GetRoomEngine().getRoomObject(event.roomId, event.objectId, event.category)
 
-        switch (event.category) {
-          case RoomObjectCategory.FLOOR:
-            SendMessageComposer(new BuildersClubPlaceRoomItemMessageComposer(pageId, purchasableOffer.offerId, product.extraParam, event.x, event.y, event.direction))
-            break
-          case RoomObjectCategory.WALL:
-            SendMessageComposer(new BuildersClubPlaceWallItemMessageComposer(pageId, purchasableOffer.offerId, product.extraParam, event.wallLocation))
-            break
-        }
+      if (roomObject) roomObject.model.setValue(RoomObjectVariable.FURNITURE_ALPHA_MULTIPLIER, 0.5)
+
+      if (catalogSkipPurchaseConfirmation) {
+        SendMessageComposer(new PurchaseFromCatalogComposer(pageId, purchasableOffer.offerId, product.extraParam, 1))
 
         if (catalogPlaceMultipleObjects) requestOfferToMover(purchasableOffer)
+      }
+      else {
+        // confirm
+
+        if (catalogPlaceMultipleObjects) requestOfferToMover(purchasableOffer)
+      }
+      break
+    }
+    case CatalogType.BUILDER: {
+      let pageId = purchasableOffer.page.pageId
+
+      if (pageId === DUMMY_PAGE_ID_FOR_OFFER_SEARCH) {
+        pageId = -1
+      }
+
+      switch (event.category) {
+      case RoomObjectCategory.FLOOR:
+        SendMessageComposer(new BuildersClubPlaceRoomItemMessageComposer(pageId, purchasableOffer.offerId, product.extraParam, event.x, event.y, event.direction))
+        break
+      case RoomObjectCategory.WALL:
+        SendMessageComposer(new BuildersClubPlaceWallItemMessageComposer(pageId, purchasableOffer.offerId, product.extraParam, event.wallLocation))
         break
       }
+
+      if (catalogPlaceMultipleObjects) requestOfferToMover(purchasableOffer)
+      break
+    }
     }
   })
 
@@ -707,26 +707,26 @@ const useCatalogState = () => {
     if (!placedObjectPurchaseData || (placedObjectPurchaseData.productClassId !== event.spriteId) || (placedObjectPurchaseData.roomId !== roomEngine.activeRoomId)) return
 
     switch (event.category) {
-      case FurniCategory.FLOOR: {
-        const floorType = roomEngine.getRoomInstanceVariable(roomEngine.activeRoomId, RoomObjectVariable.ROOM_FLOOR_TYPE)
+    case FurniCategory.FLOOR: {
+      const floorType = roomEngine.getRoomInstanceVariable(roomEngine.activeRoomId, RoomObjectVariable.ROOM_FLOOR_TYPE)
 
-        if (placedObjectPurchaseData.extraParam !== floorType) SendMessageComposer(new FurniturePlacePaintComposer(event.id))
-        break
-      }
-      case FurniCategory.WALL_PAPER: {
-        const wallType = roomEngine.getRoomInstanceVariable(roomEngine.activeRoomId, RoomObjectVariable.ROOM_WALL_TYPE)
+      if (placedObjectPurchaseData.extraParam !== floorType) SendMessageComposer(new FurniturePlacePaintComposer(event.id))
+      break
+    }
+    case FurniCategory.WALL_PAPER: {
+      const wallType = roomEngine.getRoomInstanceVariable(roomEngine.activeRoomId, RoomObjectVariable.ROOM_WALL_TYPE)
 
-        if (placedObjectPurchaseData.extraParam !== wallType) SendMessageComposer(new FurniturePlacePaintComposer(event.id))
-        break
-      }
-      case FurniCategory.LANDSCAPE: {
-        const landscapeType = roomEngine.getRoomInstanceVariable(roomEngine.activeRoomId, RoomObjectVariable.ROOM_LANDSCAPE_TYPE)
+      if (placedObjectPurchaseData.extraParam !== wallType) SendMessageComposer(new FurniturePlacePaintComposer(event.id))
+      break
+    }
+    case FurniCategory.LANDSCAPE: {
+      const landscapeType = roomEngine.getRoomInstanceVariable(roomEngine.activeRoomId, RoomObjectVariable.ROOM_LANDSCAPE_TYPE)
 
-        if (placedObjectPurchaseData.extraParam !== landscapeType) SendMessageComposer(new FurniturePlacePaintComposer(event.id))
-        break
-      }
-      default:
-        SendMessageComposer(new FurniturePlaceComposer(event.id, placedObjectPurchaseData.category, placedObjectPurchaseData.wallLocation, placedObjectPurchaseData.x, placedObjectPurchaseData.y, placedObjectPurchaseData.direction))
+      if (placedObjectPurchaseData.extraParam !== landscapeType) SendMessageComposer(new FurniturePlacePaintComposer(event.id))
+      break
+    }
+    default:
+      SendMessageComposer(new FurniturePlaceComposer(event.id, placedObjectPurchaseData.category, placedObjectPurchaseData.wallLocation, placedObjectPurchaseData.x, placedObjectPurchaseData.y, placedObjectPurchaseData.direction))
     }
 
     if (!catalogPlaceMultipleObjects) resetPlacedOfferData()
@@ -734,49 +734,49 @@ const useCatalogState = () => {
 
   useEffect(() => {
     return () => setCurrentOffer(null)
-  }, [currentPage])
+  }, [ currentPage ])
 
   useEffect(() => {
     if (!isVisible || !rootNode || !offersToNodes || !requestedPage.current) return
 
     switch (requestedPage.current.requestType) {
-      case RequestedPage.REQUEST_TYPE_NONE:
-        if (currentPage) return
+    case RequestedPage.REQUEST_TYPE_NONE:
+      if (currentPage) return
 
-        if (rootNode.isBranch) {
-          for (const child of rootNode.children) {
-            if (child && child.isVisible) {
-              activateNode(child)
+      if (rootNode.isBranch) {
+        for (const child of rootNode.children) {
+          if (child && child.isVisible) {
+            activateNode(child)
 
-              return
-            }
+            return
           }
         }
-        return
-      case RequestedPage.REQUEST_TYPE_ID:
-        openPageById(requestedPage.current.requestById)
-        requestedPage.current.resetRequest()
-        return
-      case RequestedPage.REQUEST_TYPE_OFFER:
-        openPageByOfferId(requestedPage.current.requestedByOfferId)
-        requestedPage.current.resetRequest()
-        return
-      case RequestedPage.REQUEST_TYPE_NAME:
-        openPageByName(requestedPage.current.requestByName)
-        requestedPage.current.resetRequest()
-        return
+      }
+      return
+    case RequestedPage.REQUEST_TYPE_ID:
+      openPageById(requestedPage.current.requestById)
+      requestedPage.current.resetRequest()
+      return
+    case RequestedPage.REQUEST_TYPE_OFFER:
+      openPageByOfferId(requestedPage.current.requestedByOfferId)
+      requestedPage.current.resetRequest()
+      return
+    case RequestedPage.REQUEST_TYPE_NAME:
+      openPageByName(requestedPage.current.requestByName)
+      requestedPage.current.resetRequest()
+      return
     }
-  }, [isVisible, rootNode, offersToNodes, currentPage, activateNode, openPageById, openPageByOfferId, openPageByName])
+  }, [ isVisible, rootNode, offersToNodes, currentPage, activateNode, openPageById, openPageByOfferId, openPageByName ])
 
   useEffect(() => {
     if (!searchResult && currentPage && (currentPage.pageId === -1)) openPageById(previousPageId)
-  }, [searchResult, currentPage, previousPageId, openPageById])
+  }, [ searchResult, currentPage, previousPageId, openPageById ])
 
   useEffect(() => {
     if (!currentOffer) return
 
     setPurchaseOptions({ quantity: 1, extraData: null, extraParamRequired: false, previewStuffData: null })
-  }, [currentOffer])
+  }, [ currentOffer ])
 
   useEffect(() => {
     if (!isVisible || rootNode) return
@@ -785,7 +785,7 @@ const useCatalogState = () => {
     SendMessageComposer(new GetClubGiftInfo())
     SendMessageComposer(new GetCatalogIndexComposer(currentType))
     SendMessageComposer(new BuildersClubQueryFurniCountMessageComposer())
-  }, [isVisible, rootNode, currentType])
+  }, [ isVisible, rootNode, currentType ])
 
   useEffect(() => {
     setRoomPreviewer(new RoomPreviewer(GetRoomEngine(), ++RoomPreviewer.PREVIEW_COUNTER))

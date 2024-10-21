@@ -12,30 +12,30 @@ const MODE_EDITOR: number = 2
 const MODE_CHECKOUT: number = 3
 
 export const CameraWidgetView: FC<{}> = props => {
-  const [mode, setMode] = useState(MODE_NONE)
-  const [base64Url, setSavedPictureUrl] = useState(null)
+  const [ mode, setMode ] = useState(MODE_NONE)
+  const [ base64Url, setSavedPictureUrl ] = useState(null)
   const { availableEffects = [], selectedPictureIndex = -1, cameraRoll = [], setCameraRoll = null, myLevel = 0, price = { credits: 0, duckets: 0, publishDucketPrice: 0 } } = useCamera()
 
   const processAction = (type: string) => {
     switch (type) {
-      case "close":
-        setMode(MODE_NONE)
-        return
-      case "edit":
-        setMode(MODE_EDITOR)
-        return
-      case "delete":
-        setCameraRoll(prevValue => {
-          const clone = [...prevValue]
+    case "close":
+      setMode(MODE_NONE)
+      return
+    case "edit":
+      setMode(MODE_EDITOR)
+      return
+    case "delete":
+      setCameraRoll(prevValue => {
+        const clone = [ ...prevValue ]
 
-          clone.splice(selectedPictureIndex, 1)
+        clone.splice(selectedPictureIndex, 1)
 
-          return clone
-        })
-        return
-      case "editor_cancel":
-        setMode(MODE_CAPTURE)
-        return
+        return clone
+      })
+      return
+    case "editor_cancel":
+      setMode(MODE_CAPTURE)
+      return
     }
   }
 
@@ -54,18 +54,18 @@ export const CameraWidgetView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-          case "show":
-            setMode(MODE_CAPTURE)
-            return
-          case "hide":
-            setMode(MODE_NONE)
-            return
-          case "toggle":
-            setMode(prevValue => {
-              if (!prevValue) return MODE_CAPTURE
-              else return MODE_NONE
-            })
-            return
+        case "show":
+          setMode(MODE_CAPTURE)
+          return
+        case "hide":
+          setMode(MODE_NONE)
+          return
+        case "toggle":
+          setMode(prevValue => {
+            if (!prevValue) return MODE_CAPTURE
+            else return MODE_NONE
+          })
+          return
         }
       },
       eventUrlPrefix: "camera/"

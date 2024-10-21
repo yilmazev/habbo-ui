@@ -12,8 +12,8 @@ const MODE_NO_CLUB: number = 3
 const MODE_WRONG_GENDER: number = 4
 
 export const FurnitureMannequinView: FC<{}> = props => {
-  const [renderedFigure, setRenderedFigure] = useState(null)
-  const [mode, setMode] = useState(MODE_NONE)
+  const [ renderedFigure, setRenderedFigure ] = useState(null)
+  const [ mode, setMode ] = useState(MODE_NONE)
   const { objectId = -1, figure = null, gender = null, clubLevel = HabboClubLevelEnum.NO_CLUB, name = null, setName = null, saveFigure = null, wearFigure = null, saveName = null, onClose = null } = useFurnitureMannequinWidget()
 
   useEffect(() => {
@@ -40,36 +40,36 @@ export const FurnitureMannequinView: FC<{}> = props => {
     }
 
     setMode(MODE_PEER)
-  }, [objectId, gender, clubLevel])
+  }, [ objectId, gender, clubLevel ])
 
   useEffect(() => {
     switch (mode) {
-      case MODE_CONTROLLER:
-      case MODE_WRONG_GENDER: {
-        const figureContainer = GetAvatarRenderManager().createFigureContainer(figure)
+    case MODE_CONTROLLER:
+    case MODE_WRONG_GENDER: {
+      const figureContainer = GetAvatarRenderManager().createFigureContainer(figure)
 
-        MannequinUtilities.transformAsMannequinFigure(figureContainer)
+      MannequinUtilities.transformAsMannequinFigure(figureContainer)
 
-        setRenderedFigure(figureContainer.getFigureString())
-        break
-      }
-      case MODE_UPDATE: {
-        const figureContainer = GetAvatarRenderManager().createFigureContainer(GetSessionDataManager().figure)
-
-        MannequinUtilities.transformAsMannequinFigure(figureContainer)
-
-        setRenderedFigure(figureContainer.getFigureString())
-        break
-      }
-      case MODE_PEER:
-      case MODE_NO_CLUB: {
-        const figureContainer = MannequinUtilities.getMergedMannequinFigureContainer(GetSessionDataManager().figure, figure)
-
-        setRenderedFigure(figureContainer.getFigureString())
-        break
-      }
+      setRenderedFigure(figureContainer.getFigureString())
+      break
     }
-  }, [mode, figure, clubLevel])
+    case MODE_UPDATE: {
+      const figureContainer = GetAvatarRenderManager().createFigureContainer(GetSessionDataManager().figure)
+
+      MannequinUtilities.transformAsMannequinFigure(figureContainer)
+
+      setRenderedFigure(figureContainer.getFigureString())
+      break
+    }
+    case MODE_PEER:
+    case MODE_NO_CLUB: {
+      const figureContainer = MannequinUtilities.getMergedMannequinFigureContainer(GetSessionDataManager().figure, figure)
+
+      setRenderedFigure(figureContainer.getFigureString())
+      break
+    }
+    }
+  }, [ mode, figure, clubLevel ])
 
   if (objectId === -1) return null
 

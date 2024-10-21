@@ -18,9 +18,9 @@ const MODE_CHANGE_MOTTO = 2
 
 export const AvatarInfoWidgetRentableBotView: FC<AvatarInfoWidgetRentableBotViewProps> = props => {
   const { avatarInfo = null, onClose = null } = props
-  const [mode, setMode] = useState(MODE_NORMAL)
-  const [newName, setNewName] = useState("")
-  const [newMotto, setNewMotto] = useState("")
+  const [ mode, setMode ] = useState(MODE_NORMAL)
+  const [ newName, setNewName ] = useState("")
+  const [ newMotto, setNewMotto ] = useState("")
 
   useMessageEvent<BotCommandConfigurationEvent>(BotCommandConfigurationEvent, event => {
     const parser = event.getParser()
@@ -28,33 +28,33 @@ export const AvatarInfoWidgetRentableBotView: FC<AvatarInfoWidgetRentableBotView
     if (parser.botId !== avatarInfo.webID) return
 
     switch (parser.commandId) {
-      case BotSkillsEnum.CHANGE_BOT_NAME:
-        setNewName(parser.data)
-        setMode(MODE_CHANGE_NAME)
-        return
-      case BotSkillsEnum.CHANGE_BOT_MOTTO:
-        setNewMotto(parser.data)
-        setMode(MODE_CHANGE_MOTTO)
-        return
-      case BotSkillsEnum.SETUP_CHAT: {
-        const data = parser.data
-        const pieces = data.split(((data.indexOf(";#;") === -1) ? ";" : ";#;"))
+    case BotSkillsEnum.CHANGE_BOT_NAME:
+      setNewName(parser.data)
+      setMode(MODE_CHANGE_NAME)
+      return
+    case BotSkillsEnum.CHANGE_BOT_MOTTO:
+      setNewMotto(parser.data)
+      setMode(MODE_CHANGE_MOTTO)
+      return
+    case BotSkillsEnum.SETUP_CHAT: {
+      const data = parser.data
+      const pieces = data.split(((data.indexOf(";#;") === -1) ? ";" : ";#;"))
 
-        if ((pieces.length === 3) || (pieces.length === 4)) {
-          DispatchUiEvent(new RoomWidgetUpdateRentableBotChatEvent(
-            avatarInfo.roomIndex,
-            RoomObjectCategory.UNIT,
-            avatarInfo.webID,
-            pieces[0],
-            ((pieces[1].toLowerCase() === "true") || (pieces[1] === "1")),
-            parseInt(pieces[2]),
-            ((pieces[3]) ? ((pieces[3].toLowerCase() === "true") || (pieces[3] === "1")) : false)))
+      if ((pieces.length === 3) || (pieces.length === 4)) {
+        DispatchUiEvent(new RoomWidgetUpdateRentableBotChatEvent(
+          avatarInfo.roomIndex,
+          RoomObjectCategory.UNIT,
+          avatarInfo.webID,
+          pieces[0],
+          ((pieces[1].toLowerCase() === "true") || (pieces[1] === "1")),
+          parseInt(pieces[2]),
+          ((pieces[3]) ? ((pieces[3].toLowerCase() === "true") || (pieces[3] === "1")) : false)))
 
-          onClose()
-        }
-
-        return
+        onClose()
       }
+
+      return
+    }
     }
   })
 
@@ -65,50 +65,50 @@ export const AvatarInfoWidgetRentableBotView: FC<AvatarInfoWidgetRentableBotView
 
     if (name) {
       switch (name) {
-        case "donate_to_all":
-          requestBotCommandConfiguration(BotSkillsEnum.DONATE_TO_ALL)
-          SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.DONATE_TO_ALL, ""))
-          break
-        case "donate_to_user":
-          requestBotCommandConfiguration(BotSkillsEnum.DONATE_TO_USER)
-          SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.DONATE_TO_USER, ""))
-          break
-        case "change_bot_name":
-          requestBotCommandConfiguration(BotSkillsEnum.CHANGE_BOT_NAME)
-          hideMenu = false
-          break
-        case "save_bot_name":
-          SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.CHANGE_BOT_NAME, newName))
-          break
-        case "change_bot_motto":
-          requestBotCommandConfiguration(BotSkillsEnum.CHANGE_BOT_MOTTO)
-          hideMenu = false
-          break
-        case "save_bot_motto":
-          SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.CHANGE_BOT_MOTTO, newMotto))
-          break
-        case "dress_up":
-          SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.DRESS_UP, ""))
-          break
-        case "random_walk":
-          SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.RANDOM_WALK, ""))
-          break
-        case "setup_chat":
-          requestBotCommandConfiguration(BotSkillsEnum.SETUP_CHAT)
-          hideMenu = false
-          break
-        case "dance":
-          SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.DANCE, ""))
-          break
-        case "nux_take_tour":
-          GetNitroInstance().createLinkEvent("help/tour")
-          SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.NUX_TAKE_TOUR, ""))
-          break
-        case "pick":
-          SendMessageComposer(new BotRemoveComposer(avatarInfo.webID))
-          break
-        default:
-          break
+      case "donate_to_all":
+        requestBotCommandConfiguration(BotSkillsEnum.DONATE_TO_ALL)
+        SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.DONATE_TO_ALL, ""))
+        break
+      case "donate_to_user":
+        requestBotCommandConfiguration(BotSkillsEnum.DONATE_TO_USER)
+        SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.DONATE_TO_USER, ""))
+        break
+      case "change_bot_name":
+        requestBotCommandConfiguration(BotSkillsEnum.CHANGE_BOT_NAME)
+        hideMenu = false
+        break
+      case "save_bot_name":
+        SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.CHANGE_BOT_NAME, newName))
+        break
+      case "change_bot_motto":
+        requestBotCommandConfiguration(BotSkillsEnum.CHANGE_BOT_MOTTO)
+        hideMenu = false
+        break
+      case "save_bot_motto":
+        SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.CHANGE_BOT_MOTTO, newMotto))
+        break
+      case "dress_up":
+        SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.DRESS_UP, ""))
+        break
+      case "random_walk":
+        SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.RANDOM_WALK, ""))
+        break
+      case "setup_chat":
+        requestBotCommandConfiguration(BotSkillsEnum.SETUP_CHAT)
+        hideMenu = false
+        break
+      case "dance":
+        SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.DANCE, ""))
+        break
+      case "nux_take_tour":
+        GetNitroInstance().createLinkEvent("help/tour")
+        SendMessageComposer(new BotSkillSaveComposer(avatarInfo.webID, BotSkillsEnum.NUX_TAKE_TOUR, ""))
+        break
+      case "pick":
+        SendMessageComposer(new BotRemoveComposer(avatarInfo.webID))
+        break
+      default:
+        break
       }
     }
 
@@ -117,7 +117,7 @@ export const AvatarInfoWidgetRentableBotView: FC<AvatarInfoWidgetRentableBotView
 
   useEffect(() => {
     setMode(MODE_NORMAL)
-  }, [avatarInfo])
+  }, [ avatarInfo ])
 
   const canControl = (avatarInfo.amIOwner || avatarInfo.amIAnyRoomController)
 

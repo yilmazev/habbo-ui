@@ -54,26 +54,26 @@ export const NavigatorSearchResultItemView: FC<NavigatorSearchResultItemViewProp
       }
 
       switch (roomData.doorMode) {
-        case RoomDataParser.DOORBELL_STATE:
-          setDoorData(prevValue => {
-            const newValue = { ...prevValue }
+      case RoomDataParser.DOORBELL_STATE:
+        setDoorData(prevValue => {
+          const newValue = { ...prevValue }
 
-            newValue.roomInfo = roomData
-            newValue.state = DoorStateType.START_DOORBELL
+          newValue.roomInfo = roomData
+          newValue.state = DoorStateType.START_DOORBELL
 
-            return newValue
-          })
-          return
-        case RoomDataParser.PASSWORD_STATE:
-          setDoorData(prevValue => {
-            const newValue = { ...prevValue }
+          return newValue
+        })
+        return
+      case RoomDataParser.PASSWORD_STATE:
+        setDoorData(prevValue => {
+          const newValue = { ...prevValue }
 
-            newValue.roomInfo = roomData
-            newValue.state = DoorStateType.START_PASSWORD
+          newValue.roomInfo = roomData
+          newValue.state = DoorStateType.START_PASSWORD
 
-            return newValue
-          })
-          return
+          return newValue
+        })
+        return
       }
     }
 
@@ -85,7 +85,7 @@ export const NavigatorSearchResultItemView: FC<NavigatorSearchResultItemViewProp
       <div className="flex size-full gap-3">
         <LayoutRoomThumbnailView roomId={roomData.roomId} customUrl={roomData.officialRoomPicRef} type="r63Large" isNavigator={true} />
         <div className="absolute bottom-1.5 right-1.5">
-          <p className="illumina-navigator-room-rectangle-thumbnail-room-name inline-block break-words px-2.5 py-1 font-volter_bold text-[8px] text-white">
+          <p className="illumina-navigator-room-rectangle-thumbnail-room-name font-volter_bold inline-block break-words px-2.5 py-1 text-[8px] text-white">
             {roomData.roomName}
           </p>
         </div>

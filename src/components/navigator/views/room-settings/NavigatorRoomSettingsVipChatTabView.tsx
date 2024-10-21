@@ -1,7 +1,7 @@
-import { RoomChatSettings } from "@nitrots/nitro-renderer";
-import { FC, useEffect, useMemo, useState } from "react";
-import { IRoomData, LocalizeText } from "../../../../api";
-import { usePurse } from "../../../../hooks";
+import { RoomChatSettings } from "@nitrots/nitro-renderer"
+import { FC, useEffect, useMemo, useState } from "react"
+import { IRoomData, LocalizeText } from "../../../../api"
+import { usePurse } from "../../../../hooks"
 
 interface NavigatorRoomSettingsTabViewProps {
   roomData: IRoomData;
@@ -10,7 +10,7 @@ interface NavigatorRoomSettingsTabViewProps {
 
 export const NavigatorRoomSettingsVipChatTabView: FC<NavigatorRoomSettingsTabViewProps> = props => {
   const { roomData = null, handleChange = null } = props
-  const [chatDistance, setChatDistance] = useState(0)
+  const [ chatDistance, setChatDistance ] = useState(0)
   const { purse = null } = usePurse()
 
   const isSubscription = useMemo(() => {
@@ -19,11 +19,11 @@ export const NavigatorRoomSettingsVipChatTabView: FC<NavigatorRoomSettingsTabVie
     const totalDays = (clubPeriods * 31) + clubDays
 
     return totalDays
-  }, [purse])
+  }, [ purse ])
 
   useEffect(() => {
     setChatDistance(roomData.chatSettings.distance)
-  }, [roomData.chatSettings])
+  }, [ roomData.chatSettings ])
 
   return (
     <div className="mt-2 flex flex-col gap-2">

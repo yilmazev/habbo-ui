@@ -1,7 +1,7 @@
-import { GuideSessionGuideDecidesMessageComposer } from "@nitrots/nitro-renderer";
-import { FC } from "react";
-import { LocalizeText, SendMessageComposer } from "../../../api";
-import { Button } from "../../../common";
+import { GuideSessionGuideDecidesMessageComposer } from "@nitrots/nitro-renderer"
+import { FC } from "react"
+import { LocalizeText, SendMessageComposer } from "../../../api"
+import { Button } from "../../../common"
 
 interface GuideToolAcceptViewProps {
   helpRequestDescription: string;

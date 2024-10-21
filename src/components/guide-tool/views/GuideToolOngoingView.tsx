@@ -18,12 +18,12 @@ export const GuideToolOngoingView: FC<GuideToolOngoingViewProps> = props => {
 
   const { isGuide = false, userId = 0, userName = null, userFigure = null, isTyping = false, messageGroups = [] } = props
 
-  const [messageText, setMessageText] = useState("")
+  const [ messageText, setMessageText ] = useState("")
 
   useEffect(() => {
     scrollDiv.current?.scrollIntoView({ block: "end", behavior: "smooth" })
 
-  }, [messageGroups])
+  }, [ messageGroups ])
 
   const visit = useCallback(() => {
     SendMessageComposer(new GuideSessionGetRequesterRoomMessageComposer())
@@ -48,13 +48,13 @@ export const GuideToolOngoingView: FC<GuideToolOngoingViewProps> = props => {
 
     SendMessageComposer(new GuideSessionMessageMessageComposer(messageText))
     setMessageText("")
-  }, [messageText])
+  }, [ messageText ])
 
   const onKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== "Enter") return
 
     sendMessage()
-  }, [sendMessage])
+  }, [ sendMessage ])
 
   const isOwnChat = useCallback((userId: number) => {
     return userId === GetSessionDataManager().userId
@@ -104,7 +104,7 @@ export const GuideToolOngoingView: FC<GuideToolOngoingViewProps> = props => {
       </div>
       <div className="mb-3.5 h-0.5 w-full border-b border-white bg-[#CCCCCC] dark:border-[#36322C] dark:bg-black" />
       <div className="illumina-input relative mx-[9px] flex h-7 items-center px-px">
-        <input type="text" className="w-full pl-[9px] pr-[70px] text-xs text-[#010101]" placeholder={LocalizeText("guide.help.request.guide.ongoing.input.empty", ["name"], [userName])} value={messageText} onChange={event => setMessageText(event.target.value)} onKeyDown={onKeyDown} />
+        <input type="text" className="w-full pl-[9px] pr-[70px] text-xs text-[#010101]" placeholder={LocalizeText("guide.help.request.guide.ongoing.input.empty", [ "name" ], [ userName ])} value={messageText} onChange={event => setMessageText(event.target.value)} onKeyDown={onKeyDown} />
         <Button className="absolute right-1 !h-5" onClick={sendMessage}>
           {LocalizeText("widgets.chatinput.say")}
         </Button>

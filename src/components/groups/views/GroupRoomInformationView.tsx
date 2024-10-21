@@ -5,9 +5,9 @@ import { Button, LayoutBadgeImageView } from "../../../common"
 import { useMessageEvent, useNotification } from "../../../hooks"
 
 export const GroupRoomInformationView: FC<{}> = props => {
-  const [expectedGroupId, setExpectedGroupId] = useState(0)
-  const [groupInformation, setGroupInformation] = useState<GroupInformationParser>(null)
-  const [isOpen, setIsOpen] = useState(true)
+  const [ expectedGroupId, setExpectedGroupId ] = useState(0)
+  const [ groupInformation, setGroupInformation ] = useState<GroupInformationParser>(null)
+  const [ isOpen, setIsOpen ] = useState(true)
   const { showConfirm = null } = useNotification()
 
   const isRealOwner = (groupInformation && (groupInformation.ownerName === GetSessionDataManager().userName))

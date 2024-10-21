@@ -10,10 +10,10 @@ export function GetFurnitureDataForRoomObject(roomId: number, objectId: number, 
   const typeId = roomObject.model.getValue(RoomObjectVariable.FURNITURE_TYPE_ID)
 
   switch (category) {
-    case RoomObjectCategory.FLOOR:
-      return GetSessionDataManager().getFloorItemData(typeId)
-    case RoomObjectCategory.WALL:
-      return GetSessionDataManager().getWallItemData(typeId)
+  case RoomObjectCategory.FLOOR:
+    return GetSessionDataManager().getFloorItemData(typeId)
+  case RoomObjectCategory.WALL:
+    return GetSessionDataManager().getWallItemData(typeId)
   }
 
   return null

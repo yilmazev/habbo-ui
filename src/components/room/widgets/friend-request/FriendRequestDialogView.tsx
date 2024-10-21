@@ -16,7 +16,7 @@ export const FriendRequestDialogView: FC<{ roomIndex: number, request: Messenger
             <div className="mr-2.5">
               <i className="block h-3 w-4 cursor-pointer bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-436px_0px]" />
             </div>
-            <p className="line-clamp-2 text-clip text-sm font-semibold text-white [text-shadow:_0_1px_0_#EA8000] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("widget.friendrequest.from", ["username"], [request.name])}</p>
+            <p className="line-clamp-2 text-clip text-sm font-semibold text-white [text-shadow:_0_1px_0_#EA8000] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("widget.friendrequest.from", [ "username" ], [ request.name ])}</p>
           </div>
           <LayoutTimesView onClick={event => hideFriendRequest(request.requesterUserId)} />
         </div>

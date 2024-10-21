@@ -1,6 +1,6 @@
-import { FC, useState } from "react";
-import { LocalizeText, NotificationAlertItem, NotificationAlertType, OpenUrl } from "../../../../api";
-import { Button, LayoutNotificationAlertView, LayoutNotificationAlertViewProps } from "../../../../common";
+import { FC, useState } from "react"
+import { LocalizeText, NotificationAlertItem, NotificationAlertType, OpenUrl } from "../../../../api"
+import { Button, LayoutNotificationAlertView, LayoutNotificationAlertViewProps } from "../../../../common"
 
 interface NotificationDefaultAlertViewProps extends LayoutNotificationAlertViewProps {
   item: NotificationAlertItem;
@@ -8,7 +8,7 @@ interface NotificationDefaultAlertViewProps extends LayoutNotificationAlertViewP
 
 export const NotificationDefaultAlertView: FC<NotificationDefaultAlertViewProps> = props => {
   const { item = null, title = ((props.item && props.item.title) || ""), onClose = null, ...rest } = props
-  const [imageFailed, setImageFailed] = useState(false)
+  const [ imageFailed, setImageFailed ] = useState(false)
 
   const visitUrl = () => {
     OpenUrl(item.clickUrl)
@@ -20,10 +20,10 @@ export const NotificationDefaultAlertView: FC<NotificationDefaultAlertViewProps>
 
   const widthAndHeight = (type: string) => {
     switch (type) {
-      case NotificationAlertType.DEFAULT:
-        return "w-[352px] h-[210px]"
-      default:
-        return "w-[278px] h-auto"
+    case NotificationAlertType.DEFAULT:
+      return "w-[352px] h-[210px]"
+    default:
+      return "w-[278px] h-auto"
     }
   }
 

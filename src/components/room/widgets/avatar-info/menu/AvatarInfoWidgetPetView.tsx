@@ -18,13 +18,13 @@ const MODE_MONSTER_PLANT: number = 3
 
 export const AvatarInfoWidgetPetView: FC<AvatarInfoWidgetPetViewProps> = props => {
   const { avatarInfo = null, onClose = null } = props
-  const [mode, setMode] = useState(MODE_NORMAL)
+  const [ mode, setMode ] = useState(MODE_NORMAL)
   const { roomSession = null } = useRoom()
   const { petRespectRemaining = 0, respectPet = null } = useSessionInfo()
 
   const canPickUp = useMemo(() => {
     return (roomSession.isRoomOwner || (roomSession.controllerLevel >= RoomControllerLevel.GUEST) || GetSessionDataManager().isModerator)
-  }, [roomSession])
+  }, [ roomSession ])
 
   const canGiveHandItem = useMemo(() => {
     let flag = false
@@ -45,26 +45,26 @@ export const AvatarInfoWidgetPetView: FC<AvatarInfoWidgetPetViewProps> = props =
 
     if (name) {
       switch (name) {
-        case "respect":
-          respectPet(avatarInfo.id)
+      case "respect":
+        respectPet(avatarInfo.id)
 
-          if ((petRespectRemaining - 1) >= 1) hideMenu = false
-          break
-        case "treat":
-          SendMessageComposer(new PetRespectComposer(avatarInfo.id))
-          break
-        case "pass_handitem":
-          SendMessageComposer(new RoomUnitGiveHandItemPetComposer(avatarInfo.id))
-          break
-        case "pick_up":
-          roomSession.pickupPet(avatarInfo.id)
-          break
-        case "mount":
-          roomSession.mountPet(avatarInfo.id)
-          break
-        case "dismount":
-          roomSession.dismountPet(avatarInfo.id)
-          break
+        if ((petRespectRemaining - 1) >= 1) hideMenu = false
+        break
+      case "treat":
+        SendMessageComposer(new PetRespectComposer(avatarInfo.id))
+        break
+      case "pass_handitem":
+        SendMessageComposer(new RoomUnitGiveHandItemPetComposer(avatarInfo.id))
+        break
+      case "pick_up":
+        roomSession.pickupPet(avatarInfo.id)
+        break
+      case "mount":
+        roomSession.mountPet(avatarInfo.id)
+        break
+      case "dismount":
+        roomSession.dismountPet(avatarInfo.id)
+        break
       }
     }
 
@@ -79,7 +79,7 @@ export const AvatarInfoWidgetPetView: FC<AvatarInfoWidgetPetViewProps> = props =
 
       return MODE_NORMAL
     })
-  }, [avatarInfo])
+  }, [ avatarInfo ])
 
   return (
     <ContextMenuView objectId={avatarInfo.roomIndex} category={RoomObjectCategory.UNIT} userType={RoomObjectType.PET} onClose={onClose} collapsable={true}>
@@ -88,7 +88,7 @@ export const AvatarInfoWidgetPetView: FC<AvatarInfoWidgetPetViewProps> = props =
       </ContextMenuHeaderView>
       {(mode === MODE_NORMAL) && (petRespectRemaining > 0) &&
         <ContextMenuListItemView onClick={event => processAction("respect")}>
-          {LocalizeText("infostand.button.petrespect", ["count"], [petRespectRemaining.toString()])}
+          {LocalizeText("infostand.button.petrespect", [ "count" ], [ petRespectRemaining.toString() ])}
         </ContextMenuListItemView>}
       {(mode === MODE_SADDLED_UP) &&
         <>
@@ -98,7 +98,7 @@ export const AvatarInfoWidgetPetView: FC<AvatarInfoWidgetPetViewProps> = props =
             </ContextMenuListItemView>}
           {(petRespectRemaining > 0) &&
             <ContextMenuListItemView onClick={event => processAction("respect")}>
-              {LocalizeText("infostand.button.petrespect", ["count"], [petRespectRemaining.toString()])}
+              {LocalizeText("infostand.button.petrespect", [ "count" ], [ petRespectRemaining.toString() ])}
             </ContextMenuListItemView>}
         </>}
       {(mode === MODE_RIDING) &&
@@ -108,7 +108,7 @@ export const AvatarInfoWidgetPetView: FC<AvatarInfoWidgetPetViewProps> = props =
           </ContextMenuListItemView>
           {(petRespectRemaining > 0) &&
             <ContextMenuListItemView onClick={event => processAction("respect")}>
-              {LocalizeText("infostand.button.petrespect", ["count"], [petRespectRemaining.toString()])}
+              {LocalizeText("infostand.button.petrespect", [ "count" ], [ petRespectRemaining.toString() ])}
             </ContextMenuListItemView>}
         </>}
       {(mode === MODE_MONSTER_PLANT) && !avatarInfo.dead && ((avatarInfo.energy / avatarInfo.maximumEnergy) < 0.98) &&

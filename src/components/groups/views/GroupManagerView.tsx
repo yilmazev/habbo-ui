@@ -8,12 +8,12 @@ import { GroupTabColorsView } from "./tabs/GroupTabColorsView"
 import { GroupTabIdentityView } from "./tabs/GroupTabIdentityView"
 import { GroupTabSettingsView } from "./tabs/GroupTabSettingsView"
 
-const TABS: number[] = [1, 2, 3, 5]
+const TABS: number[] = [ 1, 2, 3, 5 ]
 
 export const GroupManagerView: FC<{}> = props => {
-  const [currentTab, setCurrentTab] = useState(1)
-  const [closeAction, setCloseAction] = useState<{ action: () => boolean }>(null)
-  const [groupData, setGroupData] = useState<IGroupData>(null)
+  const [ currentTab, setCurrentTab ] = useState(1)
+  const [ closeAction, setCloseAction ] = useState<{ action: () => boolean }>(null)
+  const [ groupData, setGroupData ] = useState<IGroupData>(null)
 
   const TAB_HEAD_IMAGE = {
     1: {
@@ -87,7 +87,7 @@ export const GroupManagerView: FC<{}> = props => {
       groupHomeroomId: parser.roomId,
       groupState: parser.state,
       groupCanMembersDecorate: parser.canMembersDecorate,
-      groupColors: [parser.colorA, parser.colorB],
+      groupColors: [ parser.colorA, parser.colorB ],
       groupBadgeParts
     })
   })

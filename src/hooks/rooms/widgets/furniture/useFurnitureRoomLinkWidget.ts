@@ -6,7 +6,7 @@ import { useMessageEvent, useRoomEngineEvent } from "../../../events"
 const INTERNALLINK = "internalLink"
 
 const useFurnitureRoomLinkWidgetState = () => {
-  const [roomIdToEnter, setRoomIdToEnter] = useState(0)
+  const [ roomIdToEnter, setRoomIdToEnter ] = useState(0)
 
   useRoomEngineEvent<RoomEngineTriggerWidgetEvent>(RoomEngineTriggerWidgetEvent.REQUEST_ROOM_LINK, event => {
     const roomObject = GetRoomEngine().getRoomObject(event.roomId, event.objectId, event.category)

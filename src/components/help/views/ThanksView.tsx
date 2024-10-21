@@ -1,6 +1,6 @@
-import { FC } from "react";
-import { LocalizeText } from "../../../api";
-import { Button, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../common";
+import { FC } from "react"
+import { LocalizeText } from "../../../api"
+import { Button, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../common"
 
 export interface ThanksViewProps {
   onClose: () => void;

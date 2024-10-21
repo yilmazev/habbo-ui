@@ -13,7 +13,7 @@ interface InventoryBotViewProps {
 
 export const InventoryBotView: FC<InventoryBotViewProps> = props => {
   const { roomSession = null, roomPreviewer = null } = props
-  const [isVisible, setIsVisible] = useState(false)
+  const [ isVisible, setIsVisible ] = useState(false)
   const { botItems = [], selectedBot = null, activate = null, deactivate = null } = useInventoryBots()
   const { isUnseen = null, removeUnseen = null } = useInventoryUnseenTracker()
 
@@ -36,13 +36,13 @@ export const InventoryBotView: FC<InventoryBotViewProps> = props => {
     roomPreviewer.updateRoomWallsAndFloorVisibility(false, false)
     roomPreviewer.updateObjectRoom(floorType, wallType, landscapeType)
     roomPreviewer.addAvatarIntoRoom(botData.figure, 0)
-  }, [roomPreviewer, selectedBot])
+  }, [ roomPreviewer, selectedBot ])
 
   useEffect(() => {
     if (!selectedBot || !isUnseen(UnseenItemCategory.BOT, selectedBot.botData.id)) return
 
     removeUnseen(UnseenItemCategory.BOT, selectedBot.botData.id)
-  }, [selectedBot, isUnseen, removeUnseen])
+  }, [ selectedBot, isUnseen, removeUnseen ])
 
   useEffect(() => {
     if (!isVisible) return
@@ -50,7 +50,7 @@ export const InventoryBotView: FC<InventoryBotViewProps> = props => {
     const id = activate()
 
     return () => deactivate(id)
-  }, [isVisible, activate, deactivate])
+  }, [ isVisible, activate, deactivate ])
 
   useEffect(() => {
     setIsVisible(true)

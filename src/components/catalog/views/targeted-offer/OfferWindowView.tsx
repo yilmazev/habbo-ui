@@ -9,7 +9,7 @@ export const OfferWindowView = (props: { offer: TargetedOfferData, setOpen: Disp
 
   const { getCurrencyAmount } = usePurse()
 
-  const [amount, setAmount] = useState(1)
+  const [ amount, setAmount ] = useState(1)
 
   const canPurchase = useMemo(() => {
     let credits = false
@@ -24,7 +24,7 @@ export const OfferWindowView = (props: { offer: TargetedOfferData, setOpen: Disp
     if (offer.purchaseLimit > 0) limit = true
 
     return (credits && points && limit)
-  }, [offer, getCurrencyAmount])
+  }, [ offer, getCurrencyAmount ])
 
   const expirationTime = () => {
     let expirationTime = Math.max(0, (offer.expirationTime - Date.now()) / 1000)
@@ -43,7 +43,7 @@ export const OfferWindowView = (props: { offer: TargetedOfferData, setOpen: Disp
     <NitroCardHeaderView headerText={LocalizeText(offer.title)} onCloseClick={event => setOpen(false)} />
     <NitroCardContentView gap={1}>
       <div className="illumina-offers-end-time mb-[13px] flex h-[35px] items-center justify-center">
-        <p className="text-[#FFFEFE]">{LocalizeText("targeted.offer.timeleft", ["timeleft"], [expirationTime()])}</p>
+        <p className="text-[#FFFEFE]">{LocalizeText("targeted.offer.timeleft", [ "timeleft" ], [ expirationTime() ])}</p>
       </div>
       <div className="flex justify-between">
         <div className="illumina-offers-content relative mb-[30px] h-[249px] w-80 px-[13px] py-[18px]">

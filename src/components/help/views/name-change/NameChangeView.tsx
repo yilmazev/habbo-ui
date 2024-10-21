@@ -12,33 +12,33 @@ const INPUT: string = "INPUT"
 const CONFIRMATION: string = "CONFIRMATION"
 
 export const NameChangeView: FC<{}> = props => {
-  const [isVisible, setIsVisible] = useState(false)
-  const [layout, setLayout] = useState(INIT)
-  const [newUsername, setNewUsername] = useState("")
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ layout, setLayout ] = useState(INIT)
+  const [ newUsername, setNewUsername ] = useState("")
 
   const onAction = (action: string, value?: string) => {
     switch (action) {
-      case "start":
-        setLayout(INPUT)
-        break
-      case "confirmation":
-        setNewUsername(value)
-        setLayout(CONFIRMATION)
-        break
-      case "close":
-        setNewUsername("")
-        setIsVisible(false)
-        break
+    case "start":
+      setLayout(INPUT)
+      break
+    case "confirmation":
+      setNewUsername(value)
+      setLayout(CONFIRMATION)
+      break
+    case "close":
+      setNewUsername("")
+      setIsVisible(false)
+      break
     }
   }
 
   const titleKey = useMemo(() => {
     switch (layout) {
-      case INIT: return "tutorial.name_change.title.main"
-      case INPUT: return "tutorial.name_change.title.select"
-      case CONFIRMATION: return "tutorial.name_change.title.confirm"
+    case INIT: return "tutorial.name_change.title.main"
+    case INPUT: return "tutorial.name_change.title.select"
+    case CONFIRMATION: return "tutorial.name_change.title.confirm"
     }
-  }, [layout])
+  }, [ layout ])
 
   useUiEvent<HelpNameChangeEvent>(HelpNameChangeEvent.INIT, event => {
     setLayout(INIT)

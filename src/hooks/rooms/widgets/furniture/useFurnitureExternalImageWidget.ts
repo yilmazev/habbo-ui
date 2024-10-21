@@ -6,10 +6,10 @@ import { useFurniRemovedEvent } from "../../engine"
 import { useRoom } from "../../useRoom"
 
 const useFurnitureExternalImageWidgetState = () => {
-  const [objectId, setObjectId] = useState(-1)
-  const [category, setCategory] = useState(-1)
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(-1)
-  const [currentPhotos, setCurrentPhotos] = useState<IPhotoData[]>([])
+  const [ objectId, setObjectId ] = useState(-1)
+  const [ category, setCategory ] = useState(-1)
+  const [ currentPhotoIndex, setCurrentPhotoIndex ] = useState(-1)
+  const [ currentPhotos, setCurrentPhotos ] = useState<IPhotoData[]>([])
   const { roomSession = null } = useRoom()
 
   const onClose = () => {

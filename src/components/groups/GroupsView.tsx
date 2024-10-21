@@ -8,7 +8,7 @@ import { GroupManagerView } from "./views/GroupManagerView"
 import { GroupMembersView } from "./views/GroupMembersView"
 
 export const GroupsView: FC<{}> = props => {
-  const [isCreatorVisible, setCreatorVisible] = useState(false)
+  const [ isCreatorVisible, setCreatorVisible ] = useState(false)
   const { } = useGroup()
 
   useMessageEvent<GroupPurchasedEvent>(GroupPurchasedEvent, event => {
@@ -26,15 +26,15 @@ export const GroupsView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-          case "create":
-            setCreatorVisible(true)
-            return
-          case "manage":
-            if (!parts[2]) return
+        case "create":
+          setCreatorVisible(true)
+          return
+        case "manage":
+          if (!parts[2]) return
 
-            setCreatorVisible(false)
-            SendMessageComposer(new GroupSettingsComposer(Number(parts[2])))
-            return
+          setCreatorVisible(false)
+          SendMessageComposer(new GroupSettingsComposer(Number(parts[2])))
+          return
         }
       },
       eventUrlPrefix: "groups/"

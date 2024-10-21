@@ -6,13 +6,13 @@ import { useMessageEvent } from "../events"
 import { useNotification } from "../notification"
 
 const useNavigatorState = () => {
-  const [categories, setCategories] = useState<NavigatorCategoryDataParser[]>(null)
-  const [eventCategories, setEventCategories] = useState<NavigatorEventCategoryDataParser[]>(null)
-  const [topLevelContext, setTopLevelContext] = useState<NavigatorTopLevelContext>(null)
-  const [topLevelContexts, setTopLevelContexts] = useState<NavigatorTopLevelContext[]>(null)
-  const [doorData, setDoorData] = useState<{ roomInfo: RoomDataParser, state: number }>({ roomInfo: null, state: DoorStateType.NONE })
-  const [searchResult, setSearchResult] = useState<NavigatorSearchResultSet>(null)
-  const [navigatorData, setNavigatorData] = useState<INavigatorData>({
+  const [ categories, setCategories ] = useState<NavigatorCategoryDataParser[]>(null)
+  const [ eventCategories, setEventCategories ] = useState<NavigatorEventCategoryDataParser[]>(null)
+  const [ topLevelContext, setTopLevelContext ] = useState<NavigatorTopLevelContext>(null)
+  const [ topLevelContexts, setTopLevelContexts ] = useState<NavigatorTopLevelContext[]>(null)
+  const [ doorData, setDoorData ] = useState<{ roomInfo: RoomDataParser, state: number }>({ roomInfo: null, state: DoorStateType.NONE })
+  const [ searchResult, setSearchResult ] = useState<NavigatorSearchResultSet>(null)
+  const [ navigatorData, setNavigatorData ] = useState<INavigatorData>({
     settingsReceived: false,
     homeRoomId: 0,
     enteredGuestRoom: null,
@@ -89,7 +89,7 @@ const useNavigatorState = () => {
 
     SendMessageComposer(new GetGuestRoomMessageComposer(parser.roomId, true, false))
 
-    if (LegacyExternalInterface.available) LegacyExternalInterface.call("legacyTrack", "navigator", "private", [parser.roomId])
+    if (LegacyExternalInterface.available) LegacyExternalInterface.call("legacyTrack", "navigator", "private", [ parser.roomId ])
   })
 
   useMessageEvent<GetGuestRoomResultEvent>(GetGuestRoomResultEvent, event => {
@@ -122,26 +122,26 @@ const useNavigatorState = () => {
     else if (parser.roomForward) {
       if ((parser.data.ownerName !== GetSessionDataManager().userName) && !parser.isGroupMember) {
         switch (parser.data.doorMode) {
-          case RoomDataParser.DOORBELL_STATE:
-            setDoorData(prevValue => {
-              const newValue = { ...prevValue }
+        case RoomDataParser.DOORBELL_STATE:
+          setDoorData(prevValue => {
+            const newValue = { ...prevValue }
 
-              newValue.roomInfo = parser.data
-              newValue.state = DoorStateType.START_DOORBELL
+            newValue.roomInfo = parser.data
+            newValue.state = DoorStateType.START_DOORBELL
 
-              return newValue
-            })
-            return
-          case RoomDataParser.PASSWORD_STATE:
-            setDoorData(prevValue => {
-              const newValue = { ...prevValue }
+            return newValue
+          })
+          return
+        case RoomDataParser.PASSWORD_STATE:
+          setDoorData(prevValue => {
+            const newValue = { ...prevValue }
 
-              newValue.roomInfo = parser.data
-              newValue.state = DoorStateType.START_PASSWORD
+            newValue.roomInfo = parser.data
+            newValue.state = DoorStateType.START_PASSWORD
 
-              return newValue
-            })
-            return
+            return newValue
+          })
+          return
         }
       }
 
@@ -220,31 +220,31 @@ const useNavigatorState = () => {
     const parser = event.getParser()
 
     switch (parser.errorCode) {
-      case -100002:
-        setDoorData(prevValue => {
-          const newValue = { ...prevValue }
+    case -100002:
+      setDoorData(prevValue => {
+        const newValue = { ...prevValue }
 
-          newValue.state = DoorStateType.STATE_WRONG_PASSWORD
+        newValue.state = DoorStateType.STATE_WRONG_PASSWORD
 
-          return newValue
-        })
-        return
-      case 4009:
-        simpleAlert(LocalizeText("navigator.alert.need.to.be.vip"), NotificationAlertType.DEFAULT, null, null, LocalizeText("generic.alert.title"))
+        return newValue
+      })
+      return
+    case 4009:
+      simpleAlert(LocalizeText("navigator.alert.need.to.be.vip"), NotificationAlertType.DEFAULT, null, null, LocalizeText("generic.alert.title"))
 
-        return
-      case 4010:
-        simpleAlert(LocalizeText("navigator.alert.invalid_room_name"), NotificationAlertType.DEFAULT, null, null, LocalizeText("generic.alert.title"))
+      return
+    case 4010:
+      simpleAlert(LocalizeText("navigator.alert.invalid_room_name"), NotificationAlertType.DEFAULT, null, null, LocalizeText("generic.alert.title"))
 
-        return
-      case 4011:
-        simpleAlert(LocalizeText("navigator.alert.cannot_perm_ban"), NotificationAlertType.DEFAULT, null, null, LocalizeText("generic.alert.title"))
+      return
+    case 4011:
+      simpleAlert(LocalizeText("navigator.alert.cannot_perm_ban"), NotificationAlertType.DEFAULT, null, null, LocalizeText("generic.alert.title"))
 
-        return
-      case 4013:
-        simpleAlert(LocalizeText("navigator.alert.room_in_maintenance"), NotificationAlertType.DEFAULT, null, null, LocalizeText("generic.alert.title"))
+      return
+    case 4013:
+      simpleAlert(LocalizeText("navigator.alert.room_in_maintenance"), NotificationAlertType.DEFAULT, null, null, LocalizeText("generic.alert.title"))
 
-        return
+      return
     }
   })
 
@@ -357,22 +357,22 @@ const useNavigatorState = () => {
     const parser = event.getParser()
 
     switch (parser.reason) {
-      case CantConnectMessageParser.REASON_FULL:
-        simpleAlert(LocalizeText("navigator.guestroomfull.text"), NotificationAlertType.DEFAULT, null, null, LocalizeText("navigator.guestroomfull.title"))
+    case CantConnectMessageParser.REASON_FULL:
+      simpleAlert(LocalizeText("navigator.guestroomfull.text"), NotificationAlertType.DEFAULT, null, null, LocalizeText("navigator.guestroomfull.title"))
 
-        break
-      case CantConnectMessageParser.REASON_QUEUE_ERROR:
-        simpleAlert(LocalizeText(`room.queue.error.${parser.parameter}`), NotificationAlertType.DEFAULT, null, null, LocalizeText("room.queue.error.title"))
+      break
+    case CantConnectMessageParser.REASON_QUEUE_ERROR:
+      simpleAlert(LocalizeText(`room.queue.error.${parser.parameter}`), NotificationAlertType.DEFAULT, null, null, LocalizeText("room.queue.error.title"))
 
-        break
-      case CantConnectMessageParser.REASON_BANNED:
-        simpleAlert(LocalizeText("navigator.banned.text"), NotificationAlertType.DEFAULT, null, null, LocalizeText("navigator.banned.title"))
+      break
+    case CantConnectMessageParser.REASON_BANNED:
+      simpleAlert(LocalizeText("navigator.banned.text"), NotificationAlertType.DEFAULT, null, null, LocalizeText("navigator.banned.title"))
 
-        break
-      default:
-        simpleAlert(LocalizeText("room.queue.error.title"), NotificationAlertType.DEFAULT, null, null, LocalizeText("room.queue.error.title"))
+      break
+    default:
+      simpleAlert(LocalizeText("room.queue.error.title"), NotificationAlertType.DEFAULT, null, null, LocalizeText("room.queue.error.title"))
 
-        break
+      break
     }
 
     VisitDesktop()

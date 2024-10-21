@@ -5,12 +5,12 @@ import { useRoomEngineEvent } from "../../../events"
 import { useFurniRemovedEvent } from "../../engine"
 
 const useFurnitureMannequinWidgetState = () => {
-  const [objectId, setObjectId] = useState(-1)
-  const [category, setCategory] = useState(-1)
-  const [figure, setFigure] = useState(null)
-  const [gender, setGender] = useState(null)
-  const [clubLevel, setClubLevel] = useState(HabboClubLevelEnum.NO_CLUB)
-  const [name, setName] = useState(null)
+  const [ objectId, setObjectId ] = useState(-1)
+  const [ category, setCategory ] = useState(-1)
+  const [ figure, setFigure ] = useState(null)
+  const [ gender, setGender ] = useState(null)
+  const [ clubLevel, setClubLevel ] = useState(HabboClubLevelEnum.NO_CLUB)
+  const [ name, setName ] = useState(null)
 
   const onClose = () => {
     setObjectId(-1)

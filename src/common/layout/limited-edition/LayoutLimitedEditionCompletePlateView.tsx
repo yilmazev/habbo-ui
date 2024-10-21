@@ -1,6 +1,6 @@
-import { FC, useMemo } from "react";
-import { LocalizeText } from "../../../api";
-import { BaseProps } from "../../Base";
+import { FC, useMemo } from "react"
+import { LocalizeText } from "../../../api"
+import { BaseProps } from "../../Base"
 
 interface LayoutLimitedEditionCompletePlateViewProps extends BaseProps<HTMLDivElement> {
   uniqueLimitedItemsLeft: number;
@@ -11,12 +11,12 @@ export const LayoutLimitedEditionCompletePlateView: FC<LayoutLimitedEditionCompl
   const { uniqueLimitedItemsLeft = 0, uniqueLimitedSeriesSize = 0, classNames = [], className = "", ...rest } = props
 
   const getClassNames = useMemo(() => {
-    const newClassNames: string[] = ["bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-146px_-142px] w-[170px] h-[29px]"]
+    const newClassNames: string[] = [ "bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-146px_-142px] w-[170px] h-[29px]" ]
 
     if (classNames.length) newClassNames.push(...classNames)
 
     return newClassNames
-  }, [classNames])
+  }, [ classNames ])
 
   const getClassName = useMemo(() => {
     let newClassName = getClassNames.join(" ")
@@ -24,7 +24,7 @@ export const LayoutLimitedEditionCompletePlateView: FC<LayoutLimitedEditionCompl
     if (className.length) newClassName += (" " + className)
 
     return newClassName.trim()
-  }, [getClassNames, className])
+  }, [ getClassNames, className ])
 
   return (
     <div className={getClassName} {...rest}>

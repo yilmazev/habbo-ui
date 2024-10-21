@@ -13,21 +13,21 @@ const DEFAULT_MALE_FOOTBALL_GATE: string = "ch-3109-92-1408.lg-3116-82-1408.sh-3
 const DEFAULT_FEMALE_FOOTBALL_GATE: string = "ch-3112-1408-1408.lg-3116-71-1408.sh-3115-1408-1408"
 
 export const AvatarEditorView: FC<{}> = props => {
-  const [isVisible, setIsVisible] = useState(false)
-  const [figures, setFigures] = useState<Map<string, FigureData>>(null)
-  const [figureData, setFigureData] = useState<FigureData>(null)
-  const [categories, setCategories] = useState<Map<string, IAvatarEditorCategoryModel>>(null)
-  const [activeCategory, setActiveCategory] = useState<IAvatarEditorCategoryModel>(null)
-  const [figureSetIds, setFigureSetIds] = useState<number[]>([])
-  const [boundFurnitureNames, setBoundFurnitureNames] = useState<string[]>([])
-  const [savedFigures, setSavedFigures] = useState<[IAvatarFigureContainer, string][]>([])
-  const [isWardrobeVisible, setIsWardrobeVisible] = useState(false)
-  const [lastFigure, setLastFigure] = useState(null)
-  const [lastGender, setLastGender] = useState(null)
-  const [needsReset, setNeedsReset] = useState(true)
-  const [isInitalized, setIsInitalized] = useState(false)
-  const [genderFootballGate, setGenderFootballGate] = useState(null)
-  const [objectFootballGate, setObjectFootballGate] = useState(null)
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ figures, setFigures ] = useState<Map<string, FigureData>>(null)
+  const [ figureData, setFigureData ] = useState<FigureData>(null)
+  const [ categories, setCategories ] = useState<Map<string, IAvatarEditorCategoryModel>>(null)
+  const [ activeCategory, setActiveCategory ] = useState<IAvatarEditorCategoryModel>(null)
+  const [ figureSetIds, setFigureSetIds ] = useState<number[]>([])
+  const [ boundFurnitureNames, setBoundFurnitureNames ] = useState<string[]>([])
+  const [ savedFigures, setSavedFigures ] = useState<[IAvatarFigureContainer, string][]>([])
+  const [ isWardrobeVisible, setIsWardrobeVisible ] = useState(false)
+  const [ lastFigure, setLastFigure ] = useState(null)
+  const [ lastGender, setLastGender ] = useState(null)
+  const [ needsReset, setNeedsReset ] = useState(true)
+  const [ isInitalized, setIsInitalized ] = useState(false)
+  const [ genderFootballGate, setGenderFootballGate ] = useState(null)
+  const [ objectFootballGate, setObjectFootballGate ] = useState(null)
 
   const maxWardrobeSlots = useMemo(() => GetConfiguration("avatar.wardrobe.max.slots", 10), [])
 
@@ -59,7 +59,7 @@ export const AvatarEditorView: FC<{}> = props => {
     if (!categories) return
 
     setActiveCategory(categories.get(name))
-  }, [categories])
+  }, [ categories ])
 
   const resetCategories = useCallback(() => {
     const categories = new Map()
@@ -76,7 +76,7 @@ export const AvatarEditorView: FC<{}> = props => {
     }
 
     setCategories(categories)
-  }, [genderFootballGate])
+  }, [ genderFootballGate ])
 
   const setupFigures = useCallback(() => {
     const figures: Map<string, FigureData> = new Map()
@@ -109,36 +109,36 @@ export const AvatarEditorView: FC<{}> = props => {
       setLastFigure(figureData.getFigureString())
       setLastGender(figureData.gender)
     }
-  }, [figures, figureData])
+  }, [ figures, figureData ])
 
   const processAction = useCallback((action: string) => {
     switch (action) {
-      case AvatarEditorAction.ACTION_CLEAR:
-        loadAvatarInEditor(figureData.getFigureStringWithFace(0, false), figureData.gender, false)
-        resetCategories()
-        return
-      case AvatarEditorAction.ACTION_RESET:
-        loadAvatarInEditor(lastFigure, lastGender)
-        resetCategories()
-        return
-      case AvatarEditorAction.ACTION_RANDOMIZE:
-        const figure = generateRandomFigure(figureData, figureData.gender, GetClubMemberLevel(), figureSetIds, [FigureData.FACE])
+    case AvatarEditorAction.ACTION_CLEAR:
+      loadAvatarInEditor(figureData.getFigureStringWithFace(0, false), figureData.gender, false)
+      resetCategories()
+      return
+    case AvatarEditorAction.ACTION_RESET:
+      loadAvatarInEditor(lastFigure, lastGender)
+      resetCategories()
+      return
+    case AvatarEditorAction.ACTION_RANDOMIZE:
+      const figure = generateRandomFigure(figureData, figureData.gender, GetClubMemberLevel(), figureSetIds, [ FigureData.FACE ])
 
-        loadAvatarInEditor(figure, figureData.gender, false)
-        resetCategories()
-        return
-      case AvatarEditorAction.ACTION_SAVE:
-        !genderFootballGate ? SendMessageComposer(new UserFigureComposer(figureData.gender, figureData.getFigureString())) : SendMessageComposer(new SetClothingChangeDataMessageComposer(objectFootballGate, genderFootballGate, figureData.getFigureString()))
-        onClose()
-        return
+      loadAvatarInEditor(figure, figureData.gender, false)
+      resetCategories()
+      return
+    case AvatarEditorAction.ACTION_SAVE:
+      !genderFootballGate ? SendMessageComposer(new UserFigureComposer(figureData.gender, figureData.getFigureString())) : SendMessageComposer(new SetClothingChangeDataMessageComposer(objectFootballGate, genderFootballGate, figureData.getFigureString()))
+      onClose()
+      return
     }
-  }, [loadAvatarInEditor, figureData, resetCategories, lastFigure, lastGender, figureSetIds, genderFootballGate, objectFootballGate])
+  }, [ loadAvatarInEditor, figureData, resetCategories, lastFigure, lastGender, figureSetIds, genderFootballGate, objectFootballGate ])
 
   const setGender = useCallback((gender: string) => {
     gender = AvatarEditorUtilities.getGender(gender)
 
     setFigureData(figures.get(gender))
-  }, [figures])
+  }, [ figures ])
 
   useEffect(() => {
     const linkTracker: ILinkEventTracker = {
@@ -151,15 +151,15 @@ export const AvatarEditorView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-          case "show":
-            setIsVisible(true)
-            return
-          case "hide":
-            setIsVisible(false)
-            return
-          case "toggle":
-            setIsVisible(prevValue => !prevValue)
-            return
+        case "show":
+          setIsVisible(true)
+          return
+        case "hide":
+          setIsVisible(false)
+          return
+        case "toggle":
+          setIsVisible(prevValue => !prevValue)
+          return
         }
       },
       eventUrlPrefix: "avatar-editor/"
@@ -184,15 +184,15 @@ export const AvatarEditorView: FC<{}> = props => {
     let i = 0
 
     while (i < maxWardrobeSlots) {
-      savedFigures.push([null, null])
+      savedFigures.push([ null, null ])
 
       i++
     }
 
-    for (let [index, [look, gender]] of parser.looks.entries()) {
+    for (let [ index, [ look, gender ] ] of parser.looks.entries()) {
       const container = GetAvatarRenderManager().createFigureContainer(look)
 
-      savedFigures[(index - 1)] = [container, gender]
+      savedFigures[(index - 1)] = [ container, gender ]
     }
 
     setSavedFigures(savedFigures)
@@ -200,26 +200,26 @@ export const AvatarEditorView: FC<{}> = props => {
 
   useEffect(() => {
     setSavedFigures(new Array(maxWardrobeSlots))
-  }, [maxWardrobeSlots])
+  }, [ maxWardrobeSlots ])
 
   useEffect(() => {
     if (!isWardrobeVisible) return
 
     setActiveCategory(null)
     SendMessageComposer(new GetWardrobeMessageComposer())
-  }, [isWardrobeVisible])
+  }, [ isWardrobeVisible ])
 
   useEffect(() => {
     if (!activeCategory) return
 
     setIsWardrobeVisible(false)
-  }, [activeCategory])
+  }, [ activeCategory ])
 
   useEffect(() => {
     if (!categories) return
 
     selectCategory(!genderFootballGate ? AvatarEditorFigureCategory.GENERIC : AvatarEditorFigureCategory.TORSO)
-  }, [categories, genderFootballGate, selectCategory])
+  }, [ categories, genderFootballGate, selectCategory ])
 
   useEffect(() => {
     if (!figureData) return
@@ -229,7 +229,7 @@ export const AvatarEditorView: FC<{}> = props => {
     resetCategories()
 
     return () => AvatarEditorUtilities.CURRENT_FIGURE = null
-  }, [figureData, resetCategories])
+  }, [ figureData, resetCategories ])
 
   useEffect(() => {
     AvatarEditorUtilities.FIGURE_SET_IDS = figureSetIds
@@ -241,7 +241,7 @@ export const AvatarEditorView: FC<{}> = props => {
       AvatarEditorUtilities.FIGURE_SET_IDS = null
       AvatarEditorUtilities.BOUND_FURNITURE_NAMES = null
     }
-  }, [figureSetIds, boundFurnitureNames, resetCategories])
+  }, [ figureSetIds, boundFurnitureNames, resetCategories ])
 
   useEffect(() => {
     if (!isVisible) return
@@ -253,14 +253,14 @@ export const AvatarEditorView: FC<{}> = props => {
 
       return
     }
-  }, [isVisible, figures, setupFigures])
+  }, [ isVisible, figures, setupFigures ])
 
   useEffect(() => {
     if (!isVisible || !isInitalized || !needsReset) return
 
     loadAvatarInEditor(!genderFootballGate ? GetSessionDataManager().figure : (genderFootballGate === FigureData.MALE ? DEFAULT_MALE_FOOTBALL_GATE : DEFAULT_FEMALE_FOOTBALL_GATE), !genderFootballGate ? GetSessionDataManager().gender : genderFootballGate)
     setNeedsReset(false)
-  }, [isVisible, isInitalized, needsReset, loadAvatarInEditor, genderFootballGate])
+  }, [ isVisible, isInitalized, needsReset, loadAvatarInEditor, genderFootballGate ])
 
   useEffect(() => {
     if (!isVisible) return
@@ -268,7 +268,7 @@ export const AvatarEditorView: FC<{}> = props => {
     return () => {
       setNeedsReset(true)
     }
-  }, [isVisible, genderFootballGate])
+  }, [ isVisible, genderFootballGate ])
 
   if (!isVisible || !figureData) return null
 

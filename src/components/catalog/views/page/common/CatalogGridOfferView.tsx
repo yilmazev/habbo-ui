@@ -12,7 +12,7 @@ interface CatalogGridOfferViewProps extends LayoutGridItemProps {
 
 export const CatalogGridOfferView: FC<CatalogGridOfferViewProps> = props => {
   const { offer = null, selectOffer = null, itemActive = false, ...rest } = props
-  const [isMouseDown, setMouseDown] = useState(false)
+  const [ isMouseDown, setMouseDown ] = useState(false)
   const { requestOfferToMover = null } = useCatalog()
   const { isVisible = false } = useInventoryFurni()
 
@@ -22,22 +22,22 @@ export const CatalogGridOfferView: FC<CatalogGridOfferViewProps> = props => {
     }
 
     return offer.product.getIconUrl(offer)
-  }, [offer])
+  }, [ offer ])
 
   const onMouseEvent = (event: MouseEvent) => {
     switch (event.type) {
-      case MouseEventType.MOUSE_DOWN:
-        selectOffer(offer)
-        setMouseDown(true)
-        return
-      case MouseEventType.MOUSE_UP:
-        setMouseDown(false)
-        return
-      case MouseEventType.ROLL_OUT:
-        if (!isMouseDown || !itemActive || !isVisible) return
+    case MouseEventType.MOUSE_DOWN:
+      selectOffer(offer)
+      setMouseDown(true)
+      return
+    case MouseEventType.MOUSE_UP:
+      setMouseDown(false)
+      return
+    case MouseEventType.ROLL_OUT:
+      if (!isMouseDown || !itemActive || !isVisible) return
 
-        requestOfferToMover(offer)
-        return
+      requestOfferToMover(offer)
+      return
     }
   }
 

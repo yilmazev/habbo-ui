@@ -1,22 +1,22 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
-import { GroupBadgePart, LocalizeText } from "../../../api";
-import { Button, LayoutBadgeImageView } from "../../../common";
-import { useGroup } from "../../../hooks";
+import { Dispatch, FC, SetStateAction, useState } from "react"
+import { GroupBadgePart, LocalizeText } from "../../../api"
+import { Button, LayoutBadgeImageView } from "../../../common"
+import { useGroup } from "../../../hooks"
 
 interface GroupBadgeCreatorViewProps {
   badgeParts: GroupBadgePart[];
   setBadgeParts: Dispatch<SetStateAction<GroupBadgePart[]>>;
 }
 
-const POSITIONS: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+const POSITIONS: number[] = [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
 
 export const GroupBadgeCreatorView: FC<GroupBadgeCreatorViewProps> = props => {
   const { badgeParts = [], setBadgeParts = null } = props
-  const [selectedIndex, setSelectedIndex] = useState(-1)
+  const [ selectedIndex, setSelectedIndex ] = useState(-1)
   const { groupCustomize = null } = useGroup()
 
   const setPartProperty = (partIndex: number, property: string, value: number) => {
-    const newBadgeParts = [...badgeParts]
+    const newBadgeParts = [ ...badgeParts ]
     newBadgeParts[partIndex][property] = value
     setBadgeParts(newBadgeParts)
     if (property === "key") setSelectedIndex(-1)

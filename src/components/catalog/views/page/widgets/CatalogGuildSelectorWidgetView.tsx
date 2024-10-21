@@ -6,7 +6,7 @@ import { useCatalog } from "../../../../../hooks"
 import { CatalogPurchaseWidgetView } from "./CatalogPurchaseWidgetView"
 
 export const CatalogGuildSelectorWidgetView: FC<{}> = props => {
-  const [selectedGroupIndex, setSelectedGroupIndex] = useState(0)
+  const [ selectedGroupIndex, setSelectedGroupIndex ] = useState(0)
   const { currentOffer = null, catalogOptions = null, setPurchaseOptions = null } = useCatalog()
   const { groups = null } = catalogOptions
 
@@ -19,10 +19,10 @@ export const CatalogGuildSelectorWidgetView: FC<{}> = props => {
 
     const stuffData = new StringDataType()
 
-    stuffData.setValue(["0", group.groupId.toString(), group.badgeCode, group.colorA, group.colorB])
+    stuffData.setValue([ "0", group.groupId.toString(), group.badgeCode, group.colorA, group.colorB ])
 
     return stuffData
-  }, [selectedGroupIndex, groups])
+  }, [ selectedGroupIndex, groups ])
 
   useEffect(() => {
     if (!currentOffer) return
@@ -36,7 +36,7 @@ export const CatalogGuildSelectorWidgetView: FC<{}> = props => {
 
       return newValue
     })
-  }, [currentOffer, previewStuffData, setPurchaseOptions])
+  }, [ currentOffer, previewStuffData, setPurchaseOptions ])
 
   useEffect(() => {
     SendMessageComposer(new CatalogGroupsComposer())

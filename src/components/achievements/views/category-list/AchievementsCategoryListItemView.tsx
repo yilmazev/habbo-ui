@@ -1,6 +1,6 @@
-import { Dispatch, FC, SetStateAction } from "react";
-import { AchievementUtilities, IAchievementCategory, LocalizeText } from "../../../../api";
-import { LayoutItemCountView } from "../../../../common";
+import { Dispatch, FC, SetStateAction } from "react"
+import { AchievementUtilities, IAchievementCategory, LocalizeText } from "../../../../api"
+import { LayoutItemCountView } from "../../../../common"
 
 interface AchievementCategoryListItemViewProps {
   category: IAchievementCategory;

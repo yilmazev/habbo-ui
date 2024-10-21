@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useEffect, useState } from "react";
+import { FC, MouseEvent, useEffect, useState } from "react"
 
 interface ChatInputStyleSelectorViewProps {
   chatStyleId: number;
@@ -8,8 +8,8 @@ interface ChatInputStyleSelectorViewProps {
 
 export const ChatInputStyleSelectorView: FC<ChatInputStyleSelectorViewProps> = props => {
   const { chatStyleId = 0, chatStyleIds = null, selectChatStyleId = null } = props
-  const [target, setTarget] = useState<(EventTarget & HTMLElement)>(null)
-  const [selectorVisible, setSelectorVisible] = useState(false)
+  const [ target, setTarget ] = useState<(EventTarget & HTMLElement)>(null)
+  const [ selectorVisible, setSelectorVisible ] = useState(false)
 
   const selectStyle = (styleId: number) => {
     selectChatStyleId(styleId)
@@ -32,7 +32,7 @@ export const ChatInputStyleSelectorView: FC<ChatInputStyleSelectorViewProps> = p
     if (selectorVisible) return
 
     setTarget(null)
-  }, [selectorVisible])
+  }, [ selectorVisible ])
 
   return (
     <>

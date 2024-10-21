@@ -1,6 +1,6 @@
-import { Dispatch, FC, SetStateAction } from "react";
-import { IAchievementCategory } from "../../../../api";
-import { AchievementsCategoryListItemView } from "./AchievementsCategoryListItemView";
+import { Dispatch, FC, SetStateAction } from "react"
+import { IAchievementCategory } from "../../../../api"
+import { AchievementsCategoryListItemView } from "./AchievementsCategoryListItemView"
 
 interface AchievementsCategoryListViewProps {
   categories: IAchievementCategory[];

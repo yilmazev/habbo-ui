@@ -7,20 +7,20 @@ import { useCatalog, usePurse, useUiEvent } from "../../../../../hooks"
 import { CatalogLayoutProps } from "./CatalogLayout.types"
 
 export const CatalogLayoutVipBuyView: FC<CatalogLayoutProps> = props => {
-  const [pendingOffer, setPendingOffer] = useState<ClubOfferData>(null)
-  const [purchaseState, setPurchaseState] = useState(CatalogPurchaseState.NONE)
+  const [ pendingOffer, setPendingOffer ] = useState<ClubOfferData>(null)
+  const [ purchaseState, setPurchaseState ] = useState(CatalogPurchaseState.NONE)
   const { currentPage = null, catalogOptions = null } = useCatalog()
   const { purse = null } = usePurse()
   const { clubOffers = null } = catalogOptions
 
   const onCatalogEvent = useCallback((event: CatalogEvent) => {
     switch (event.type) {
-      case CatalogPurchasedEvent.PURCHASE_SUCCESS:
-        setPurchaseState(CatalogPurchaseState.NONE)
-        return
-      case CatalogPurchaseFailureEvent.PURCHASE_FAILED:
-        setPurchaseState(CatalogPurchaseState.FAILED)
-        return
+    case CatalogPurchasedEvent.PURCHASE_SUCCESS:
+      setPurchaseState(CatalogPurchaseState.NONE)
+      return
+    case CatalogPurchaseFailureEvent.PURCHASE_FAILED:
+      setPurchaseState(CatalogPurchaseState.FAILED)
+      return
     }
   }, [])
 
@@ -31,13 +31,13 @@ export const CatalogLayoutVipBuyView: FC<CatalogLayoutProps> = props => {
     let offerText = ""
 
     if (offer.months > 0) {
-      offerText = LocalizeText("catalog.vip.item.header.months", ["num_months"], [offer.months.toString()])
+      offerText = LocalizeText("catalog.vip.item.header.months", [ "num_months" ], [ offer.months.toString() ])
     }
 
     if (offer.extraDays > 0) {
       if (offerText !== "") offerText += " "
 
-      offerText += (" " + LocalizeText("catalog.vip.item.header.days", ["num_days"], [offer.extraDays.toString()]))
+      offerText += (" " + LocalizeText("catalog.vip.item.header.days", [ "num_days" ], [ offer.extraDays.toString() ]))
     }
 
     return offerText
@@ -52,7 +52,7 @@ export const CatalogLayoutVipBuyView: FC<CatalogLayoutProps> = props => {
     const locale = LocalizeText("catalog.vip.buy.confirm." + extensionOrSubscription + daysOrMonths)
 
     return locale.replace("%NUM_" + daysOrMonths.toUpperCase() + "%", daysOrMonthsText.toString())
-  }, [pendingOffer, purse])
+  }, [ pendingOffer, purse ])
 
   const getPurchaseValidUntil = useCallback(() => {
     let locale = LocalizeText("catalog.vip.buy.confirm.end_date")
@@ -62,7 +62,7 @@ export const CatalogLayoutVipBuyView: FC<CatalogLayoutProps> = props => {
     locale = locale.replace("%year%", pendingOffer.year.toString())
 
     return locale
-  }, [pendingOffer])
+  }, [ pendingOffer ])
 
   const getSubscriptionDetails = useMemo(() => {
     const clubDays = purse.clubDays
@@ -72,7 +72,7 @@ export const CatalogLayoutVipBuyView: FC<CatalogLayoutProps> = props => {
     if (totalDays > 0) {
       return (<>
         <p className="mb-3 text-sm font-semibold [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("catalog.vip.extend.title")}</p>
-        <p className="text-sm" dangerouslySetInnerHTML={{ __html: LocalizeText("catalog.vip.extend.info", ["days"], [totalDays.toString()]) }} />
+        <p className="text-sm" dangerouslySetInnerHTML={{ __html: LocalizeText("catalog.vip.extend.info", [ "days" ], [ totalDays.toString() ]) }} />
       </>)
     } else {
       return (<>
@@ -81,14 +81,14 @@ export const CatalogLayoutVipBuyView: FC<CatalogLayoutProps> = props => {
       </>)
     }
 
-  }, [purse])
+  }, [ purse ])
 
   const purchaseSubscription = useCallback(() => {
     if (!pendingOffer) return
 
     setPurchaseState(CatalogPurchaseState.PURCHASE)
     SendMessageComposer(new PurchaseFromCatalogComposer(currentPage.pageId, pendingOffer.offerId, null, 1))
-  }, [pendingOffer, currentPage])
+  }, [ pendingOffer, currentPage ])
 
   const setOffer = useCallback((offer: ClubOfferData) => {
     setPurchaseState(CatalogPurchaseState.CONFIRM)
@@ -97,7 +97,7 @@ export const CatalogLayoutVipBuyView: FC<CatalogLayoutProps> = props => {
 
   useEffect(() => {
     if (!clubOffers) SendMessageComposer(new GetClubOffersMessageComposer(1))
-  }, [clubOffers])
+  }, [ clubOffers ])
 
   const PurchaseDialog = () => (
     <LayoutNotificationAlertView onClose={() => setPurchaseState(CatalogPurchaseState.NONE)} title={LocalizeText("catalog.purchase_confirmation.title")} style={{ width: 369 }}>

@@ -13,7 +13,7 @@ interface FloorplanImportExportViewProps {
 
 export const FloorplanImportExportView: FC<FloorplanImportExportViewProps> = props => {
   const { onCloseClick = null } = props
-  const [map, setMap] = useState("")
+  const [ map, setMap ] = useState("")
   const { originalFloorplanSettings = null } = useFloorplanEditorContext()
 
   const saveFloorChanges = () => {

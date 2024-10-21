@@ -13,12 +13,12 @@ export interface CameraWidgetCheckoutViewProps {
 
 export const CameraWidgetCheckoutView: FC<CameraWidgetCheckoutViewProps> = props => {
   const { base64Url = null, onCloseClick = null, onCancelClick = null, price = null } = props
-  const [pictureUrl, setPictureUrl] = useState(null)
-  const [publishUrl, setPublishUrl] = useState(null)
-  const [picturesBought, setPicturesBought] = useState(0)
-  const [wasPicturePublished, setWasPicturePublished] = useState(false)
-  const [isWaiting, setIsWaiting] = useState(false)
-  const [publishCooldown, setPublishCooldown] = useState(0)
+  const [ pictureUrl, setPictureUrl ] = useState(null)
+  const [ publishUrl, setPublishUrl ] = useState(null)
+  const [ picturesBought, setPicturesBought ] = useState(0)
+  const [ wasPicturePublished, setWasPicturePublished ] = useState(false)
+  const [ isWaiting, setIsWaiting ] = useState(false)
+  const [ publishCooldown, setPublishCooldown ] = useState(0)
 
   const publishDisabled = useMemo(() => GetConfiguration("camera.publish.disabled", false), [])
 
@@ -44,24 +44,24 @@ export const CameraWidgetCheckoutView: FC<CameraWidgetCheckoutViewProps> = props
 
   const processAction = (type: string, value: string | number = null) => {
     switch (type) {
-      case "close":
-        onCloseClick()
-        return
-      case "buy":
-        if (isWaiting) return
+    case "close":
+      onCloseClick()
+      return
+    case "buy":
+      if (isWaiting) return
 
-        setIsWaiting(true)
-        SendMessageComposer(new PurchasePhotoMessageComposer(""))
-        return
-      case "publish":
-        if (isWaiting) return
+      setIsWaiting(true)
+      SendMessageComposer(new PurchasePhotoMessageComposer(""))
+      return
+    case "publish":
+      if (isWaiting) return
 
-        setIsWaiting(true)
-        SendMessageComposer(new PublishPhotoMessageComposer())
-        return
-      case "cancel":
-        onCancelClick()
-        return
+      setIsWaiting(true)
+      SendMessageComposer(new PublishPhotoMessageComposer())
+      return
+    case "cancel":
+      onCancelClick()
+      return
     }
   }
 
@@ -69,7 +69,7 @@ export const CameraWidgetCheckoutView: FC<CameraWidgetCheckoutViewProps> = props
     if (!base64Url) return
 
     GetRoomEngine().saveBase64AsScreenshot(base64Url)
-  }, [base64Url])
+  }, [ base64Url ])
 
   if (!price) return null
 

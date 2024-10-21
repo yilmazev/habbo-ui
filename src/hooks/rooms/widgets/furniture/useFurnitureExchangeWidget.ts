@@ -5,9 +5,9 @@ import { useRoomEngineEvent } from "../../../events"
 import { useFurniRemovedEvent } from "../../engine"
 
 const useFurnitureExchangeWidgetState = () => {
-  const [objectId, setObjectId] = useState(-1)
-  const [category, setCategory] = useState(-1)
-  const [value, setValue] = useState(0)
+  const [ objectId, setObjectId ] = useState(-1)
+  const [ category, setCategory ] = useState(-1)
+  const [ value, setValue ] = useState(0)
 
   const onClose = () => {
     setObjectId(-1)

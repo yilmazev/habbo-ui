@@ -15,75 +15,75 @@ import { GuideToolUserSomethingWrogView } from "./views/GuideToolUserSomethingWr
 import { GuideToolUserThanksView } from "./views/GuideToolUserThanksView"
 
 export const GuideToolView: FC<{}> = props => {
-  const [isVisible, setIsVisible] = useState(false)
-  const [headerText, setHeaderText] = useState(LocalizeText("guide.help.guide.tool.title"))
-  const [noCloseButton, setNoCloseButton] = useState(false)
-  const [sessionState, setSessionState] = useState(GuideSessionState.GUIDE_TOOL_MENU)
+  const [ isVisible, setIsVisible ] = useState(false)
+  const [ headerText, setHeaderText ] = useState(LocalizeText("guide.help.guide.tool.title"))
+  const [ noCloseButton, setNoCloseButton ] = useState(false)
+  const [ sessionState, setSessionState ] = useState(GuideSessionState.GUIDE_TOOL_MENU)
 
-  const [isOnDuty, setIsOnDuty] = useState(false)
-  const [isHandlingBullyReports, setIsHandlingBullyReports] = useState(false)
-  const [isHandlingGuideRequests, setIsHandlingGuideRequests] = useState(false)
-  const [isHandlingHelpRequests, setIsHandlingHelpRequests] = useState(false)
+  const [ isOnDuty, setIsOnDuty ] = useState(false)
+  const [ isHandlingBullyReports, setIsHandlingBullyReports ] = useState(false)
+  const [ isHandlingGuideRequests, setIsHandlingGuideRequests ] = useState(false)
+  const [ isHandlingHelpRequests, setIsHandlingHelpRequests ] = useState(false)
 
-  const [helpersOnDuty, setHelpersOnDuty] = useState(0)
-  const [guidesOnDuty, setGuidesOnDuty] = useState(0)
-  const [guardiansOnDuty, setGuardiansOnDuty] = useState(0)
+  const [ helpersOnDuty, setHelpersOnDuty ] = useState(0)
+  const [ guidesOnDuty, setGuidesOnDuty ] = useState(0)
+  const [ guardiansOnDuty, setGuardiansOnDuty ] = useState(0)
 
-  const [userRequest, setUserRequest] = useState("")
+  const [ userRequest, setUserRequest ] = useState("")
 
-  const [helpRequestDescription, setHelpRequestDescription] = useState(null)
-  const [helpRequestAverageTime, setHelpRequestAverageTime] = useState(0)
+  const [ helpRequestDescription, setHelpRequestDescription ] = useState(null)
+  const [ helpRequestAverageTime, setHelpRequestAverageTime ] = useState(0)
 
-  const [ongoingUserId, setOngoingUserId] = useState(0)
-  const [ongoingUsername, setOngoingUsername] = useState(null)
-  const [ongoingFigure, setOngoingFigure] = useState(null)
-  const [ongoingIsTyping, setOngoingIsTyping] = useState(false)
-  const [ongoingMessageGroups, setOngoingMessageGroups] = useState<GuideToolMessageGroup[]>([])
+  const [ ongoingUserId, setOngoingUserId ] = useState(0)
+  const [ ongoingUsername, setOngoingUsername ] = useState(null)
+  const [ ongoingFigure, setOngoingFigure ] = useState(null)
+  const [ ongoingIsTyping, setOngoingIsTyping ] = useState(false)
+  const [ ongoingMessageGroups, setOngoingMessageGroups ] = useState<GuideToolMessageGroup[]>([])
 
   const { simpleAlert = null } = useNotification()
 
   const updateSessionState = useCallback((newState: string, replacement?: string) => {
     switch (newState) {
-      case GuideSessionState.GUIDE_TOOL_MENU:
-        setHeaderText(LocalizeText("guide.help.guide.tool.title"))
-        setNoCloseButton(false)
-        break
-      case GuideSessionState.GUIDE_ACCEPT:
-        setHeaderText(LocalizeText("guide.help.request.guide.accept.title"))
-        setNoCloseButton(true)
-        break
-      case GuideSessionState.GUIDE_ONGOING:
-        setHeaderText(LocalizeText("guide.help.request.guide.ongoing.title", ["name"], [replacement]))
-        setNoCloseButton(true)
-        break
-      case GuideSessionState.USER_CREATE:
-        setHeaderText(LocalizeText("guide.help.request.user.create.title"))
-        setNoCloseButton(false)
-        break
-      case GuideSessionState.USER_PENDING:
-        setHeaderText(LocalizeText("guide.help.request.user.pending.title"))
-        setNoCloseButton(true)
-        break
-      case GuideSessionState.USER_ONGOING:
-        setHeaderText(LocalizeText("guide.help.request.user.ongoing.title", ["name"], [replacement]))
-        setNoCloseButton(true)
-        break
-      case GuideSessionState.USER_FEEDBACK:
-        setHeaderText(LocalizeText("guide.help.request.user.feedback.title"))
-        setNoCloseButton(false)
-        break
-      case GuideSessionState.USER_THANKS:
-        setHeaderText(LocalizeText("guide.help.request.user.thanks.title"))
-        setNoCloseButton(false)
-        break
-      case GuideSessionState.USER_NO_HELPERS:
-        setHeaderText(LocalizeText("guide.help.request.no_tour_guides.heading"))
-        setNoCloseButton(false)
-        break
-      case GuideSessionState.USER_SOMETHING_WRONG:
-        setHeaderText(LocalizeText("guide.help.request.user.guide.disconnected.error.heading"))
-        setNoCloseButton(false)
-        break
+    case GuideSessionState.GUIDE_TOOL_MENU:
+      setHeaderText(LocalizeText("guide.help.guide.tool.title"))
+      setNoCloseButton(false)
+      break
+    case GuideSessionState.GUIDE_ACCEPT:
+      setHeaderText(LocalizeText("guide.help.request.guide.accept.title"))
+      setNoCloseButton(true)
+      break
+    case GuideSessionState.GUIDE_ONGOING:
+      setHeaderText(LocalizeText("guide.help.request.guide.ongoing.title", [ "name" ], [ replacement ]))
+      setNoCloseButton(true)
+      break
+    case GuideSessionState.USER_CREATE:
+      setHeaderText(LocalizeText("guide.help.request.user.create.title"))
+      setNoCloseButton(false)
+      break
+    case GuideSessionState.USER_PENDING:
+      setHeaderText(LocalizeText("guide.help.request.user.pending.title"))
+      setNoCloseButton(true)
+      break
+    case GuideSessionState.USER_ONGOING:
+      setHeaderText(LocalizeText("guide.help.request.user.ongoing.title", [ "name" ], [ replacement ]))
+      setNoCloseButton(true)
+      break
+    case GuideSessionState.USER_FEEDBACK:
+      setHeaderText(LocalizeText("guide.help.request.user.feedback.title"))
+      setNoCloseButton(false)
+      break
+    case GuideSessionState.USER_THANKS:
+      setHeaderText(LocalizeText("guide.help.request.user.thanks.title"))
+      setNoCloseButton(false)
+      break
+    case GuideSessionState.USER_NO_HELPERS:
+      setHeaderText(LocalizeText("guide.help.request.no_tour_guides.heading"))
+      setNoCloseButton(false)
+      break
+    case GuideSessionState.USER_SOMETHING_WRONG:
+      setHeaderText(LocalizeText("guide.help.request.user.guide.disconnected.error.heading"))
+      setNoCloseButton(false)
+      break
     }
 
     setSessionState(newState)
@@ -92,20 +92,20 @@ export const GuideToolView: FC<{}> = props => {
 
   const onGuideToolEvent = useCallback((event: GuideToolEvent) => {
     switch (event.type) {
-      case GuideToolEvent.SHOW_GUIDE_TOOL:
-        setIsVisible(true)
-        return
-      case GuideToolEvent.HIDE_GUIDE_TOOL:
-        setIsVisible(false)
-        return
-      case GuideToolEvent.TOGGLE_GUIDE_TOOL:
-        setIsVisible(value => !value)
-        return
-      case GuideToolEvent.CREATE_HELP_REQUEST:
-        updateSessionState(GuideSessionState.USER_CREATE)
-        return
+    case GuideToolEvent.SHOW_GUIDE_TOOL:
+      setIsVisible(true)
+      return
+    case GuideToolEvent.HIDE_GUIDE_TOOL:
+      setIsVisible(false)
+      return
+    case GuideToolEvent.TOGGLE_GUIDE_TOOL:
+      setIsVisible(value => !value)
+      return
+    case GuideToolEvent.CREATE_HELP_REQUEST:
+      updateSessionState(GuideSessionState.USER_CREATE)
+      return
     }
-  }, [updateSessionState])
+  }, [ updateSessionState ])
 
   useUiEvent(GuideToolEvent.SHOW_GUIDE_TOOL, onGuideToolEvent)
   useUiEvent(GuideToolEvent.HIDE_GUIDE_TOOL, onGuideToolEvent)
@@ -167,7 +167,7 @@ export const GuideToolView: FC<{}> = props => {
   useMessageEvent<GuideSessionMessageMessageEvent>(GuideSessionMessageMessageEvent, event => {
     const parser = event.getParser()
 
-    const messageGroups = [...ongoingMessageGroups]
+    const messageGroups = [ ...ongoingMessageGroups ]
 
     let lastGroup = messageGroups[messageGroups.length - 1]
 
@@ -184,7 +184,7 @@ export const GuideToolView: FC<{}> = props => {
     const parser = event.getParser()
 
     if (parser.roomId !== 0) {
-      const messageGroups = [...ongoingMessageGroups]
+      const messageGroups = [ ...ongoingMessageGroups ]
 
       let lastGroup = messageGroups[messageGroups.length - 1]
 
@@ -220,13 +220,13 @@ export const GuideToolView: FC<{}> = props => {
     // SOMETHING_WRONG_REQUEST = 0, NO_HELPERS_AVAILABLE = 1, NO_GUARDIANS_AVAILABLE = 2
 
     switch (parser["errorCode"]) {
-      case 0:
-        updateSessionState(GuideSessionState.USER_SOMETHING_WRONG)
-        break
-      case 1:
-      case 2:
-        updateSessionState(GuideSessionState.USER_NO_HELPERS)
-        break
+    case 0:
+      updateSessionState(GuideSessionState.USER_SOMETHING_WRONG)
+      break
+    case 1:
+    case 2:
+      updateSessionState(GuideSessionState.USER_NO_HELPERS)
+      break
     }
   })
 
@@ -254,9 +254,9 @@ export const GuideToolView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-          case "tour":
-            //Create Tour Request
-            return
+        case "tour":
+          //Create Tour Request
+          return
         }
       },
       eventUrlPrefix: "help/"
@@ -269,41 +269,41 @@ export const GuideToolView: FC<{}> = props => {
 
   const processAction = useCallback((action: string) => {
     switch (action) {
-      case "close":
-        setIsVisible(false)
-        setUserRequest("")
-        setSessionState(GuideSessionState.GUIDE_TOOL_MENU)
+    case "close":
+      setIsVisible(false)
+      setUserRequest("")
+      setSessionState(GuideSessionState.GUIDE_TOOL_MENU)
+      return
+    case "toggle_duty":
+      if (!isHandlingBullyReports && !isHandlingGuideRequests && !isHandlingHelpRequests) {
+        simpleAlert(LocalizeText("guide.help.guide.tool.noqueueselected.message"), null, null, null, LocalizeText("guide.help.guide.tool.noqueueselected.caption"), null)
         return
-      case "toggle_duty":
-        if (!isHandlingBullyReports && !isHandlingGuideRequests && !isHandlingHelpRequests) {
-          simpleAlert(LocalizeText("guide.help.guide.tool.noqueueselected.message"), null, null, null, LocalizeText("guide.help.guide.tool.noqueueselected.caption"), null)
-          return
-        }
+      }
 
-        setIsOnDuty(v => {
-          SendMessageComposer(new GuideSessionOnDutyUpdateMessageComposer(!v, v ? false : isHandlingGuideRequests, v ? false : isHandlingHelpRequests, v ? false : isHandlingBullyReports))
-          return !v
-        })
+      setIsOnDuty(v => {
+        SendMessageComposer(new GuideSessionOnDutyUpdateMessageComposer(!v, v ? false : isHandlingGuideRequests, v ? false : isHandlingHelpRequests, v ? false : isHandlingBullyReports))
+        return !v
+      })
 
-        return
-      case "forum_link":
-        const url: string = GetConfiguration("group.homepage.url", "").replace("%groupid%", GetConfiguration("guide.help.alpha.groupid", "0"))
-        window.open(url)
-        return
+      return
+    case "forum_link":
+      const url: string = GetConfiguration("group.homepage.url", "").replace("%groupid%", GetConfiguration("guide.help.alpha.groupid", "0"))
+      window.open(url)
+      return
     }
-  }, [isHandlingBullyReports, isHandlingGuideRequests, isHandlingHelpRequests, simpleAlert])
+  }, [ isHandlingBullyReports, isHandlingGuideRequests, isHandlingHelpRequests, simpleAlert ])
 
   if (!isVisible) return null
 
   return (
     <NitroCardView uniqueKey="guide-tool" className="illumina-guide-tool w-[280px]" windowPosition={DraggableWindowPosition.TOP_LEFT}>
       <NitroCardHeaderView headerText={headerText} onCloseClick={event => processAction("close")} noCloseButton={noCloseButton} />
-      <NitroCardContentView className={`text-black ${[GuideSessionState.GUIDE_ONGOING, GuideSessionState.USER_ONGOING].includes(sessionState) || (sessionState === GuideSessionState.USER_FEEDBACK) || (sessionState === GuideSessionState.GUIDE_ACCEPT) ? "!px-px" : ""}`}>
+      <NitroCardContentView className={`text-black ${[ GuideSessionState.GUIDE_ONGOING, GuideSessionState.USER_ONGOING ].includes(sessionState) || (sessionState === GuideSessionState.USER_FEEDBACK) || (sessionState === GuideSessionState.GUIDE_ACCEPT) ? "!px-px" : ""}`}>
         {(sessionState === GuideSessionState.GUIDE_TOOL_MENU) &&
           <GuideToolMenuView isOnDuty={isOnDuty} isHandlingGuideRequests={isHandlingGuideRequests} setIsHandlingGuideRequests={setIsHandlingGuideRequests} isHandlingHelpRequests={isHandlingHelpRequests} setIsHandlingHelpRequests={setIsHandlingHelpRequests} isHandlingBullyReports={isHandlingBullyReports} setIsHandlingBullyReports={setIsHandlingBullyReports} guidesOnDuty={guidesOnDuty} helpersOnDuty={helpersOnDuty} guardiansOnDuty={guardiansOnDuty} processAction={processAction} />}
         {(sessionState === GuideSessionState.GUIDE_ACCEPT) &&
           <GuideToolAcceptView helpRequestDescription={helpRequestDescription} helpRequestAverageTime={helpRequestAverageTime} />}
-        {[GuideSessionState.GUIDE_ONGOING, GuideSessionState.USER_ONGOING].includes(sessionState) &&
+        {[ GuideSessionState.GUIDE_ONGOING, GuideSessionState.USER_ONGOING ].includes(sessionState) &&
           <GuideToolOngoingView isGuide={isOnDuty} userId={ongoingUserId} userName={ongoingUsername} userFigure={ongoingFigure} isTyping={ongoingIsTyping} messageGroups={ongoingMessageGroups} />}
         {(sessionState === GuideSessionState.USER_CREATE) &&
           <GuideToolUserCreateRequestView userRequest={userRequest} setUserRequest={setUserRequest} onCloseClick={event => processAction("close")} />}

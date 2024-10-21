@@ -27,8 +27,8 @@ import { UserSettingsView } from "../user-settings/UserSettingsView"
 import { Wired } from "../wired"
 
 export const Main: FC<{}> = () => {
-  const [isReady, setIsReady] = useState(false)
-  const [landingViewVisible, setLandingViewVisible] = useState(true)
+  const [ isReady, setIsReady ] = useState(false)
+  const [ landingViewVisible, setLandingViewVisible ] = useState(true)
 
   useRoomSessionManagerEvent<RoomSessionEvent>(RoomSessionEvent.CREATED, event => setLandingViewVisible(false))
   useRoomSessionManagerEvent<RoomSessionEvent>(RoomSessionEvent.ENDED, event => setLandingViewVisible(event.openLandingView))
@@ -46,19 +46,19 @@ export const Main: FC<{}> = () => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-          case "open":
-            if (parts.length > 2) {
-              switch (parts[2]) {
-                case "credits":
-                  //HabboWebTools.openWebPageAndMinimizeClient(this._windowManager.getProperty(ExternalVariables.WEB_SHOP_RELATIVE_URL));
-                  break
-                default: {
-                  const name = parts[2]
-                  HabboWebTools.openHabblet(name)
-                }
-              }
+        case "open":
+          if (parts.length > 2) {
+            switch (parts[2]) {
+            case "credits":
+              //HabboWebTools.openWebPageAndMinimizeClient(this._windowManager.getProperty(ExternalVariables.WEB_SHOP_RELATIVE_URL));
+              break
+            default: {
+              const name = parts[2]
+              HabboWebTools.openHabblet(name)
             }
-            return
+            }
+          }
+          return
         }
       },
       eventUrlPrefix: "habblet/"

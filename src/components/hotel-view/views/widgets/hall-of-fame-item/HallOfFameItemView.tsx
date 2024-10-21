@@ -1,7 +1,7 @@
-import { HallOfFameEntryData } from "@nitrots/nitro-renderer";
-import { FC } from "react";
-import { LocalizeFormattedNumber, LocalizeText } from "../../../../../api";
-import { LayoutAvatarImage } from "../../../../../common";
+import { HallOfFameEntryData } from "@nitrots/nitro-renderer"
+import { FC } from "react"
+import { LocalizeFormattedNumber, LocalizeText } from "../../../../../api"
+import { LayoutAvatarImage } from "../../../../../common"
 
 export interface HallOfFameItemViewProps {
   data: HallOfFameEntryData;
@@ -18,7 +18,7 @@ export const HallOfFameItemView: FC<HallOfFameItemViewProps> = props => {
           {level}. {data.userName}
           {/* <UserProfileIconView userId={ data.userId } /> */}
         </div>
-        <div className="small text-center text-white">{LocalizeText("landing.view.competition.hof.points", ["points"], [LocalizeFormattedNumber(data.currentScore).toString()])}</div>
+        <div className="small text-center text-white">{LocalizeText("landing.view.competition.hof.points", [ "points" ], [ LocalizeFormattedNumber(data.currentScore).toString() ])}</div>
       </div>
       <LayoutAvatarImage figure={data.figure} direction={2} />
     </div>

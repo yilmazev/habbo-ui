@@ -11,12 +11,12 @@ interface NavigatorRoomSettingsTabViewProps {
 
 export const NavigatorRoomSettingsModTabView: FC<NavigatorRoomSettingsTabViewProps> = props => {
   const { roomData = null, handleChange = null } = props
-  const [selectedUserId, setSelectedUserId] = useState(-1)
-  const [bannedUsers, setBannedUsers] = useState<BannedUserData[]>([])
+  const [ selectedUserId, setSelectedUserId ] = useState(-1)
+  const [ bannedUsers, setBannedUsers ] = useState<BannedUserData[]>([])
 
   const unBanUser = (userId: number) => {
     setBannedUsers(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
 
       const index = newValue.findIndex(value => (value.userId === userId))
 
@@ -40,7 +40,7 @@ export const NavigatorRoomSettingsModTabView: FC<NavigatorRoomSettingsTabViewPro
 
   useEffect(() => {
     SendMessageComposer(new RoomBannedUsersComposer(roomData.roomId))
-  }, [roomData.roomId])
+  }, [ roomData.roomId ])
 
   return (
     <div className="mt-2 flex flex-col gap-[15px]">

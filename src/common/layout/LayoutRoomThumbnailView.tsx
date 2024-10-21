@@ -1,6 +1,6 @@
-import { FC, useMemo } from "react";
-import { GetConfiguration } from "../../api";
-import { BaseProps } from "../Base";
+import { FC, useMemo } from "react"
+import { GetConfiguration } from "../../api"
+import { BaseProps } from "../Base"
 
 export interface LayoutRoomThumbnailViewProps extends BaseProps<HTMLDivElement> {
   roomId?: number;
@@ -14,7 +14,7 @@ export const LayoutRoomThumbnailView: FC<LayoutRoomThumbnailViewProps> = props =
   const { roomId = -1, isRoom = false, isNavigator = false, type = "default", customUrl = null, classNames = [], className = "", children = null, ...rest } = props
 
   const getClassNames = useMemo(() => {
-    const newClassNames: string[] = ["relative overflow-hidden shrink-0"]
+    const newClassNames: string[] = [ "relative overflow-hidden shrink-0" ]
 
     if (type === "r63") newClassNames.push("!w-[70px] !h-16")
     newClassNames.push("w-[106px] h-[107px]")
@@ -22,7 +22,7 @@ export const LayoutRoomThumbnailView: FC<LayoutRoomThumbnailViewProps> = props =
     if (classNames.length) newClassNames.push(...classNames)
 
     return newClassNames
-  }, [classNames])
+  }, [ classNames ])
 
   const getClassName = useMemo(() => {
     let newClassName = getClassNames.join(" ")
@@ -30,7 +30,7 @@ export const LayoutRoomThumbnailView: FC<LayoutRoomThumbnailViewProps> = props =
     if (className.length) newClassName += (" " + className)
 
     return newClassName.trim()
-  }, [getClassNames, className])
+  }, [ getClassNames, className ])
 
   const getImageUrl = useMemo(() => {
     if (customUrl && customUrl.length) {
@@ -38,7 +38,7 @@ export const LayoutRoomThumbnailView: FC<LayoutRoomThumbnailViewProps> = props =
     }
 
     return `${GetConfiguration("thumbnails.url").replace("%thumbnail%", roomId.toString())}?cache=${Math.random()}`
-  }, [customUrl, roomId])
+  }, [ customUrl, roomId ])
 
   if (isNavigator) return (
     <div className="absolute left-0 top-0 size-full bg-cover bg-center" style={{ backgroundImage: `url(${getImageUrl})` }} />

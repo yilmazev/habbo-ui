@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react";
-import { AvatarEditorGridColorItem, GetConfiguration } from "../../../../api";
-import { LayoutGridItemProps } from "../../../../common";
+import { FC, useEffect, useState } from "react"
+import { AvatarEditorGridColorItem, GetConfiguration } from "../../../../api"
+import { LayoutGridItemProps } from "../../../../common"
 
 export interface AvatarEditorPaletteSetItemProps extends LayoutGridItemProps {
   colorItem: AvatarEditorGridColorItem;
@@ -8,7 +8,7 @@ export interface AvatarEditorPaletteSetItemProps extends LayoutGridItemProps {
 
 export const AvatarEditorPaletteSetItem: FC<AvatarEditorPaletteSetItemProps> = props => {
   const { colorItem = null, children = null, ...rest } = props
-  const [updateId, setUpdateId] = useState(-1)
+  const [ updateId, setUpdateId ] = useState(-1)
 
   const hcDisabled = GetConfiguration("hc.disabled", false)
 
@@ -18,7 +18,7 @@ export const AvatarEditorPaletteSetItem: FC<AvatarEditorPaletteSetItemProps> = p
     colorItem.notify = rerender
 
     return () => colorItem.notify = null
-  }, [colorItem])
+  }, [ colorItem ])
 
   return (
     <div className={`relative h-[17px] w-[13px] cursor-pointer ${colorItem.isSelected ? "-translate-y-0.5" : null}`} {...rest}>

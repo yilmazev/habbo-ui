@@ -12,14 +12,14 @@ import { CatalogLayoutProps } from "../CatalogLayout.types"
 
 export const CatalogLayoutPetView: FC<CatalogLayoutProps> = props => {
   const { page = null } = props
-  const [petIndex, setPetIndex] = useState(-1)
-  const [sellablePalettes, setSellablePalettes] = useState<SellablePetPaletteData[]>([])
-  const [selectedPaletteIndex, setSelectedPaletteIndex] = useState(-1)
-  const [sellableColors, setSellableColors] = useState<number[][]>([])
-  const [selectedColorIndex, setSelectedColorIndex] = useState(-1)
-  const [colorsShowing, setColorsShowing] = useState(false)
-  const [petName, setPetName] = useState("")
-  const [approvalResult, setApprovalResult] = useState(-1)
+  const [ petIndex, setPetIndex ] = useState(-1)
+  const [ sellablePalettes, setSellablePalettes ] = useState<SellablePetPaletteData[]>([])
+  const [ selectedPaletteIndex, setSelectedPaletteIndex ] = useState(-1)
+  const [ sellableColors, setSellableColors ] = useState<number[][]>([])
+  const [ selectedColorIndex, setSelectedColorIndex ] = useState(-1)
+  const [ colorsShowing, setColorsShowing ] = useState(false)
+  const [ petName, setPetName ] = useState("")
+  const [ approvalResult, setApprovalResult ] = useState(-1)
   const { currentOffer = null, setCurrentOffer = null, setPurchaseOptions = null, catalogOptions = null, roomPreviewer = null } = useCatalog()
   const { petPalettes = null } = catalogOptions
   const { simpleAlert = null } = useNotification()
@@ -28,13 +28,13 @@ export const CatalogLayoutPetView: FC<CatalogLayoutProps> = props => {
     if (!sellableColors.length || (selectedColorIndex === -1)) return 0xFFFFFF
 
     return sellableColors[selectedColorIndex][0]
-  }, [sellableColors, selectedColorIndex])
+  }, [ sellableColors, selectedColorIndex ])
 
   const petBreedName = useMemo(() => {
     if ((petIndex === -1) || !sellablePalettes.length || (selectedPaletteIndex === -1)) return ""
 
     return LocalizeText(`pet.breed.${petIndex}.${sellablePalettes[selectedPaletteIndex].breedId}`)
-  }, [petIndex, sellablePalettes, selectedPaletteIndex])
+  }, [ petIndex, sellablePalettes, selectedPaletteIndex ])
 
   const petPurchaseString = useMemo(() => {
     if (!sellablePalettes.length || (selectedPaletteIndex === -1)) return ""
@@ -54,24 +54,24 @@ export const CatalogLayoutPetView: FC<CatalogLayoutProps> = props => {
     while (colorString.length < 6) colorString = ("0" + colorString)
 
     return `${paletteId}\n${colorString}`
-  }, [sellablePalettes, selectedPaletteIndex, petIndex, sellableColors, selectedColorIndex])
+  }, [ sellablePalettes, selectedPaletteIndex, petIndex, sellableColors, selectedColorIndex ])
 
   const validationErrorMessage = useMemo(() => {
     switch (approvalResult) {
-      case 1:
-        simpleAlert(LocalizeText("catalog.alert.petname.long"), NotificationAlertType.ALERT, null, null, LocalizeText("catalog.alert.purchaseerror.title"))
-        return
-      case 2:
-        simpleAlert(LocalizeText("catalog.alert.petname.short"), NotificationAlertType.ALERT, null, null, LocalizeText("catalog.alert.purchaseerror.title"))
-        return
-      case 3:
-        simpleAlert(LocalizeText("catalog.alert.petname.chars"), NotificationAlertType.ALERT, null, null, LocalizeText("catalog.alert.purchaseerror.title"))
-        return
-      case 4:
-        simpleAlert(LocalizeText("catalog.alert.petname.bobba"), NotificationAlertType.ALERT, null, null, LocalizeText("catalog.alert.purchaseerror.title"))
-        return
+    case 1:
+      simpleAlert(LocalizeText("catalog.alert.petname.long"), NotificationAlertType.ALERT, null, null, LocalizeText("catalog.alert.purchaseerror.title"))
+      return
+    case 2:
+      simpleAlert(LocalizeText("catalog.alert.petname.short"), NotificationAlertType.ALERT, null, null, LocalizeText("catalog.alert.purchaseerror.title"))
+      return
+    case 3:
+      simpleAlert(LocalizeText("catalog.alert.petname.chars"), NotificationAlertType.ALERT, null, null, LocalizeText("catalog.alert.purchaseerror.title"))
+      return
+    case 4:
+      simpleAlert(LocalizeText("catalog.alert.petname.bobba"), NotificationAlertType.ALERT, null, null, LocalizeText("catalog.alert.purchaseerror.title"))
+      return
     }
-  }, [approvalResult])
+  }, [ approvalResult ])
 
   const purchasePet = useCallback(() => {
     if (approvalResult === -1) {
@@ -85,7 +85,7 @@ export const CatalogLayoutPetView: FC<CatalogLayoutProps> = props => {
     }
 
     setApprovalResult(-1)
-  }, [page, currentOffer, petName, petPurchaseString, approvalResult])
+  }, [ page, currentOffer, petName, petPurchaseString, approvalResult ])
 
   useMessageEvent<ApproveNameMessageEvent>(ApproveNameMessageEvent, event => {
     const parser = event.getParser()
@@ -104,7 +104,7 @@ export const CatalogLayoutPetView: FC<CatalogLayoutProps> = props => {
     setCurrentOffer(offer)
     setPetIndex(GetPetIndexFromLocalization(offer.localizationId))
     setColorsShowing(false)
-  }, [page, setCurrentOffer])
+  }, [ page, setCurrentOffer ])
 
   useEffect(() => {
     if (!currentOffer) return
@@ -136,7 +136,7 @@ export const CatalogLayoutPetView: FC<CatalogLayoutProps> = props => {
     setSellablePalettes([])
 
     SendMessageComposer(new GetSellablePetPalettesComposer(productData.type))
-  }, [currentOffer, petPalettes])
+  }, [ currentOffer, petPalettes ])
 
   useEffect(() => {
     if (petIndex === -1) return
@@ -145,7 +145,7 @@ export const CatalogLayoutPetView: FC<CatalogLayoutProps> = props => {
 
     setSelectedColorIndex((colors.length ? 0 : -1))
     setSellableColors(colors)
-  }, [petIndex, sellablePalettes])
+  }, [ petIndex, sellablePalettes ])
 
   useEffect(() => {
     if (!roomPreviewer) return
@@ -159,11 +159,11 @@ export const CatalogLayoutPetView: FC<CatalogLayoutProps> = props => {
     if (petIndex <= 7) petFigureString += ` ${getColor.toString(16)}`
 
     roomPreviewer.addPetIntoRoom(petFigureString)
-  }, [roomPreviewer, petIndex, sellablePalettes, selectedPaletteIndex, getColor])
+  }, [ roomPreviewer, petIndex, sellablePalettes, selectedPaletteIndex, getColor ])
 
   useEffect(() => {
     setApprovalResult(-1)
-  }, [petName])
+  }, [ petName ])
 
   if (!currentOffer) return null
 

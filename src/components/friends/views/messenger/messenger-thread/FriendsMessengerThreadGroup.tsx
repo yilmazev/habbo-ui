@@ -6,7 +6,7 @@ import { Button, LayoutAvatarImage } from "../../../../../common"
 export const FriendsMessengerThreadGroup: FC<{ thread: MessengerThread, group: MessengerThreadChatGroup }> = props => {
   const { thread = null, group = null } = props
 
-  const groupChatData = useMemo(() => ((group.type === MessengerGroupType.GROUP_CHAT) && GetGroupChatData(group.chats[0].extraData)), [group])
+  const groupChatData = useMemo(() => ((group.type === MessengerGroupType.GROUP_CHAT) && GetGroupChatData(group.chats[0].extraData)), [ group ])
 
   const isOwnChat = useMemo(() => {
     if (!thread || !group) return false
@@ -16,7 +16,7 @@ export const FriendsMessengerThreadGroup: FC<{ thread: MessengerThread, group: M
     if (groupChatData && group.chats.length && (groupChatData.userId === GetSessionDataManager().userId)) return true
 
     return false
-  }, [thread, group, groupChatData])
+  }, [ thread, group, groupChatData ])
 
   if (!thread || !group) return null
 
@@ -37,7 +37,7 @@ export const FriendsMessengerThreadGroup: FC<{ thread: MessengerThread, group: M
                 <p className="mb-2.5 w-[170px] overflow-hidden break-words text-xs !leading-[13px] text-[#2F2F2F]">{chat.message}</p>
                 <Button className="!h-5 w-fit gap-[5px] !px-1.5" onClick={() => thread && thread.participant && SendMessageComposer(new FollowFriendMessageComposer(thread.participant.id))}>
                   <i className="block h-2.5 w-[9px] bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-453px_0px]" />
-                  <p className="text-[11px] font-semibold !leading-3 text-[#4a4a4a] [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("messenger.invitation.button", ["username"], [thread.participant.name])}</p>
+                  <p className="text-[11px] font-semibold !leading-3 text-[#4a4a4a] [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("messenger.invitation.button", [ "username" ], [ thread.participant.name ])}</p>
                 </Button>
               </div>
             </div>}

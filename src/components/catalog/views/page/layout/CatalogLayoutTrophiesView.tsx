@@ -7,7 +7,7 @@ import { CatalogLayoutProps } from "./CatalogLayout.types"
 
 export const CatalogLayoutTrophiesView: FC<CatalogLayoutProps> = props => {
   const { page = null } = props
-  const [trophyText, setTrophyText] = useState("")
+  const [ trophyText, setTrophyText ] = useState("")
   const { currentOffer = null, setPurchaseOptions = null } = useCatalog()
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const CatalogLayoutTrophiesView: FC<CatalogLayoutProps> = props => {
 
       return newValue
     })
-  }, [currentOffer, trophyText, setPurchaseOptions])
+  }, [ currentOffer, trophyText, setPurchaseOptions ])
 
   return (<>
     <CatalogFirstProductSelectorWidgetView />

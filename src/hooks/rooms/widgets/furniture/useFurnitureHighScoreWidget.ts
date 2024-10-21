@@ -4,11 +4,11 @@ import { GetRoomEngine } from "../../../../api"
 import { useRoomEngineEvent } from "../../../events"
 import { useRoom } from "../../useRoom"
 
-const SCORE_TYPES = ["perteam", "mostwins", "classic"]
-const CLEAR_TYPES = ["alltime", "daily", "weekly", "monthly"]
+const SCORE_TYPES = [ "perteam", "mostwins", "classic" ]
+const CLEAR_TYPES = [ "alltime", "daily", "weekly", "monthly" ]
 
 const useFurnitureHighScoreWidgetState = () => {
-  const [stuffDatas, setStuffDatas] = useState<Map<number, HighScoreDataType>>(new Map())
+  const [ stuffDatas, setStuffDatas ] = useState<Map<number, HighScoreDataType>>(new Map())
   const { roomSession = null } = useRoom()
 
   const getScoreType = (type: number) => SCORE_TYPES[type]

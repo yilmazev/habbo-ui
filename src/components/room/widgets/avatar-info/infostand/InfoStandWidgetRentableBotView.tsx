@@ -18,7 +18,7 @@ export const InfoStandWidgetRentableBotView: FC<InfoStandWidgetRentableBotViewPr
     if (!avatarInfo.amIOwner && !avatarInfo.amIAnyRoomController) return false
 
     return true
-  }, [avatarInfo])
+  }, [ avatarInfo ])
 
   const pickupBot = () => SendMessageComposer(new BotRemoveComposer(avatarInfo.webID))
 
@@ -50,7 +50,7 @@ export const InfoStandWidgetRentableBotView: FC<InfoStandWidgetRentableBotViewPr
         <div className="mb-[7px] mt-1 h-0.5 w-full border-b border-white bg-[#CCCCCC] dark:border-[#36322C] dark:bg-black" />
         <div className="mb-[9px]">
           <p className="text-[13px] !leading-3 [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">
-            {LocalizeText("infostand.text.botowner", ["name"], [avatarInfo.ownerName])}
+            {LocalizeText("infostand.text.botowner", [ "name" ], [ avatarInfo.ownerName ])}
           </p>
         </div>
       </div>

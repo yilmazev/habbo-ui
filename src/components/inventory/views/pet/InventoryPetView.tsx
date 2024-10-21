@@ -13,7 +13,7 @@ interface InventoryPetViewProps {
 
 export const InventoryPetView: FC<InventoryPetViewProps> = props => {
   const { roomSession = null, roomPreviewer = null } = props
-  const [isVisible, setIsVisible] = useState(false)
+  const [ isVisible, setIsVisible ] = useState(false)
   const { petItems = null, selectedPet = null, activate = null, deactivate = null } = useInventoryPets()
   const { isUnseen = null, removeUnseen = null } = useInventoryUnseenTracker()
 
@@ -35,13 +35,13 @@ export const InventoryPetView: FC<InventoryPetViewProps> = props => {
     roomPreviewer.updateRoomWallsAndFloorVisibility(false, false)
     roomPreviewer.updateObjectRoom(floorType, wallType, landscapeType)
     roomPreviewer.addPetIntoRoom(petData.figureString)
-  }, [roomPreviewer, selectedPet])
+  }, [ roomPreviewer, selectedPet ])
 
   useEffect(() => {
     if (!selectedPet || !isUnseen(UnseenItemCategory.PET, selectedPet.petData.id)) return
 
     removeUnseen(UnseenItemCategory.PET, selectedPet.petData.id)
-  }, [selectedPet, isUnseen, removeUnseen])
+  }, [ selectedPet, isUnseen, removeUnseen ])
 
   useEffect(() => {
     if (!isVisible) return
@@ -49,7 +49,7 @@ export const InventoryPetView: FC<InventoryPetViewProps> = props => {
     const id = activate()
 
     return () => deactivate(id)
-  }, [isVisible, activate, deactivate])
+  }, [ isVisible, activate, deactivate ])
 
   useEffect(() => {
     setIsVisible(true)

@@ -8,20 +8,20 @@ import { useObjectDeselectedEvent, useObjectRollOutEvent, useObjectRollOverEvent
 import { useRoom } from "../useRoom"
 
 const useAvatarInfoWidgetState = () => {
-  const [avatarInfo, setAvatarInfo] = useState<IAvatarInfo>(null)
-  const [activeNameBubble, setActiveNameBubble] = useState<AvatarInfoName>(null)
-  const [nameBubbles, setNameBubbles] = useState<AvatarInfoName[]>([])
-  const [productBubbles, setProductBubbles] = useState<UseProductItem[]>([])
-  const [confirmingProduct, setConfirmingProduct] = useState<UseProductItem>(null)
-  const [pendingPetId, setPendingPetId] = useState(-1)
-  const [isDecorating, setIsDecorating] = useState(false)
+  const [ avatarInfo, setAvatarInfo ] = useState<IAvatarInfo>(null)
+  const [ activeNameBubble, setActiveNameBubble ] = useState<AvatarInfoName>(null)
+  const [ nameBubbles, setNameBubbles ] = useState<AvatarInfoName[]>([])
+  const [ productBubbles, setProductBubbles ] = useState<UseProductItem[]>([])
+  const [ confirmingProduct, setConfirmingProduct ] = useState<UseProductItem>(null)
+  const [ pendingPetId, setPendingPetId ] = useState(-1)
+  const [ isDecorating, setIsDecorating ] = useState(false)
   const { friends = [] } = useFriends()
   const { selectObjectForWired = null } = useWired()
   const { roomSession = null } = useRoom()
 
   const removeNameBubble = (index: number) => {
     setNameBubbles(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
 
       newValue.splice(index, 1)
 
@@ -31,7 +31,7 @@ const useAvatarInfoWidgetState = () => {
 
   const removeProductBubble = (index: number) => {
     setProductBubbles(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
       const item = newValue.splice(index, 1)[0]
 
       if (confirmingProduct === item) setConfirmingProduct(null)
@@ -59,33 +59,33 @@ const useAvatarInfoWidgetState = () => {
     let info: IAvatarInfo = null
 
     switch (category) {
-      case RoomObjectCategory.FLOOR:
-      case RoomObjectCategory.WALL:
-        info = AvatarInfoUtilities.getFurniInfo(objectId, category)
+    case RoomObjectCategory.FLOOR:
+    case RoomObjectCategory.WALL:
+      info = AvatarInfoUtilities.getFurniInfo(objectId, category)
 
-        if (info) selectObjectForWired(objectId, category)
+      if (info) selectObjectForWired(objectId, category)
+      break
+    case RoomObjectCategory.UNIT: {
+      const userData = roomSession.userDataManager.getUserDataByIndex(objectId)
+
+      if (!userData) break
+
+      switch (userData.type) {
+      case RoomObjectType.PET:
+        roomSession.userDataManager.requestPetInfo(userData.webID)
+        setPendingPetId(userData.webID)
         break
-      case RoomObjectCategory.UNIT: {
-        const userData = roomSession.userDataManager.getUserDataByIndex(objectId)
-
-        if (!userData) break
-
-        switch (userData.type) {
-          case RoomObjectType.PET:
-            roomSession.userDataManager.requestPetInfo(userData.webID)
-            setPendingPetId(userData.webID)
-            break
-          case RoomObjectType.USER:
-            info = AvatarInfoUtilities.getUserInfo(category, userData)
-            break
-          case RoomObjectType.BOT:
-            info = AvatarInfoUtilities.getBotInfo(category, userData)
-            break
-          case RoomObjectType.RENTABLE_BOT:
-            info = AvatarInfoUtilities.getRentableBotInfo(category, userData)
-            break
-        }
+      case RoomObjectType.USER:
+        info = AvatarInfoUtilities.getUserInfo(category, userData)
+        break
+      case RoomObjectType.BOT:
+        info = AvatarInfoUtilities.getBotInfo(category, userData)
+        break
+      case RoomObjectType.RENTABLE_BOT:
+        info = AvatarInfoUtilities.getRentableBotInfo(category, userData)
+        break
       }
+    }
 
     }
 
@@ -119,7 +119,7 @@ const useAvatarInfoWidgetState = () => {
     if (!addedNameBubbles.length) return
 
     setNameBubbles(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
 
       addedNameBubbles.forEach(bubble => {
         const oldIndex = newValue.findIndex(oldBubble => (oldBubble.id === bubble.id))
@@ -296,17 +296,17 @@ const useAvatarInfoWidgetState = () => {
     setActiveNameBubble(null)
     setNameBubbles([])
     setProductBubbles([])
-  }, [avatarInfo])
+  }, [ avatarInfo ])
 
   useEffect(() => {
     if (!activeNameBubble) return
 
     setNameBubbles([])
-  }, [activeNameBubble])
+  }, [ activeNameBubble ])
 
   useEffect(() => {
     roomSession.isDecorating = isDecorating
-  }, [roomSession, isDecorating])
+  }, [ roomSession, isDecorating ])
 
   return { avatarInfo, setAvatarInfo, activeNameBubble, setActiveNameBubble, nameBubbles, productBubbles, confirmingProduct, isDecorating, setIsDecorating, removeNameBubble, removeProductBubble, updateConfirmingProduct, getObjectName }
 }

@@ -6,13 +6,13 @@ import { useNotification } from "../../../notification"
 import { useFurniRemovedEvent } from "../../engine"
 
 const useFurnitureBadgeDisplayWidgetState = () => {
-  const [objectId, setObjectId] = useState(-1)
-  const [category, setCategory] = useState(-1)
-  const [color, setColor] = useState("1")
-  const [badgeName, setBadgeName] = useState("")
-  const [badgeDesc, setBadgeDesc] = useState("")
-  const [date, setDate] = useState("")
-  const [senderName, setSenderName] = useState("")
+  const [ objectId, setObjectId ] = useState(-1)
+  const [ category, setCategory ] = useState(-1)
+  const [ color, setColor ] = useState("1")
+  const [ badgeName, setBadgeName ] = useState("")
+  const [ badgeDesc, setBadgeDesc ] = useState("")
+  const [ date, setDate ] = useState("")
+  const [ senderName, setSenderName ] = useState("")
   const { simpleAlert = null } = useNotification()
 
   const onClose = () => {

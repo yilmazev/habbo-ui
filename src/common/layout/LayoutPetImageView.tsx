@@ -1,7 +1,7 @@
-import { IPetCustomPart, PetFigureData, TextureUtils, Vector3d } from "@nitrots/nitro-renderer";
-import { CSSProperties, FC, useEffect, useMemo, useRef, useState } from "react";
-import { GetRoomEngine } from "../../api";
-import { BaseProps } from "../Base";
+import { IPetCustomPart, PetFigureData, TextureUtils, Vector3d } from "@nitrots/nitro-renderer"
+import { CSSProperties, FC, useEffect, useMemo, useRef, useState } from "react"
+import { GetRoomEngine } from "../../api"
+import { BaseProps } from "../Base"
 
 interface LayoutPetImageViewProps extends BaseProps<HTMLDivElement> {
   figure?: string;
@@ -17,9 +17,9 @@ interface LayoutPetImageViewProps extends BaseProps<HTMLDivElement> {
 
 export const LayoutPetImageView: FC<LayoutPetImageViewProps> = props => {
   const { figure = "", typeId = -1, paletteId = -1, petColor = 0xFFFFFF, customParts = [], posture = "std", headOnly = false, direction = 0, scale = 1, style = {}, ...rest } = props
-  const [petUrl, setPetUrl] = useState(null)
-  const [width, setWidth] = useState(0)
-  const [height, setHeight] = useState(0)
+  const [ petUrl, setPetUrl ] = useState(null)
+  const [ width, setWidth ] = useState(0)
+  const [ height, setHeight ] = useState(0)
   const isDisposed = useRef(false)
 
   const getStyle = useMemo(() => {
@@ -39,7 +39,7 @@ export const LayoutPetImageView: FC<LayoutPetImageViewProps> = props => {
     if (Object.keys(style).length) newStyle = { ...newStyle, ...style }
 
     return newStyle
-  }, [petUrl, scale, style, width, height])
+  }, [ petUrl, scale, style, width, height ])
 
   useEffect(() => {
     let url = null
@@ -91,7 +91,7 @@ export const LayoutPetImageView: FC<LayoutPetImageViewProps> = props => {
         setHeight(image.height)
       }
     }
-  }, [figure, typeId, paletteId, petColor, customParts, posture, headOnly, direction])
+  }, [ figure, typeId, paletteId, petColor, customParts, posture, headOnly, direction ])
 
   useEffect(() => {
     isDisposed.current = false

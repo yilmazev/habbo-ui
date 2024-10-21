@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { BaseProps } from "..";
+import { FC } from "react"
+import { BaseProps } from ".."
 
 interface LayoutSubViewProps extends BaseProps<HTMLDivElement> {
   onClick: React.MouseEventHandler<HTMLDivElement>;

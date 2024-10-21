@@ -7,15 +7,15 @@ import { useNotification } from "../notification"
 import { useFriends } from "./useFriends"
 
 const useMessengerState = () => {
-  const [messageThreads, setMessageThreads] = useState<MessengerThread[]>([])
-  const [activeThreadId, setActiveThreadId] = useState(-1)
-  const [hiddenThreadIds, setHiddenThreadIds] = useState<number[]>([])
-  const [iconState, setIconState] = useState(MessengerIconState.HIDDEN)
+  const [ messageThreads, setMessageThreads ] = useState<MessengerThread[]>([])
+  const [ activeThreadId, setActiveThreadId ] = useState(-1)
+  const [ hiddenThreadIds, setHiddenThreadIds ] = useState<number[]>([])
+  const [ iconState, setIconState ] = useState(MessengerIconState.HIDDEN)
   const { getFriend = null } = useFriends()
   const { simpleAlert = null } = useNotification()
 
-  const visibleThreads = useMemo(() => messageThreads.filter(thread => (hiddenThreadIds.indexOf(thread.threadId) === -1)), [messageThreads, hiddenThreadIds])
-  const activeThread = useMemo(() => ((activeThreadId > 0) && visibleThreads.find(thread => (thread.threadId === activeThreadId) || null)), [activeThreadId, visibleThreads])
+  const visibleThreads = useMemo(() => messageThreads.filter(thread => (hiddenThreadIds.indexOf(thread.threadId) === -1)), [ messageThreads, hiddenThreadIds ])
+  const activeThread = useMemo(() => ((activeThreadId > 0) && visibleThreads.find(thread => (thread.threadId === activeThreadId) || null)), [ activeThreadId, visibleThreads ])
 
   const getMessageThread = (userId: number) => {
     let thread = messageThreads.find(thread => (thread.participant && (thread.participant.id === userId)))
@@ -32,7 +32,7 @@ const useMessengerState = () => {
       thread.setRead()
 
       setMessageThreads(prevValue => {
-        const newValue = [...prevValue]
+        const newValue = [ ...prevValue ]
 
         newValue.push(thread)
 
@@ -44,7 +44,7 @@ const useMessengerState = () => {
 
       if (hiddenIndex >= 0) {
         setHiddenThreadIds(prevValue => {
-          const newValue = [...prevValue]
+          const newValue = [ ...prevValue ]
 
           newValue.splice(hiddenIndex, 1)
 
@@ -58,7 +58,7 @@ const useMessengerState = () => {
 
   const closeThread = (threadId: number) => {
     setHiddenThreadIds(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
 
       if (newValue.indexOf(threadId) >= 0) return prevValue
 
@@ -78,7 +78,7 @@ const useMessengerState = () => {
     if (ownMessage && (messageText.length <= 255)) SendMessageComposer(new SendMessageComposerPacket(thread.participant.id, messageText))
 
     setMessageThreads(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
       const index = newValue.findIndex(newThread => (newThread.threadId === thread.threadId))
 
       if (index === -1) return prevValue
@@ -127,7 +127,7 @@ const useMessengerState = () => {
     if (activeThreadId <= 0) return
 
     setMessageThreads(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
       const index = newValue.findIndex(newThread => (newThread.threadId === activeThreadId))
 
       if (index >= 0) {
@@ -138,7 +138,7 @@ const useMessengerState = () => {
 
       return newValue
     })
-  }, [activeThreadId])
+  }, [ activeThreadId ])
 
   useEffect(() => {
     setIconState(prevValue => {
@@ -158,7 +158,7 @@ const useMessengerState = () => {
 
       return MessengerIconState.SHOW
     })
-  }, [visibleThreads])
+  }, [ visibleThreads ])
 
   return { messageThreads, activeThread, iconState, visibleThreads, getMessageThread, setActiveThreadId, closeThread, sendMessage }
 }

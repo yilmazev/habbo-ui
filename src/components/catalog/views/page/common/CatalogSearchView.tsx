@@ -4,7 +4,7 @@ import { CatalogPage, CatalogType, FilterCatalogNode, FurnitureOffer, GetOfferNo
 import { useCatalog } from "../../../../../hooks"
 
 export const CatalogSearchView: FC<{}> = props => {
-  const [searchValue, setSearchValue] = useState("")
+  const [ searchValue, setSearchValue ] = useState("")
   const { currentType = null, rootNode = null, offersToNodes = null, searchResult = null, setSearchResult = null, setCurrentPage = null } = useCatalog()
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export const CatalogSearchView: FC<{}> = props => {
 
         if ((currentType === CatalogType.NORMAL) && furniture.excludeDynamic) continue
 
-        const searchValues = [furniture.className, furniture.name, furniture.description].join(" ").replace(/ /gi, "").toLowerCase()
+        const searchValues = [ furniture.className, furniture.name, furniture.description ].join(" ").replace(/ /gi, "").toLowerCase()
 
         if ((currentType === CatalogType.BUILDER) && (furniture.purchaseOfferId === -1) && (furniture.rentOfferId === -1)) {
           if ((furniture.furniLine !== "") && (foundFurniLines.indexOf(furniture.furniLine) < 0)) {
@@ -65,7 +65,7 @@ export const CatalogSearchView: FC<{}> = props => {
     }, 300)
 
     return () => clearTimeout(timeout)
-  }, [offersToNodes, currentType, rootNode, searchValue, setCurrentPage, setSearchResult])
+  }, [ offersToNodes, currentType, rootNode, searchValue, setCurrentPage, setSearchResult ])
 
   return (
     <div className="illumina-input relative h-[26px] w-full">

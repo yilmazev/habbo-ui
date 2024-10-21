@@ -1,7 +1,7 @@
-import { AvatarDirectionAngle } from "@nitrots/nitro-renderer";
-import { FC, useEffect, useState } from "react";
-import { FigureData } from "../../../api";
-import { LayoutAvatarImage } from "../../../common";
+import { AvatarDirectionAngle } from "@nitrots/nitro-renderer"
+import { FC, useEffect, useState } from "react"
+import { FigureData } from "../../../api"
+import { LayoutAvatarImage } from "../../../common"
 
 export interface AvatarEditorFigurePreviewViewProps {
   figureData: FigureData;
@@ -9,7 +9,7 @@ export interface AvatarEditorFigurePreviewViewProps {
 
 export const AvatarEditorFigurePreviewView: FC<AvatarEditorFigurePreviewViewProps> = props => {
   const { figureData = null } = props
-  const [updateId, setUpdateId] = useState(-1)
+  const [ updateId, setUpdateId ] = useState(-1)
 
   const rotateFigure = (direction: number) => {
     if (direction < AvatarDirectionAngle.MIN_DIRECTION) {
@@ -31,7 +31,7 @@ export const AvatarEditorFigurePreviewView: FC<AvatarEditorFigurePreviewViewProp
     return () => {
       figureData.notify = null
     }
-  }, [figureData])
+  }, [ figureData ])
 
   return (
     <div className="illumina-previewer relative flex h-[275px] w-full flex-col items-center justify-center overflow-hidden">

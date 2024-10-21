@@ -5,9 +5,9 @@ import { Button, NitroCardContentView, NitroCardHeaderView, NitroCardView } from
 import { useFilterWordsWidget, useNavigator } from "../../../../hooks"
 
 export const RoomFilterWordsWidgetView: FC<{}> = props => {
-  const [word, setWord] = useState("bobba")
-  const [selectedWord, setSelectedWord] = useState("")
-  const [isSelectingWord, setIsSelectingWord] = useState(false)
+  const [ word, setWord ] = useState("bobba")
+  const [ selectedWord, setSelectedWord ] = useState("")
+  const [ isSelectingWord, setIsSelectingWord ] = useState(false)
   const { wordsFilter = [], isVisible = null, setWordsFilter, onClose = null } = useFilterWordsWidget()
   const { navigatorData = null } = useNavigator()
 
@@ -22,7 +22,7 @@ export const RoomFilterWordsWidgetView: FC<{}> = props => {
     if (isAddingWord && wordsFilter.includes((isSelectingWord ? selectedWord : word))) return
 
     setWordsFilter(prevValue => {
-      const newWords = [...prevValue]
+      const newWords = [ ...prevValue ]
 
       isAddingWord ? newWords.push((isSelectingWord ? selectedWord : word)) : newWords.splice(newWords.indexOf((isSelectingWord ? selectedWord : word)), 1)
 

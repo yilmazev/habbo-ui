@@ -7,21 +7,21 @@ import { useRoomSessionManagerEvent, useSessionInfo } from "../../hooks"
 const widgetSlotCount = 7
 
 export const HotelView: FC<{}> = () => {
-  const [isVisible, setIsVisible] = useState(true)
+  const [ isVisible, setIsVisible ] = useState(true)
   const { userFigure = null } = useSessionInfo()
 
   useRoomSessionManagerEvent<RoomSessionEvent>([
     RoomSessionEvent.CREATED,
-    RoomSessionEvent.ENDED], event => {
-      switch (event.type) {
-        case RoomSessionEvent.CREATED:
-          setIsVisible(false)
-          return
-        case RoomSessionEvent.ENDED:
-          setIsVisible(event.openLandingView)
-          return
-      }
-    })
+    RoomSessionEvent.ENDED ], event => {
+    switch (event.type) {
+    case RoomSessionEvent.CREATED:
+      setIsVisible(false)
+      return
+    case RoomSessionEvent.ENDED:
+      setIsVisible(event.openLandingView)
+      return
+    }
+  })
 
   if (!isVisible) return null
 
@@ -31,7 +31,7 @@ export const HotelView: FC<{}> = () => {
   const right = NitroConfiguration.interpolate(GetConfiguration("hotelview")["images"]["right"])
 
   return (
-    <div className="bg-[#121212] w-full h-screen">
+    <div className="h-screen w-full bg-[#121212]">
       <div className="fixed block h-[calc(100%_-_51px)] w-full bg-[#9AE2F2]">
         <div className="absolute top-0 size-full bg-bottom bg-repeat" style={{ backgroundImage: `url(${background})` }} />
         <div className="absolute left-[106px] top-0 z-10 size-full bg-no-repeat" style={{ backgroundImage: `url(${drape})` }} />

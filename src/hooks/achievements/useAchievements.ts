@@ -5,11 +5,11 @@ import { AchievementCategory, AchievementUtilities, CloneObject, SendMessageComp
 import { useMessageEvent } from "../events"
 
 const useAchievementsState = () => {
-  const [needsUpdate, setNeedsUpdate] = useState(true)
-  const [achievementCategories, setAchievementCategories] = useState<AchievementCategory[]>([])
-  const [selectedCategoryCode, setSelectedCategoryCode] = useState(null)
-  const [selectedAchievementId, setSelectedAchievementId] = useState(-1)
-  const [achievementScore, setAchievementScore] = useState(0)
+  const [ needsUpdate, setNeedsUpdate ] = useState(true)
+  const [ achievementCategories, setAchievementCategories ] = useState<AchievementCategory[]>([])
+  const [ selectedCategoryCode, setSelectedCategoryCode ] = useState(null)
+  const [ selectedAchievementId, setSelectedAchievementId ] = useState(-1)
+  const [ achievementScore, setAchievementScore ] = useState(0)
 
   const getTotalUnseen = useMemo(() => {
     let unseen = 0
@@ -17,7 +17,7 @@ const useAchievementsState = () => {
     achievementCategories.forEach(category => unseen += AchievementUtilities.getAchievementCategoryTotalUnseen(category))
 
     return unseen
-  }, [achievementCategories])
+  }, [ achievementCategories ])
 
   const getProgress = useMemo(() => {
     let progress = 0
@@ -25,7 +25,7 @@ const useAchievementsState = () => {
     achievementCategories.forEach(category => (progress += category.getProgress()))
 
     return progress
-  }, [achievementCategories])
+  }, [ achievementCategories ])
 
   const getMaxProgress = useMemo(() => {
     let progress = 0
@@ -33,27 +33,27 @@ const useAchievementsState = () => {
     achievementCategories.forEach(category => (progress += category.getMaxProgress()))
 
     return progress
-  }, [achievementCategories])
+  }, [ achievementCategories ])
 
   const scaledProgressPercent = useMemo(() => {
     return ~~((((getProgress - 0) * (100 - 0)) / (getMaxProgress - 0)) + 0)
-  }, [getProgress, getMaxProgress])
+  }, [ getProgress, getMaxProgress ])
 
   const selectedCategory = useMemo(() => {
     if (selectedCategoryCode === null) return null
 
     return achievementCategories.find(category => (category.code === selectedCategoryCode))
-  }, [achievementCategories, selectedCategoryCode])
+  }, [ achievementCategories, selectedCategoryCode ])
 
   const selectedAchievement = useMemo(() => {
     if ((selectedAchievementId === -1) || !selectedCategory) return null
 
     return selectedCategory.achievements.find(achievement => (achievement.achievementId === selectedAchievementId))
-  }, [selectedCategory, selectedAchievementId])
+  }, [ selectedCategory, selectedAchievementId ])
 
   const setAchievementSeen = useCallback((categoryCode: string, achievementId: number) => {
     setAchievementCategories(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
 
       for (const category of newValue) {
         if (category.code !== categoryCode) continue
@@ -74,7 +74,7 @@ const useAchievementsState = () => {
     const achievement = parser.achievement
 
     setAchievementCategories(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
       const categoryIndex = newValue.findIndex(existing => (existing.code === achievement.category))
 
       if (categoryIndex === -1) {
@@ -86,7 +86,7 @@ const useAchievementsState = () => {
       }
       else {
         const category = CloneObject(newValue[categoryIndex])
-        const newAchievements = [...category.achievements]
+        const newAchievements = [ ...category.achievements ]
         const achievementIndex = newAchievements.findIndex(existing => (existing.achievementId === achievement.achievementId))
         let previousAchievement: AchievementData = null
 
@@ -147,13 +147,13 @@ const useAchievementsState = () => {
     SendMessageComposer(new RequestAchievementsMessageComposer())
 
     setNeedsUpdate(false)
-  }, [needsUpdate])
+  }, [ needsUpdate ])
 
   useEffect(() => {
     if (!selectedCategoryCode || (selectedAchievementId === -1)) return
 
     setAchievementSeen(selectedCategoryCode, selectedAchievementId)
-  }, [selectedCategoryCode, selectedAchievementId, setAchievementSeen])
+  }, [ selectedCategoryCode, selectedAchievementId, setAchievementSeen ])
 
   return { achievementCategories, selectedCategoryCode, setSelectedCategoryCode, selectedAchievementId, setSelectedAchievementId, achievementScore, getTotalUnseen, getProgress, getMaxProgress, scaledProgressPercent, selectedCategory, selectedAchievement, setAchievementSeen }
 }

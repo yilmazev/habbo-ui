@@ -5,14 +5,14 @@ import { WiredMessage } from "../WiredMessage"
 import { WiredActionBase } from "./WiredActionBase"
 
 export const WiredActionBotTalkToAvatar: FC<{}> = () => {
-  const [botName, setBotName] = useState("")
-  const [message, setMessage] = useState("")
-  const [talkMode, setTalkMode] = useState(-1)
+  const [ botName, setBotName ] = useState("")
+  const [ message, setMessage ] = useState("")
+  const [ talkMode, setTalkMode ] = useState(-1)
   const { trigger = null, setStringParam = null, setIntParams = null } = useWired()
 
   const save = () => {
     setStringParam(botName + WIRED_STRING_DELIMETER + message)
-    setIntParams([talkMode])
+    setIntParams([ talkMode ])
   }
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export const WiredActionBotTalkToAvatar: FC<{}> = () => {
     if (data.length > 1) setMessage(data[1].length > 0 ? data[1] : "")
 
     setTalkMode((trigger.intData.length > 0) ? trigger.intData[0] : 0)
-  }, [trigger])
+  }, [ trigger ])
 
   return (
     <WiredActionBase requiresFurni={WiredFurniType.STUFF_SELECTION_OPTION_NONE} hasSpecialInput={true} save={save}>

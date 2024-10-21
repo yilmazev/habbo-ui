@@ -1,8 +1,8 @@
-import { GroupSavePreferencesComposer } from "@nitrots/nitro-renderer";
-import { Dispatch, FC, SetStateAction, useCallback, useEffect, useState } from "react";
-import { IGroupData, LocalizeText, SendMessageComposer } from "../../../../api";
+import { GroupSavePreferencesComposer } from "@nitrots/nitro-renderer"
+import { Dispatch, FC, SetStateAction, useCallback, useEffect, useState } from "react"
+import { IGroupData, LocalizeText, SendMessageComposer } from "../../../../api"
 
-const STATES: string[] = ["regular", "exclusive", "private"]
+const STATES: string[] = [ "regular", "exclusive", "private" ]
 
 interface GroupTabSettingsViewProps {
   groupData: IGroupData;
@@ -12,8 +12,8 @@ interface GroupTabSettingsViewProps {
 
 export const GroupTabSettingsView: FC<GroupTabSettingsViewProps> = props => {
   const { groupData = null, setGroupData = null, setCloseAction = null } = props
-  const [groupState, setGroupState] = useState(groupData.groupState)
-  const [groupDecorate, setGroupDecorate] = useState(groupData.groupCanMembersDecorate)
+  const [ groupState, setGroupState ] = useState(groupData.groupState)
+  const [ groupDecorate, setGroupDecorate ] = useState(groupData.groupCanMembersDecorate)
 
   const getGroupTypeIcon = {
     0: "bg-[-246px_-125px] w-3.5 h-4",
@@ -42,18 +42,18 @@ export const GroupTabSettingsView: FC<GroupTabSettingsViewProps> = props => {
     SendMessageComposer(new GroupSavePreferencesComposer(groupData.groupId, groupState, groupDecorate ? 0 : 1))
 
     return true
-  }, [groupData, groupState, groupDecorate, setGroupData])
+  }, [ groupData, groupState, groupDecorate, setGroupData ])
 
   useEffect(() => {
     setGroupState(groupData.groupState)
     setGroupDecorate(groupData.groupCanMembersDecorate)
-  }, [groupData])
+  }, [ groupData ])
 
   useEffect(() => {
     setCloseAction({ action: saveSettings })
 
     return () => setCloseAction(null)
-  }, [setCloseAction, saveSettings])
+  }, [ setCloseAction, saveSettings ])
 
   return (
     <div className="flex gap-[21px]">

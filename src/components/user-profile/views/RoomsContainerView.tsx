@@ -15,7 +15,7 @@ export const RoomsContainerView: FC<RoomsContainerViewProps> = (props) => {
 
   const { searchResult = null } = useNavigator()
   const elementRef = useRef<HTMLDivElement>()
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [ currentIndex, setCurrentIndex ] = useState(0)
 
   const handleNextClick = () => {
     setCurrentIndex((prevIndex) => {
@@ -32,7 +32,7 @@ export const RoomsContainerView: FC<RoomsContainerViewProps> = (props) => {
     const contextCode = "hotel_view"
 
     SendMessageComposer(new NavigatorSearchComposer(contextCode, searchValue))
-  }, [userProfileUsername])
+  }, [ userProfileUsername ])
 
   if (searchResult && searchResult.results[0].rooms.length > 1) {
     return (

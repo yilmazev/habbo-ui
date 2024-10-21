@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { VALUE_KEY_DISLIKE, VALUE_KEY_LIKE } from "../../../../api";
+import { FC } from "react"
+import { VALUE_KEY_DISLIKE, VALUE_KEY_LIKE } from "../../../../api"
 
 interface WordQuizQuestionViewProps {
   question: string;

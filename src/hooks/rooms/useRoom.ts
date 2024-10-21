@@ -5,10 +5,10 @@ import { CanManipulateFurniture, DispatchUiEvent, GetNitroInstance, GetRoomEngin
 import { useRoomEngineEvent, useRoomSessionManagerEvent, useUiEvent } from "../events"
 
 const useRoomState = () => {
-  const [roomSession, setRoomSession] = useState<IRoomSession>(null)
-  const [roomBackground, setRoomBackground] = useState<NitroSprite>(null)
-  const [roomFilter, setRoomFilter] = useState<AdjustmentFilter>(null)
-  const [originalRoomBackgroundColor, setOriginalRoomBackgroundColor] = useState(0)
+  const [ roomSession, setRoomSession ] = useState<IRoomSession>(null)
+  const [ roomBackground, setRoomBackground ] = useState<NitroSprite>(null)
+  const [ roomFilter, setRoomFilter ] = useState<AdjustmentFilter>(null)
+  const [ originalRoomBackgroundColor, setOriginalRoomBackgroundColor ] = useState(0)
 
   const updateRoomBackgroundColor = (hue: number, saturation: number, lightness: number, original: boolean = false) => {
     if (!roomBackground) return
@@ -77,13 +77,13 @@ const useRoomState = () => {
     if (!session) return
 
     switch (event.type) {
-      case RoomEngineEvent.INITIALIZED:
-        SetActiveRoomId(event.roomId)
-        setRoomSession(session)
-        return
-      case RoomEngineEvent.DISPOSED:
-        setRoomSession(null)
-        return
+    case RoomEngineEvent.INITIALIZED:
+      SetActiveRoomId(event.roomId)
+      setRoomSession(session)
+      return
+    case RoomEngineEvent.DISPOSED:
+      setRoomSession(null)
+      return
     }
   })
 
@@ -92,12 +92,12 @@ const useRoomState = () => {
     RoomSessionEvent.ENDED
   ], event => {
     switch (event.type) {
-      case RoomSessionEvent.CREATED:
-        StartRoomSession(event.session)
-        return
-      case RoomSessionEvent.ENDED:
-        setRoomSession(null)
-        return
+    case RoomSessionEvent.CREATED:
+      StartRoomSession(event.session)
+      return
+    case RoomSessionEvent.ENDED:
+      setRoomSession(null)
+      return
     }
   })
 
@@ -118,59 +118,59 @@ const useRoomState = () => {
     let updateEvent: RoomWidgetUpdateRoomObjectEvent = null
 
     switch (event.type) {
-      case RoomEngineObjectEvent.SELECTED:
-        if (!IsFurnitureSelectionDisabled(event)) updateEvent = new RoomWidgetUpdateRoomObjectEvent(RoomWidgetUpdateRoomObjectEvent.OBJECT_SELECTED, event.objectId, event.category, event.roomId)
-        break
-      case RoomEngineObjectEvent.DESELECTED:
-        updateEvent = new RoomWidgetUpdateRoomObjectEvent(RoomWidgetUpdateRoomObjectEvent.OBJECT_DESELECTED, event.objectId, event.category, event.roomId)
-        break
-      case RoomEngineObjectEvent.ADDED: {
-        let addedEventType: string = null
+    case RoomEngineObjectEvent.SELECTED:
+      if (!IsFurnitureSelectionDisabled(event)) updateEvent = new RoomWidgetUpdateRoomObjectEvent(RoomWidgetUpdateRoomObjectEvent.OBJECT_SELECTED, event.objectId, event.category, event.roomId)
+      break
+    case RoomEngineObjectEvent.DESELECTED:
+      updateEvent = new RoomWidgetUpdateRoomObjectEvent(RoomWidgetUpdateRoomObjectEvent.OBJECT_DESELECTED, event.objectId, event.category, event.roomId)
+      break
+    case RoomEngineObjectEvent.ADDED: {
+      let addedEventType: string = null
 
-        switch (event.category) {
-          case RoomObjectCategory.FLOOR:
-          case RoomObjectCategory.WALL:
-            addedEventType = RoomWidgetUpdateRoomObjectEvent.FURNI_ADDED
-            break
-          case RoomObjectCategory.UNIT:
-            addedEventType = RoomWidgetUpdateRoomObjectEvent.USER_ADDED
-            break
-        }
-
-        if (addedEventType) updateEvent = new RoomWidgetUpdateRoomObjectEvent(addedEventType, event.objectId, event.category, event.roomId)
+      switch (event.category) {
+      case RoomObjectCategory.FLOOR:
+      case RoomObjectCategory.WALL:
+        addedEventType = RoomWidgetUpdateRoomObjectEvent.FURNI_ADDED
+        break
+      case RoomObjectCategory.UNIT:
+        addedEventType = RoomWidgetUpdateRoomObjectEvent.USER_ADDED
         break
       }
-      case RoomEngineObjectEvent.REMOVED: {
-        let removedEventType: string = null
 
-        switch (event.category) {
-          case RoomObjectCategory.FLOOR:
-          case RoomObjectCategory.WALL:
-            removedEventType = RoomWidgetUpdateRoomObjectEvent.FURNI_REMOVED
-            break
-          case RoomObjectCategory.UNIT:
-            removedEventType = RoomWidgetUpdateRoomObjectEvent.USER_REMOVED
-            break
-        }
+      if (addedEventType) updateEvent = new RoomWidgetUpdateRoomObjectEvent(addedEventType, event.objectId, event.category, event.roomId)
+      break
+    }
+    case RoomEngineObjectEvent.REMOVED: {
+      let removedEventType: string = null
 
-        if (removedEventType) updateEvent = new RoomWidgetUpdateRoomObjectEvent(removedEventType, event.objectId, event.category, event.roomId)
+      switch (event.category) {
+      case RoomObjectCategory.FLOOR:
+      case RoomObjectCategory.WALL:
+        removedEventType = RoomWidgetUpdateRoomObjectEvent.FURNI_REMOVED
+        break
+      case RoomObjectCategory.UNIT:
+        removedEventType = RoomWidgetUpdateRoomObjectEvent.USER_REMOVED
         break
       }
-      case RoomEngineObjectEvent.REQUEST_MOVE:
-        if (CanManipulateFurniture(roomSession, event.objectId, event.category)) ProcessRoomObjectOperation(event.objectId, event.category, RoomObjectOperationType.OBJECT_MOVE)
-        break
-      case RoomEngineObjectEvent.REQUEST_ROTATE:
-        if (CanManipulateFurniture(roomSession, event.objectId, event.category)) ProcessRoomObjectOperation(event.objectId, event.category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE)
-        break
-      case RoomEngineObjectEvent.MOUSE_ENTER:
-        updateEvent = new RoomWidgetUpdateRoomObjectEvent(RoomWidgetUpdateRoomObjectEvent.OBJECT_ROLL_OVER, event.objectId, event.category, event.roomId)
-        break
-      case RoomEngineObjectEvent.MOUSE_LEAVE:
-        updateEvent = new RoomWidgetUpdateRoomObjectEvent(RoomWidgetUpdateRoomObjectEvent.OBJECT_ROLL_OUT, event.objectId, event.category, event.roomId)
-        break
-      case RoomEngineObjectEvent.DOUBLE_CLICK:
-        updateEvent = new RoomWidgetUpdateRoomObjectEvent(RoomWidgetUpdateRoomObjectEvent.OBJECT_DOUBLE_CLICKED, event.objectId, event.category, event.roomId)
-        break
+
+      if (removedEventType) updateEvent = new RoomWidgetUpdateRoomObjectEvent(removedEventType, event.objectId, event.category, event.roomId)
+      break
+    }
+    case RoomEngineObjectEvent.REQUEST_MOVE:
+      if (CanManipulateFurniture(roomSession, event.objectId, event.category)) ProcessRoomObjectOperation(event.objectId, event.category, RoomObjectOperationType.OBJECT_MOVE)
+      break
+    case RoomEngineObjectEvent.REQUEST_ROTATE:
+      if (CanManipulateFurniture(roomSession, event.objectId, event.category)) ProcessRoomObjectOperation(event.objectId, event.category, RoomObjectOperationType.OBJECT_ROTATE_POSITIVE)
+      break
+    case RoomEngineObjectEvent.MOUSE_ENTER:
+      updateEvent = new RoomWidgetUpdateRoomObjectEvent(RoomWidgetUpdateRoomObjectEvent.OBJECT_ROLL_OVER, event.objectId, event.category, event.roomId)
+      break
+    case RoomEngineObjectEvent.MOUSE_LEAVE:
+      updateEvent = new RoomWidgetUpdateRoomObjectEvent(RoomWidgetUpdateRoomObjectEvent.OBJECT_ROLL_OUT, event.objectId, event.category, event.roomId)
+      break
+    case RoomEngineObjectEvent.DOUBLE_CLICK:
+      updateEvent = new RoomWidgetUpdateRoomObjectEvent(RoomWidgetUpdateRoomObjectEvent.OBJECT_DOUBLE_CLICKED, event.objectId, event.category, event.roomId)
+      break
     }
 
     if (updateEvent) DispatchUiEvent(updateEvent)
@@ -208,7 +208,7 @@ const useRoomState = () => {
     background.height = height
 
     master.addChildAt(background, 0)
-    master.filters = [filter]
+    master.filters = [ filter ]
 
     setRoomBackground(background)
     setRoomFilter(filter)
@@ -268,7 +268,7 @@ const useRoomState = () => {
 
       window.removeEventListener("resize", resize)
     }
-  }, [roomSession])
+  }, [ roomSession ])
 
   return { roomSession }
 }

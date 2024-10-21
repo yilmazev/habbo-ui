@@ -10,10 +10,10 @@ import { ModToolsUserChatlogView } from "./views/user/ModToolsUserChatlogView"
 import { ModToolsUserView } from "./views/user/ModToolsUserView"
 
 export const ModToolsView: FC<{}> = props => {
-  const [isVisible, setIsVisible] = useState(true)
-  const [currentRoomId, setCurrentRoomId] = useState(-1)
-  const [selectedUser, setSelectedUser] = useState<ISelectedUser>(null)
-  const [isTicketsVisible, setIsTicketsVisible] = useState(false)
+  const [ isVisible, setIsVisible ] = useState(true)
+  const [ currentRoomId, setCurrentRoomId ] = useState(-1)
+  const [ selectedUser, setSelectedUser ] = useState<ISelectedUser>(null)
+  const [ isTicketsVisible, setIsTicketsVisible ] = useState(false)
   const { openRooms = [], openRoomChatlogs = [], openUserChatlogs = [], openUserInfos = [], openRoomInfo = null, closeRoomInfo = null, toggleRoomInfo = null, openRoomChatlog = null, closeRoomChatlog = null, toggleRoomChatlog = null, openUserInfo = null, closeUserInfo = null, toggleUserInfo = null, openUserChatlog = null, closeUserChatlog = null, toggleUserChatlog = null } = useModTools()
 
   const isMod = GetSessionDataManager().isModerator
@@ -26,12 +26,12 @@ export const ModToolsView: FC<{}> = props => {
     if (RoomId.isRoomPreviewerId(event.roomId)) return
 
     switch (event.type) {
-      case RoomEngineEvent.INITIALIZED:
-        setCurrentRoomId(event.roomId)
-        return
-      case RoomEngineEvent.DISPOSED:
-        setCurrentRoomId(-1)
-        return
+    case RoomEngineEvent.INITIALIZED:
+      setCurrentRoomId(event.roomId)
+      return
+    case RoomEngineEvent.DISPOSED:
+      setCurrentRoomId(-1)
+      return
     }
   })
 
@@ -57,51 +57,51 @@ export const ModToolsView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-          case "show":
-            setIsVisible(true)
-            return
-          case "hide":
-            setIsVisible(false)
-            return
-          case "toggle":
-            setIsVisible(prevValue => !prevValue)
-            return
-          case "open-room-info":
-            openRoomInfo(Number(parts[2]))
-            return
-          case "close-room-info":
-            closeRoomInfo(Number(parts[2]))
-            return
-          case "toggle-room-info":
-            toggleRoomInfo(Number(parts[2]))
-            return
-          case "open-room-chatlog":
-            openRoomChatlog(Number(parts[2]))
-            return
-          case "close-room-chatlog":
-            closeRoomChatlog(Number(parts[2]))
-            return
-          case "toggle-room-chatlog":
-            toggleRoomChatlog(Number(parts[2]))
-            return
-          case "open-user-info":
-            openUserInfo(Number(parts[2]))
-            return
-          case "close-user-info":
-            closeUserInfo(Number(parts[2]))
-            return
-          case "toggle-user-info":
-            toggleUserInfo(Number(parts[2]))
-            return
-          case "open-user-chatlog":
-            openUserChatlog(Number(parts[2]))
-            return
-          case "close-user-chatlog":
-            closeUserChatlog(Number(parts[2]))
-            return
-          case "toggle-user-chatlog":
-            toggleUserChatlog(Number(parts[2]))
-            return
+        case "show":
+          setIsVisible(true)
+          return
+        case "hide":
+          setIsVisible(false)
+          return
+        case "toggle":
+          setIsVisible(prevValue => !prevValue)
+          return
+        case "open-room-info":
+          openRoomInfo(Number(parts[2]))
+          return
+        case "close-room-info":
+          closeRoomInfo(Number(parts[2]))
+          return
+        case "toggle-room-info":
+          toggleRoomInfo(Number(parts[2]))
+          return
+        case "open-room-chatlog":
+          openRoomChatlog(Number(parts[2]))
+          return
+        case "close-room-chatlog":
+          closeRoomChatlog(Number(parts[2]))
+          return
+        case "toggle-room-chatlog":
+          toggleRoomChatlog(Number(parts[2]))
+          return
+        case "open-user-info":
+          openUserInfo(Number(parts[2]))
+          return
+        case "close-user-info":
+          closeUserInfo(Number(parts[2]))
+          return
+        case "toggle-user-info":
+          toggleUserInfo(Number(parts[2]))
+          return
+        case "open-user-chatlog":
+          openUserChatlog(Number(parts[2]))
+          return
+        case "close-user-chatlog":
+          closeUserChatlog(Number(parts[2]))
+          return
+        case "toggle-user-chatlog":
+          toggleUserChatlog(Number(parts[2]))
+          return
         }
       },
       eventUrlPrefix: "mod-tools/"
@@ -110,7 +110,7 @@ export const ModToolsView: FC<{}> = props => {
     AddEventLinkTracker(linkTracker)
 
     return () => RemoveLinkEventTracker(linkTracker)
-  }, [openRoomInfo, closeRoomInfo, toggleRoomInfo, openRoomChatlog, closeRoomChatlog, toggleRoomChatlog, openUserInfo, closeUserInfo, toggleUserInfo, openUserChatlog, closeUserChatlog, toggleUserChatlog])
+  }, [ openRoomInfo, closeRoomInfo, toggleRoomInfo, openRoomChatlog, closeRoomChatlog, toggleRoomChatlog, openUserInfo, closeUserInfo, toggleUserInfo, openUserChatlog, closeUserChatlog, toggleUserChatlog ])
 
   return (
     <>

@@ -7,7 +7,7 @@ import { NameChangeLayoutViewProps } from "./NameChangeView.types"
 
 export const NameChangeConfirmationView: FC<NameChangeLayoutViewProps> = props => {
   const { username = "", onAction = null } = props
-  const [isConfirming, setIsConfirming] = useState(false)
+  const [ isConfirming, setIsConfirming ] = useState(false)
   const { simpleAlert = null } = useNotification()
 
   const confirm = () => {
@@ -15,7 +15,7 @@ export const NameChangeConfirmationView: FC<NameChangeLayoutViewProps> = props =
 
     setIsConfirming(true)
     SendMessageComposer(new ChangeUserNameMessageComposer(username))
-    simpleAlert(LocalizeText("help.tutorial.name.changed", ["name"], [username]), NotificationAlertType.ALERT, null, null, LocalizeText("generic.alert.title"))
+    simpleAlert(LocalizeText("help.tutorial.name.changed", [ "name" ], [ username ]), NotificationAlertType.ALERT, null, null, LocalizeText("generic.alert.title"))
   }
 
   useMessageEvent<UserNameChangeMessageEvent>(UserNameChangeMessageEvent, event => {

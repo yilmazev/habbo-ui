@@ -6,9 +6,9 @@ import { DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, Nit
 const NEW_LINE_REGEX = /\n\r|\n|\r/mg
 
 export const NitropediaView: FC<{}> = props => {
-  const [content, setContent] = useState(null)
-  const [header, setHeader] = useState("")
-  const [dimensions, setDimensions] = useState<{ width: number, height: number }>(null)
+  const [ content, setContent ] = useState(null)
+  const [ header, setHeader ] = useState("")
+  const [ dimensions, setDimensions ] = useState<{ width: number, height: number }>(null)
   const elementRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

@@ -12,19 +12,19 @@ interface InfoStandWidgetPetViewProps {
 
 export const InfoStandWidgetPetView: FC<InfoStandWidgetPetViewProps> = props => {
   const { avatarInfo = null, onClose = null } = props
-  const [remainingGrowTime, setRemainingGrowTime] = useState(0)
-  const [remainingTimeToLive, setRemainingTimeToLive] = useState(0)
+  const [ remainingGrowTime, setRemainingGrowTime ] = useState(0)
+  const [ remainingTimeToLive, setRemainingTimeToLive ] = useState(0)
   const { roomSession = null } = useRoom()
   const { petRespectRemaining = 0, respectPet = null } = useSessionInfo()
 
   const canPickUp = useMemo(() => {
     return (roomSession.isRoomOwner || (GetSessionDataManager().isModerator))
-  }, [roomSession])
+  }, [ roomSession ])
 
   useEffect(() => {
     setRemainingGrowTime(avatarInfo.remainingGrowTime)
     setRemainingTimeToLive(avatarInfo.remainingTimeToLive)
-  }, [avatarInfo])
+  }, [ avatarInfo ])
 
   useEffect(() => {
     if ((avatarInfo.petType !== PetType.MONSTERPLANT) || avatarInfo.dead) return
@@ -35,7 +35,7 @@ export const InfoStandWidgetPetView: FC<InfoStandWidgetPetViewProps> = props => 
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [avatarInfo])
+  }, [ avatarInfo ])
 
   if (!avatarInfo) return null
 
@@ -45,26 +45,26 @@ export const InfoStandWidgetPetView: FC<InfoStandWidgetPetViewProps> = props => 
     if (!action || action === "") return
 
     switch (action) {
-      case "respect":
-        respectPet(avatarInfo.id)
+    case "respect":
+      respectPet(avatarInfo.id)
 
-        if ((petRespectRemaining - 1) >= 1) hideMenu = false
-        break
-      case "buyfood":
-        CreateLinkEvent("catalog/open/" + GetConfiguration("catalog.links")["pets.buy_food"])
-        break
-      case "train":
-        roomSession?.requestPetCommands(avatarInfo.id)
-        break
-      case "treat":
-        SendMessageComposer(new PetRespectComposer(avatarInfo.id))
-        break
-      case "compost":
-        roomSession?.compostPlant(avatarInfo.id)
-        break
-      case "pick_up":
-        roomSession?.pickupPet(avatarInfo.id)
-        break
+      if ((petRespectRemaining - 1) >= 1) hideMenu = false
+      break
+    case "buyfood":
+      CreateLinkEvent("catalog/open/" + GetConfiguration("catalog.links")["pets.buy_food"])
+      break
+    case "train":
+      roomSession?.requestPetCommands(avatarInfo.id)
+      break
+    case "treat":
+      SendMessageComposer(new PetRespectComposer(avatarInfo.id))
+      break
+    case "compost":
+      roomSession?.compostPlant(avatarInfo.id)
+      break
+    case "pick_up":
+      roomSession?.pickupPet(avatarInfo.id)
+      break
     }
 
     if (hideMenu) onClose()
@@ -103,14 +103,14 @@ export const InfoStandWidgetPetView: FC<InfoStandWidgetPetViewProps> = props => 
                       <LayoutCounterTimeView day={ConvertSeconds(remainingGrowTime).split(":")[0]} hour={ConvertSeconds(remainingGrowTime).split(":")[1]} minutes={ConvertSeconds(remainingGrowTime).split(":")[2]} seconds={ConvertSeconds(remainingGrowTime).split(":")[3]} />
                     </div>}
                   <div className="flex flex-col items-center">
-                    <p className="mb-1 text-[13px]">{LocalizeText("infostand.pet.text.raritylevel", ["level"], [LocalizeText(`infostand.pet.raritylevel.${avatarInfo.rarityLevel}`)])}</p>
+                    <p className="mb-1 text-[13px]">{LocalizeText("infostand.pet.text.raritylevel", [ "level" ], [ LocalizeText(`infostand.pet.raritylevel.${avatarInfo.rarityLevel}`) ])}</p>
                     <LayoutRarityLevelView level={avatarInfo.rarityLevel} />
                   </div>
                 </div>
               </div>
               <div className="flex flex-col items-center gap-0.5">
-                <p className="text-[13px]">{LocalizeText("pet.age", ["age"], [avatarInfo.age.toString()])}</p>
-                <p className="text-[13px]">{LocalizeText("infostand.text.petowner", ["name"], [avatarInfo.ownerName])}</p>
+                <p className="text-[13px]">{LocalizeText("pet.age", [ "age" ], [ avatarInfo.age.toString() ])}</p>
+                <p className="text-[13px]">{LocalizeText("infostand.text.petowner", [ "name" ], [ avatarInfo.ownerName ])}</p>
               </div>
             </>}
           {(avatarInfo.petType !== PetType.MONSTERPLANT) &&
@@ -121,7 +121,7 @@ export const InfoStandWidgetPetView: FC<InfoStandWidgetPetViewProps> = props => 
                     <LayoutPetImageView figure={avatarInfo.petFigure} posture={avatarInfo.posture} direction={2} />
                   </div>
                   <div className="pt-[2%]">
-                    <p className="text-[13px]">{LocalizeText("pet.level", ["level", "maxlevel"], [avatarInfo.level.toString(), avatarInfo.maximumLevel.toString()])}</p>
+                    <p className="text-[13px]">{LocalizeText("pet.level", [ "level", "maxlevel" ], [ avatarInfo.level.toString(), avatarInfo.maximumLevel.toString() ])}</p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-1">
@@ -153,11 +153,11 @@ export const InfoStandWidgetPetView: FC<InfoStandWidgetPetViewProps> = props => 
               </div>
               <div className="flex flex-col items-center gap-0.5">
                 <div className="flex items-center gap-[3px]">
-                  <p className="text-[13px]">{LocalizeText("infostand.text.petrespect", ["count"], [avatarInfo.respect.toString()])}</p>
+                  <p className="text-[13px]">{LocalizeText("infostand.text.petrespect", [ "count" ], [ avatarInfo.respect.toString() ])}</p>
                   <i className="h-[21px] w-[13px] bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-381px_-84px]" />
                 </div>
-                <p className="text-[13px]">{LocalizeText("pet.age", ["age"], [avatarInfo.age.toString()])}</p>
-                <p className="text-[13px]">{LocalizeText("infostand.text.petowner", ["name"], [avatarInfo.ownerName])}</p>
+                <p className="text-[13px]">{LocalizeText("pet.age", [ "age" ], [ avatarInfo.age.toString() ])}</p>
+                <p className="text-[13px]">{LocalizeText("infostand.text.petowner", [ "name" ], [ avatarInfo.ownerName ])}</p>
               </div>
             </>}
         </div>
@@ -185,7 +185,7 @@ export const InfoStandWidgetPetView: FC<InfoStandWidgetPetViewProps> = props => 
           </Button>}
         {(petRespectRemaining > 0) && (avatarInfo.petType !== PetType.MONSTERPLANT) &&
           <Button variant="primary" className="w-fit !px-2" onClick={event => processButtonAction("respect")}>
-            {LocalizeText("infostand.button.petrespect", ["count"], [petRespectRemaining.toString()])}
+            {LocalizeText("infostand.button.petrespect", [ "count" ], [ petRespectRemaining.toString() ])}
           </Button>}
       </div>
     </div>

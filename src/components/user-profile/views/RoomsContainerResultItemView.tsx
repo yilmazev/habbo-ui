@@ -30,7 +30,7 @@ export const RoomsContainerResultItemView: FC<RoomsContainerResultItemViewProps>
 
   const getImageUrl = useMemo(() => {
     return `${GetConfiguration("thumbnails.url").replace("%thumbnail%", roomData.roomId.toString())}?cache=${Math.random()}`
-  }, [roomData.roomId])
+  }, [ roomData.roomId ])
 
   return (
     <div className="flex h-full gap-3">

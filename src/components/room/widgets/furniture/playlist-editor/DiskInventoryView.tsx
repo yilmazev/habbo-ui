@@ -1,7 +1,7 @@
-import { IAdvancedMap, MusicPriorities } from "@nitrots/nitro-renderer";
-import { FC, MouseEvent, useCallback, useEffect, useState } from "react";
-import { CatalogPageName, CreateLinkEvent, GetConfiguration, GetDiskColor, GetNitroInstance, LocalizeText } from "../../../../../api";
-import { Base, Button, Flex, LayoutGridItem, Text } from "../../../../../common";
+import { IAdvancedMap, MusicPriorities } from "@nitrots/nitro-renderer"
+import { FC, MouseEvent, useCallback, useEffect, useState } from "react"
+import { CatalogPageName, CreateLinkEvent, GetConfiguration, GetDiskColor, GetNitroInstance, LocalizeText } from "../../../../../api"
+import { Base, Button, Flex, LayoutGridItem, Text } from "../../../../../common"
 
 export interface DiskInventoryViewProps {
   diskInventory: IAdvancedMap<number, number>;
@@ -10,8 +10,8 @@ export interface DiskInventoryViewProps {
 
 export const DiskInventoryView: FC<DiskInventoryViewProps> = props => {
   const { diskInventory = null, addToPlaylist = null } = props
-  const [selectedItem, setSelectedItem] = useState(-1)
-  const [previewSongId, setPreviewSongId] = useState(-1)
+  const [ selectedItem, setSelectedItem ] = useState(-1)
+  const [ previewSongId, setPreviewSongId ] = useState(-1)
 
   const previewSong = useCallback((event: MouseEvent, songId: number) => {
     event.stopPropagation()
@@ -23,7 +23,7 @@ export const DiskInventoryView: FC<DiskInventoryViewProps> = props => {
     event.stopPropagation()
 
     addToPlaylist(diskId, GetNitroInstance().soundManager.musicController?.getRoomItemPlaylist()?.length)
-  }, [addToPlaylist])
+  }, [ addToPlaylist ])
 
   const openCatalogPage = () => {
     CreateLinkEvent("catalog/open/" + CatalogPageName.TRAX_SONGS)
@@ -37,7 +37,7 @@ export const DiskInventoryView: FC<DiskInventoryViewProps> = props => {
     return () => {
       GetNitroInstance().soundManager.musicController?.stop(MusicPriorities.PRIORITY_SONG_PLAY)
     }
-  }, [previewSongId])
+  }, [ previewSongId ])
 
   useEffect(() => {
     return () => setPreviewSongId(-1)
@@ -56,7 +56,7 @@ export const DiskInventoryView: FC<DiskInventoryViewProps> = props => {
           const songInfo = GetNitroInstance().soundManager.musicController?.getSongInfo(songId)
 
           return (
-            <LayoutGridItem key={index} itemActive={(selectedItem === index)} onClick={() => setSelectedItem(prev => prev === index ? -1 : index)} classNames={["text-black"]}>
+            <LayoutGridItem key={index} itemActive={(selectedItem === index)} onClick={() => setSelectedItem(prev => prev === index ? -1 : index)} classNames={[ "text-black" ]}>
               <div className="disk-image mb-n2" style={{ backgroundColor: GetDiskColor(songInfo?.songData) }}>
               </div>
               <Text truncate fullWidth className="text-center">{songInfo?.name}</Text>

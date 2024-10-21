@@ -12,12 +12,12 @@ interface AvatarInfoRentableBotChatViewProps {
 export const AvatarInfoRentableBotChatView: FC<AvatarInfoRentableBotChatViewProps> = props => {
   const { chatEvent = null, onClose = null } = props
   // eslint-disable-next-line no-template-curly-in-string
-  const [newText, setNewText] = useState(chatEvent.chat === "${bot.skill.chatter.configuration.text.placeholder}" ? "" : chatEvent.chat)
-  const [automaticChat, setAutomaticChat] = useState(chatEvent.automaticChat)
-  const [mixSentences, setMixSentences] = useState(chatEvent.mixSentences)
-  const [chatDelay, setChatDelay] = useState(cchatDelay)
+  const [ newText, setNewText ] = useState(chatEvent.chat === "${bot.skill.chatter.configuration.text.placeholder}" ? "" : chatEvent.chat)
+  const [ automaticChat, setAutomaticChat ] = useState(chatEvent.automaticChat)
+  const [ mixSentences, setMixSentences ] = useState(chatEvent.mixSentences)
+  const [ chatDelay, setChatDelay ] = useState(cchatDelay)
 
-  const getObjectLocation = useMemo(() => GetRoomObjectBounds(GetRoomSession().roomId, chatEvent.objectId, chatEvent.category, 1), [chatEvent])
+  const getObjectLocation = useMemo(() => GetRoomObjectBounds(GetRoomSession().roomId, chatEvent.objectId, chatEvent.category, 1), [ chatEvent ])
 
   const formatChatString = (value: string) => value.replace(/;#;/g, " ").replace(/\r\n|\r|\n/g, "\r")
 

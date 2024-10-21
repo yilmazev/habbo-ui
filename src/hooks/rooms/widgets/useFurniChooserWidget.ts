@@ -5,7 +5,7 @@ import { useFurniAddedEvent, useFurniRemovedEvent } from "../engine"
 import { useRoom } from "../useRoom"
 
 const useFurniChooserWidgetState = () => {
-  const [items, setItems] = useState<RoomObjectItem[]>(null)
+  const [ items, setItems ] = useState<RoomObjectItem[]>(null)
   const { roomSession = null } = useRoom()
 
   const onClose = () => setItems(null)
@@ -48,7 +48,7 @@ const useFurniChooserWidgetState = () => {
       return new RoomObjectItem(roomObject.id, RoomObjectCategory.FLOOR, name)
     })
 
-    setItems([...wallItems, ...floorItems].sort((a, b) => ((a.name < b.name) ? -1 : 1)))
+    setItems([ ...wallItems, ...floorItems ].sort((a, b) => ((a.name < b.name) ? -1 : 1)))
   }
 
   useFurniAddedEvent(!!items, event => {
@@ -61,43 +61,43 @@ const useFurniChooserWidgetState = () => {
     let item: RoomObjectItem = null
 
     switch (event.category) {
-      case RoomObjectCategory.WALL: {
-        let name = roomObject.type
+    case RoomObjectCategory.WALL: {
+      let name = roomObject.type
 
-        if (name.startsWith("poster")) {
-          name = LocalizeText(`poster_${name.replace("poster", "")}_name`)
-        }
-        else {
-          const typeId = roomObject.model.getValue(RoomObjectVariable.FURNITURE_TYPE_ID)
-          const furniData = GetSessionDataManager().getWallItemData(typeId)
-
-          if (furniData && furniData.name.length) name = furniData.name
-        }
-
-        item = new RoomObjectItem(roomObject.id, RoomObjectCategory.WALL, name)
-
-        break
+      if (name.startsWith("poster")) {
+        name = LocalizeText(`poster_${name.replace("poster", "")}_name`)
       }
-      case RoomObjectCategory.FLOOR: {
-        let name = roomObject.type
-
+      else {
         const typeId = roomObject.model.getValue(RoomObjectVariable.FURNITURE_TYPE_ID)
-        const furniData = GetSessionDataManager().getFloorItemData(typeId)
+        const furniData = GetSessionDataManager().getWallItemData(typeId)
 
         if (furniData && furniData.name.length) name = furniData.name
-
-        item = new RoomObjectItem(roomObject.id, RoomObjectCategory.FLOOR, name)
       }
+
+      item = new RoomObjectItem(roomObject.id, RoomObjectCategory.WALL, name)
+
+      break
+    }
+    case RoomObjectCategory.FLOOR: {
+      let name = roomObject.type
+
+      const typeId = roomObject.model.getValue(RoomObjectVariable.FURNITURE_TYPE_ID)
+      const furniData = GetSessionDataManager().getFloorItemData(typeId)
+
+      if (furniData && furniData.name.length) name = furniData.name
+
+      item = new RoomObjectItem(roomObject.id, RoomObjectCategory.FLOOR, name)
+    }
     }
 
-    setItems(prevValue => [...prevValue, item].sort((a, b) => ((a.name < b.name) ? -1 : 1)))
+    setItems(prevValue => [ ...prevValue, item ].sort((a, b) => ((a.name < b.name) ? -1 : 1)))
   })
 
   useFurniRemovedEvent(!!items, event => {
     if (event.id < 0) return
 
     setItems(prevValue => {
-      const newValue = [...prevValue]
+      const newValue = [ ...prevValue ]
 
       for (let i = 0; i < newValue.length; i++) {
         const existingValue = newValue[i]

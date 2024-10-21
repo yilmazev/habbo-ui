@@ -15,8 +15,8 @@ const MAX_FLOOR_HEIGHT: number = 26
 
 export const FloorplanOptionsView: FC<{}> = props => {
   const { visualizationSettings = null, setVisualizationSettings = null } = useFloorplanEditorContext()
-  const [floorAction, setFloorAction] = useState(FloorAction.SET)
-  const [floorHeight, setFloorHeight] = useState(0)
+  const [ floorAction, setFloorAction ] = useState(FloorAction.SET)
+  const [ floorHeight, setFloorHeight ] = useState(0)
   const { userFigure = null } = useSessionInfo()
 
   const selectAction = (action: number) => {

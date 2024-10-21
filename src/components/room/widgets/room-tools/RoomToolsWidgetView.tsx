@@ -4,44 +4,44 @@ import { CreateLinkEvent, GetRoomEngine, LocalizeText, SendMessageComposer } fro
 import { useMessageEvent, useNavigator, useRoom } from "../../../../hooks"
 
 export const RoomToolsWidgetView: FC<{}> = props => {
-  const [isToolsExpand, setIsToolsExpand] = useState(true)
-  const [isZoomedIn, setIsZoomedIn] = useState(false)
-  const [roomName, setRoomName] = useState(null)
-  const [roomOwner, setRoomOwner] = useState(null)
-  const [roomTags, setRoomTags] = useState<string[]>(null)
+  const [ isToolsExpand, setIsToolsExpand ] = useState(true)
+  const [ isZoomedIn, setIsZoomedIn ] = useState(false)
+  const [ roomName, setRoomName ] = useState(null)
+  const [ roomOwner, setRoomOwner ] = useState(null)
+  const [ roomTags, setRoomTags ] = useState<string[]>(null)
   const { navigatorData = null } = useNavigator()
   const { roomSession = null } = useRoom()
 
   const handleToolClick = (action: string, value?: string) => {
     switch (action) {
-      case "settings":
-        CreateLinkEvent("navigator/toggle-room-info")
-        return
-      case "zoom":
-        setIsZoomedIn(prevValue => {
-          let scale = GetRoomEngine().getRoomInstanceRenderingCanvasScale(roomSession.roomId, 1)
+    case "settings":
+      CreateLinkEvent("navigator/toggle-room-info")
+      return
+    case "zoom":
+      setIsZoomedIn(prevValue => {
+        let scale = GetRoomEngine().getRoomInstanceRenderingCanvasScale(roomSession.roomId, 1)
 
-          if (!prevValue) scale /= 2
-          else scale *= 2
+        if (!prevValue) scale /= 2
+        else scale *= 2
 
-          GetRoomEngine().setRoomInstanceRenderingCanvasScale(roomSession.roomId, 1, scale)
+        GetRoomEngine().setRoomInstanceRenderingCanvasScale(roomSession.roomId, 1, scale)
 
-          return !prevValue
-        })
-        return
-      case "chat_history":
-        CreateLinkEvent("chat-history/toggle")
-        return
-      case "like_room":
-        SendMessageComposer(new RateFlatMessageComposer(1))
-        return
-      case "toggle_room_link":
-        CreateLinkEvent("navigator/toggle-room-link")
-        return
-      case "navigator_search_tag":
-        CreateLinkEvent(`navigator/search/${value}`)
-        SendMessageComposer(new NavigatorSearchComposer("hotel_view", `tag:${value}`))
-        return
+        return !prevValue
+      })
+      return
+    case "chat_history":
+      CreateLinkEvent("chat-history/toggle")
+      return
+    case "like_room":
+      SendMessageComposer(new RateFlatMessageComposer(1))
+      return
+    case "toggle_room_link":
+      CreateLinkEvent("navigator/toggle-room-link")
+      return
+    case "navigator_search_tag":
+      CreateLinkEvent(`navigator/search/${value}`)
+      SendMessageComposer(new NavigatorSearchComposer("hotel_view", `tag:${value}`))
+      return
     }
   }
 

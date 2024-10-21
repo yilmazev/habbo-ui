@@ -4,12 +4,12 @@ import { DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, Nit
 import { useDoorbellWidget } from "../../../../hooks"
 
 export const DoorbellWidgetView: FC<{}> = props => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [ isVisible, setIsVisible ] = useState(false)
   const { users = [], answer = null } = useDoorbellWidget()
 
   useEffect(() => {
     setIsVisible(!!users.length)
-  }, [users])
+  }, [ users ])
 
   if (!isVisible) return null
 

@@ -1,7 +1,7 @@
-import { Dispatch, FC, SetStateAction } from "react";
-import { CreateLinkEvent, HasHabboClub, IGroupData, LocalizeText } from "../../../../api";
-import { LayoutBadgeImageView } from "../../../../common";
-import { useGroup } from "../../../../hooks";
+import { Dispatch, FC, SetStateAction } from "react"
+import { CreateLinkEvent, HasHabboClub, IGroupData, LocalizeText } from "../../../../api"
+import { LayoutBadgeImageView } from "../../../../common"
+import { useGroup } from "../../../../hooks"
 
 interface GroupTabCreatorConfirmationViewProps {
   groupData: IGroupData;

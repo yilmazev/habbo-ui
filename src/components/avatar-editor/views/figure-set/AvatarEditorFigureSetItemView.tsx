@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react";
-import { AvatarEditorGridPartItem, GetConfiguration } from "../../../../api";
-import { LayoutGridItem, LayoutGridItemProps } from "../../../../common";
+import { FC, useEffect, useState } from "react"
+import { AvatarEditorGridPartItem, GetConfiguration } from "../../../../api"
+import { LayoutGridItem, LayoutGridItemProps } from "../../../../common"
 
 export interface AvatarEditorFigureSetItemViewProps extends LayoutGridItemProps {
   partItem: AvatarEditorGridPartItem;
@@ -8,7 +8,7 @@ export interface AvatarEditorFigureSetItemViewProps extends LayoutGridItemProps 
 
 export const AvatarEditorFigureSetItemView: FC<AvatarEditorFigureSetItemViewProps> = props => {
   const { partItem = null, children = null, ...rest } = props
-  const [updateId, setUpdateId] = useState(-1)
+  const [ updateId, setUpdateId ] = useState(-1)
 
   const hcDisabled = GetConfiguration("hc.disabled", false)
 
@@ -18,7 +18,7 @@ export const AvatarEditorFigureSetItemView: FC<AvatarEditorFigureSetItemViewProp
     partItem.notify = rerender
 
     return () => partItem.notify = null
-  }, [partItem])
+  }, [ partItem ])
 
   return (
     <LayoutGridItem className="!size-[52px]" itemImage={(partItem.isClear ? undefined : partItem.imageUrl)} itemAbsolute={true} itemActive={partItem.isSelected} {...rest}>

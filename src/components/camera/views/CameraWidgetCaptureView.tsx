@@ -36,7 +36,7 @@ export const CameraWidgetCaptureView: FC<CameraWidgetCaptureViewProps> = props =
 
     const texture = GetRoomEngine().createTextureFromRoom(GetRoomSession().roomId, 1, getCameraBounds())
 
-    const clone = [...cameraRoll]
+    const clone = [ ...cameraRoll ]
 
     if (clone.length >= CAMERA_ROLL_LIMIT) {
       simpleAlert(LocalizeText("camera.full.body"))
