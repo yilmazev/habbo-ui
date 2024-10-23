@@ -2,13 +2,12 @@ import { ILinkEventTracker } from "@nitrots/nitro-renderer"
 import { useEffect, useState } from "react"
 import { AddEventLinkTracker, RemoveLinkEventTracker, VisitDesktop } from "../../api"
 import { useGameCenter } from "../../hooks"
-import { GameListView } from "./views/GameListView"
-import { GameStageView } from "./views/GameStageView"
+import { GameListView } from "./views/GameList"
 import { GameView } from "./views/GameView"
 
-export const GameCenterView = () => {
+export const GameCenter = () => {
   const { isVisible, setIsVisible, games, accountStatus } = useGameCenter()
-  const [ blackScreen, setBlackScreen ] = useState(false)
+  const [blackScreen, setBlackScreen] = useState(false)
 
   useEffect(() => {
 
@@ -17,16 +16,16 @@ export const GameCenterView = () => {
         const value = url.split("/")
 
         switch (value[1]) {
-        case "show":
-          setBlackScreen(true)
-          VisitDesktop()
-          setTimeout(() => {
-            setIsVisible(true)
-          }, 250)
-          return
-        case "hide":
-          setIsVisible(false)
-          return
+          case "show":
+            setBlackScreen(true)
+            VisitDesktop()
+            setTimeout(() => {
+              setIsVisible(true)
+            }, 250)
+            return
+          case "hide":
+            setIsVisible(false)
+            return
         }
       },
       eventUrlPrefix: "games/"
@@ -44,6 +43,5 @@ export const GameCenterView = () => {
       <GameView />
       <GameListView />
     </div>
-    <GameStageView />
   </div>
 }

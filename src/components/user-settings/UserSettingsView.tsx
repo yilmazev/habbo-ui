@@ -1,13 +1,13 @@
 import { ILinkEventTracker, NitroSettingsEvent, UserSettingsCameraFollowComposer, UserSettingsEvent, UserSettingsOldChatComposer, UserSettingsRoomInvitesComposer, UserSettingsSoundComposer } from "@nitrots/nitro-renderer"
 import { FC, useEffect, useState } from "react"
 import { AddEventLinkTracker, DispatchMainEvent, DispatchUiEvent, GetConfiguration, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from "../../api"
-import { Button, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader } from "../../common"
 import { useMessageEvent } from "../../hooks"
 
 export const UserSettingsView: FC<{}> = props => {
-  const [ isVisible, setIsVisible ] = useState(false)
-  const [ userSettings, setUserSettings ] = useState<NitroSettingsEvent>(null)
-  const [ isDarkMode, setIsDarkMode ] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
+  const [userSettings, setUserSettings] = useState<NitroSettingsEvent>(null)
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
   const defaultTheme: boolean = GetConfiguration("illumina.main.theme") === "dark"
 
@@ -24,37 +24,37 @@ export const UserSettingsView: FC<{}> = props => {
     const clone = userSettings.clone()
 
     switch (type) {
-    case "close_view":
-      setIsVisible(false)
-      doUpdate = false
-      return
-    case "oldchat":
-      clone.oldChat = value as boolean
-      SendMessageComposer(new UserSettingsOldChatComposer(clone.oldChat))
-      break
-    case "room_invites":
-      clone.roomInvites = value as boolean
-      SendMessageComposer(new UserSettingsRoomInvitesComposer(clone.roomInvites))
-      break
-    case "camera_follow":
-      clone.cameraFollow = value as boolean
-      SendMessageComposer(new UserSettingsCameraFollowComposer(clone.cameraFollow))
-      break
-    case "system_volume":
-      clone.volumeSystem = value as number
-      clone.volumeSystem = Math.max(0, clone.volumeSystem)
-      clone.volumeSystem = Math.min(100, clone.volumeSystem)
-      break
-    case "furni_volume":
-      clone.volumeFurni = value as number
-      clone.volumeFurni = Math.max(0, clone.volumeFurni)
-      clone.volumeFurni = Math.min(100, clone.volumeFurni)
-      break
-    case "trax_volume":
-      clone.volumeTrax = value as number
-      clone.volumeTrax = Math.max(0, clone.volumeTrax)
-      clone.volumeTrax = Math.min(100, clone.volumeTrax)
-      break
+      case "close_view":
+        setIsVisible(false)
+        doUpdate = false
+        return
+      case "oldchat":
+        clone.oldChat = value as boolean
+        SendMessageComposer(new UserSettingsOldChatComposer(clone.oldChat))
+        break
+      case "room_invites":
+        clone.roomInvites = value as boolean
+        SendMessageComposer(new UserSettingsRoomInvitesComposer(clone.roomInvites))
+        break
+      case "camera_follow":
+        clone.cameraFollow = value as boolean
+        SendMessageComposer(new UserSettingsCameraFollowComposer(clone.cameraFollow))
+        break
+      case "system_volume":
+        clone.volumeSystem = value as number
+        clone.volumeSystem = Math.max(0, clone.volumeSystem)
+        clone.volumeSystem = Math.min(100, clone.volumeSystem)
+        break
+      case "furni_volume":
+        clone.volumeFurni = value as number
+        clone.volumeFurni = Math.max(0, clone.volumeFurni)
+        clone.volumeFurni = Math.min(100, clone.volumeFurni)
+        break
+      case "trax_volume":
+        clone.volumeTrax = value as number
+        clone.volumeTrax = Math.max(0, clone.volumeTrax)
+        clone.volumeTrax = Math.min(100, clone.volumeTrax)
+        break
     }
 
     if (doUpdate) setUserSettings(clone)
@@ -64,9 +64,9 @@ export const UserSettingsView: FC<{}> = props => {
 
   const saveRangeSlider = (type: string) => {
     switch (type) {
-    case "volume":
-      SendMessageComposer(new UserSettingsSoundComposer(Math.round(userSettings.volumeSystem), Math.round(userSettings.volumeFurni), Math.round(userSettings.volumeTrax)))
-      break
+      case "volume":
+        SendMessageComposer(new UserSettingsSoundComposer(Math.round(userSettings.volumeSystem), Math.round(userSettings.volumeFurni), Math.round(userSettings.volumeTrax)))
+        break
     }
   }
 
@@ -95,15 +95,15 @@ export const UserSettingsView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-        case "show":
-          setIsVisible(true)
-          return
-        case "hide":
-          setIsVisible(false)
-          return
-        case "toggle":
-          setIsVisible(prevValue => !prevValue)
-          return
+          case "show":
+            setIsVisible(true)
+            return
+          case "hide":
+            setIsVisible(false)
+            return
+          case "toggle":
+            setIsVisible(prevValue => !prevValue)
+            return
         }
       },
       eventUrlPrefix: "user-settings/"
@@ -123,7 +123,7 @@ export const UserSettingsView: FC<{}> = props => {
     if (!userSettings) return
 
     DispatchUiEvent(userSettings)
-  }, [ userSettings ])
+  }, [userSettings])
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("isDarkMode")
@@ -134,14 +134,14 @@ export const UserSettingsView: FC<{}> = props => {
     } else {
       setIsDarkMode(false)
     }
-  }, [ isDarkMode, defaultTheme ])
+  }, [isDarkMode, defaultTheme])
 
   if (!isVisible || !userSettings) return null
 
   return (
-    <NitroCardView uniqueKey="user-settings" className="illumina-user-settings max-w-80">
-      <NitroCardHeaderView headerText={LocalizeText("widget.memenu.settings")} onCloseClick={event => processAction("close_view")} />
-      <NitroCardContentView>
+    <IlluminaCard uniqueKey="user-settings" className="illumina-user-settings max-w-80">
+      <IlluminaCardHeader headerText={LocalizeText("widget.memenu.settings")} onCloseClick={event => processAction("close_view")} />
+      <IlluminaCardContent>
         <div className="illumina-card mb-3 flex flex-col gap-[7px] p-3">
           <div className="flex items-center gap-1.5">
             <input id="oldChat" className="illumina-input" type="checkbox" checked={userSettings.oldChat} onChange={event => processAction("oldchat", event.target.checked)} />
@@ -188,7 +188,7 @@ export const UserSettingsView: FC<{}> = props => {
           </div>
         </div>
         <Button onClick={() => window.location.href = "/logout"}>{LocalizeText("panic.button.caption")}</Button>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

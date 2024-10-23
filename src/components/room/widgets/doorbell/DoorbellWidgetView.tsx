@@ -1,22 +1,22 @@
 import { FC, useEffect, useState } from "react"
 import { LocalizeText } from "../../../../api"
-import { DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
+import { DraggableWindowPosition, IlluminaCard, IlluminaCardContent, IlluminaCardHeader } from "../../../../common"
 import { useDoorbellWidget } from "../../../../hooks"
 
 export const DoorbellWidgetView: FC<{}> = props => {
-  const [ isVisible, setIsVisible ] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
   const { users = [], answer = null } = useDoorbellWidget()
 
   useEffect(() => {
     setIsVisible(!!users.length)
-  }, [ users ])
+  }, [users])
 
   if (!isVisible) return null
 
   return (
-    <NitroCardView uniqueKey="doorbell" className="illumina-doorbell w-[249px]" windowPosition={DraggableWindowPosition.TOP_LEFT}>
-      <NitroCardHeaderView headerText={LocalizeText("navigator.doorbell.title")} onCloseClick={event => setIsVisible(false)} />
-      <NitroCardContentView>
+    <IlluminaCard uniqueKey="doorbell" className="illumina-doorbell w-[249px]" windowPosition={DraggableWindowPosition.TOP_LEFT}>
+      <IlluminaCardHeader headerText={LocalizeText("navigator.doorbell.title")} onCloseClick={event => setIsVisible(false)} />
+      <IlluminaCardContent>
         <div className="mb-2">
           <p className="px-1 pb-1 text-sm">{LocalizeText("widgets.doorbell.info")}</p>
         </div>
@@ -35,7 +35,7 @@ export const DoorbellWidgetView: FC<{}> = props => {
             </div>
           ))}
         </div>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

@@ -1,14 +1,14 @@
 import { Game2GetAccountGameStatusMessageComposer, GetGameStatusMessageComposer } from "@nitrots/nitro-renderer"
 import { useEffect, useRef, useState } from "react"
 import { GetSessionDataManager, LocalizeText, SendMessageComposer } from "../../../api"
-import { Button, NitroBigCardContentView, NitroBigCardHeaderView, NitroBigCardView } from "../../../common"
+import { Button, IlluminaBigCard, IlluminaBigCardContent, IlluminaBigCardHeader } from "../../../common"
 import { LayoutTimesView } from "../../../common/layout/LayoutTimesView"
 import { useGameCenter } from "../../../hooks"
 
 export const GameView = () => {
   const { selectedGame, accountStatus } = useGameCenter()
-  const [ isGameLoading, setIsGameLoading ] = useState(false)
-  const [ iframeSrc, setIframeSrc ] = useState(null)
+  const [isGameLoading, setIsGameLoading] = useState(false)
+  const [iframeSrc, setIframeSrc] = useState(null)
   const basejumpRef = useRef(null)
 
   const getBgColour = () => selectedGame.bgColor
@@ -65,23 +65,21 @@ export const GameView = () => {
       SendMessageComposer(new GetGameStatusMessageComposer(selectedGame.gameId))
       SendMessageComposer(new Game2GetAccountGameStatusMessageComposer(selectedGame.gameId))
     }
-  }, [ selectedGame ])
+  }, [selectedGame])
 
   return <>
     <div className="relative flex size-full justify-center bg-left-bottom bg-repeat-x pt-[63px]" style={{ backgroundColor: getBgColour(), backgroundImage: getBgImage() }}>
       <div className="z-10 w-full max-w-[960px]">
         <div className="flex w-[540px] flex-col items-center">
           <div className="flex flex-col items-center">
-            <p className="pb-2 text-center text-xs font-semibold !leading-3 [text-shadow:_0_1px_0_#fff]" style={{ textShadow: `0 1px 0 ${getBgColour()}` }}>{LocalizeText(`gamecenter.${selectedGame.gameNameId}.description_title`)}</p>
+            <p className="pb-[8px] font-bold text-center text-[12px] leading-[14px] text-[#010101]">{LocalizeText(`gamecenter.${selectedGame.gameNameId}.description_title`)}</p>
             <img src={selectedGame.assetUrl + "game_logo.png"} />
             {(accountStatus.hasUnlimitedGames || accountStatus.freeGamesLeft > 0) && <>
-              <Button className="!font-volter_bold relative !h-10 !text-[9px] !font-normal" onClick={event => onPlay(selectedGame.gameNameId)}>
+              <Button variant="101" className="font-volter relative h-[41px] px-[12px] font-bold" onClick={event => onPlay(selectedGame.gameNameId)}>
                 {LocalizeText("gamecenter.play_now")}
-                {/* { !accountStatus.hasUnlimitedGames && 
-                                    <LayoutItemCountView count={ accountStatus.freeGamesLeft }/> } */}
               </Button>
             </>}
-            <p className="w-[350px] pt-2.5 text-center text-xs !leading-3 [text-shadow:_0_1px_0_#fff]" style={{ textShadow: `0 1px 0 ${getBgColour()}` }}>{LocalizeText(`gamecenter.${selectedGame.gameNameId}.description_content`)}</p>
+            <p className="w-[350px] pt-[12px] text-center text-[12px] leading-[14px] text-[#010101]">{LocalizeText(`gamecenter.${selectedGame.gameNameId}.description_content`)}</p>
           </div>
         </div>
       </div>
@@ -89,19 +87,19 @@ export const GameView = () => {
       <div className="absolute bottom-0 left-0 size-full bg-left-bottom bg-no-repeat" style={{ backgroundImage: getBgLeftImage() }} />
     </div>
     {isGameLoading && (
-      <NitroBigCardView>
-        <NitroBigCardHeaderView headerText={LocalizeText("gamecenter.waiting.game.title")} />
-        <NitroBigCardContentView>
+      <IlluminaBigCard>
+        <IlluminaBigCardHeader headerText={LocalizeText("gamecenter.waiting.game.title")} />
+        <IlluminaBigCardContent>
           <div className="mb-1 flex w-full justify-end">
             <LayoutTimesView onClick={() => setIsGameLoading(false)} />
           </div>
           <img src={selectedGame.assetUrl + "game_logo.png"} className="mb-8" />
-          <Button variant="underline" onClick={() => setIsGameLoading(false)}>{LocalizeText("generic.cancel")}</Button>
-        </NitroBigCardContentView>
-      </NitroBigCardView>
+          <Button variant="0" onClick={() => setIsGameLoading(false)}>{LocalizeText("generic.cancel")}</Button>
+        </IlluminaBigCardContent>
+      </IlluminaBigCard>
     )}
     {iframeSrc && (
-      <div className="absolute left-0 top-0 size-full">
+      <div className="absolute left-0 top-0 size-full bg-black z-50">
         <iframe ref={basejumpRef} src={iframeSrc} className="absolute left-0 top-0 z-[99999] size-full" />
         <div className="position-game-exit absolute left-10 top-0 z-[999999]">
           <div className="flex justify-center gap-8">
@@ -109,7 +107,7 @@ export const GameView = () => {
             <span className="h-4 w-1 border-x border-black bg-[#6E6E6E]" />
           </div>
           <button className="border border-black bg-[#E02D11] px-2 py-2.5" onClick={() => setIframeSrc(null)}>
-            <p className="text-3xl font-extrabold uppercase text-white">{LocalizeText("quiz.SafetyQuiz1.exit.button")}</p>
+            <p className="text-[30px] font-bold uppercase text-white">{LocalizeText("quiz.SafetyQuiz1.exit.button")}</p>
           </button>
         </div>
       </div>

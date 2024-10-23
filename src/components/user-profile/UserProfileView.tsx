@@ -1,7 +1,7 @@
 import { ExtendedProfileChangedMessageEvent, FriendlyTime, RelationshipStatusInfoEvent, RelationshipStatusInfoMessageParser, RoomEngineObjectEvent, RoomObjectCategory, RoomObjectType, UserCurrentBadgesComposer, UserCurrentBadgesEvent, UserProfileEvent, UserProfileParser, UserRelationshipsComposer } from "@nitrots/nitro-renderer"
 import { FC, useState } from "react"
 import { CreateLinkEvent, GetRoomSession, GetSessionDataManager, GetUserProfile, LocalizeText, OpenMessengerChat, ReportType, SendMessageComposer } from "../../api"
-import { Button, LayoutAvatarImage, NitroBigCardContentView, NitroBigCardHeaderView, NitroBigCardView } from "../../common"
+import { Button, IlluminaBigCard, IlluminaBigCardContent, IlluminaBigCardHeader, LayoutAvatarImage } from "../../common"
 import { useFriends, useHelp, useMessageEvent, useRoomEngineEvent } from "../../hooks"
 import { BadgesContainerView } from "./views/BadgesContainerView"
 import { GroupsContainerView } from "./views/GroupsContainerView"
@@ -9,9 +9,9 @@ import { RelationshipsContainerView } from "./views/RelationshipsContainerView"
 import { RoomsContainerView } from "./views/RoomsContainerView"
 
 export const UserProfileView: FC<{}> = props => {
-  const [ userProfile, setUserProfile ] = useState<UserProfileParser>(null)
-  const [ userBadges, setUserBadges ] = useState<string[]>([])
-  const [ userRelationships, setUserRelationships ] = useState<RelationshipStatusInfoMessageParser>(null)
+  const [userProfile, setUserProfile] = useState<UserProfileParser>(null)
+  const [userBadges, setUserBadges] = useState<string[]>([])
+  const [userRelationships, setUserRelationships] = useState<RelationshipStatusInfoMessageParser>(null)
   const { canRequestFriend = null, getFriend = null } = useFriends()
   const { report = null } = useHelp()
 
@@ -26,15 +26,15 @@ export const UserProfileView: FC<{}> = props => {
 
     if (name) {
       switch (name) {
-      case "message":
-        OpenMessengerChat(userProfile.id)
-        break
-      case "friend":
-        CreateLinkEvent(`friends/request/${userProfile.id}/${userProfile.username}`)
-        return
-      case "report":
-        report(ReportType.BULLY, { reportedUserId: userProfile.id })
-        break
+        case "message":
+          OpenMessengerChat(userProfile.id)
+          break
+        case "friend":
+          CreateLinkEvent(`friends/request/${userProfile.id}/${userProfile.username}`)
+          return
+        case "report":
+          report(ReportType.BULLY, { reportedUserId: userProfile.id })
+          break
       }
     }
 
@@ -100,8 +100,8 @@ export const UserProfileView: FC<{}> = props => {
   if (!userProfile) return null
 
   return (
-    <NitroBigCardView uniqueKey="profile" className="illumina-profile mt-[110px] w-[560px]" onCloseClick={onClose}>
-      <NitroBigCardHeaderView className="absolute top-[-100px] mb-0 ml-2.5 w-full">
+    <IlluminaBigCard uniqueKey="profile" className="illumina-profile mt-[110px] w-[560px]" onCloseClick={onClose}>
+      <IlluminaBigCardHeader className="absolute top-[-100px] mb-0 ml-2.5 w-full">
         <div className="relative flex w-full items-end justify-between">
           <div>
             {userProfile.motto.length > 0 &&
@@ -117,19 +117,19 @@ export const UserProfileView: FC<{}> = props => {
               </div>
             </div>
           </div>
-          <p className="mb-5 mr-[25px] text-xs font-semibold text-white [text-shadow:_0_1px_0_#33312B]">{LocalizeText("profile.created_at.text", [ "date" ], [ userProfile.registration ])}</p>
+          <p className="mb-5 mr-[25px] text-xs font-semibold text-white [text-shadow:_0_1px_0_#33312B]">{LocalizeText("profile.created_at.text", ["date"], [userProfile.registration])}</p>
         </div>
-      </NitroBigCardHeaderView>
-      <NitroBigCardContentView className="!p-0 !pt-[5px]">
+      </IlluminaBigCardHeader>
+      <IlluminaBigCardContent className="!p-0 !pt-[5px]">
         <div className="px-2">
           <div className="flex items-center justify-between pb-0.5 pl-[52px] pt-1">
             <div className="w-full">
               <p className="!dark:text-[#cccccc] text-xs font-semibold !leading-3 text-[#1B1B1B]  [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">
                 {userProfile.isOnline
-                  ? LocalizeText("profile.online.text", [ "username" ], [ userProfile.username ])
-                  : LocalizeText("profile.offline.text", [ "username" ], [ userProfile.username ])}
+                  ? LocalizeText("profile.online.text", ["username"], [userProfile.username])
+                  : LocalizeText("profile.offline.text", ["username"], [userProfile.username])}
                 &nbsp;
-                <span className="font-normal text-[#4A4A4A]">{LocalizeText("profile.last_login.text", [ "time" ], [ FriendlyTime.format(userProfile.secondsSinceLastVisit, ".ago", 2) ])}</span>
+                <span className="font-normal text-[#4A4A4A]">{LocalizeText("profile.last_login.text", ["time"], [FriendlyTime.format(userProfile.secondsSinceLastVisit, ".ago", 2)])}</span>
               </p>
             </div>
             <div className="flex justify-end gap-1">
@@ -199,7 +199,7 @@ export const UserProfileView: FC<{}> = props => {
             <div className="absolute bottom-5 right-[21px] h-[89px] w-[123px] shrink-0 bg-[url('/client-assets/images/profile/spritesheet.png?v=2451779')] bg-[-164px_-297px]" />
           </div>
         </div>
-      </NitroBigCardContentView>
-    </NitroBigCardView>
+      </IlluminaBigCardContent>
+    </IlluminaBigCard>
   )
 }

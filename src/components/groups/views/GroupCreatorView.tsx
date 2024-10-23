@@ -1,7 +1,7 @@
 import { GroupBuyComposer, GroupBuyDataComposer, GroupBuyDataEvent } from "@nitrots/nitro-renderer"
 import { FC, useEffect, useState } from "react"
 import { HasHabboClub, IGroupData, LocalizeText, SendMessageComposer } from "../../../api"
-import { Button, LayoutCurrencyIcon, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader, LayoutCurrencyIcon } from "../../../common"
 import { useMessageEvent, useNotification, usePurse } from "../../../hooks"
 import { GroupTabBadgeView } from "./tabs/GroupTabBadgeView"
 import { GroupTabColorsView } from "./tabs/GroupTabColorsView"
@@ -12,15 +12,15 @@ interface GroupCreatorViewProps {
   onClose: () => void;
 }
 
-const TABS: number[] = [ 1, 2, 3, 4 ]
+const TABS: number[] = [1, 2, 3, 4]
 
 export const GroupCreatorView: FC<GroupCreatorViewProps> = props => {
   const { onClose = null } = props
-  const [ currentTab, setCurrentTab ] = useState(1)
-  const [ closeAction, setCloseAction ] = useState<{ action: () => boolean }>(null)
-  const [ groupData, setGroupData ] = useState<IGroupData>(null)
-  const [ availableRooms, setAvailableRooms ] = useState<{ id: number, name: string }[]>(null)
-  const [ purchaseCost, setPurchaseCost ] = useState(0)
+  const [currentTab, setCurrentTab] = useState(1)
+  const [closeAction, setCloseAction] = useState<{ action: () => boolean }>(null)
+  const [groupData, setGroupData] = useState<IGroupData>(null)
+  const [availableRooms, setAvailableRooms] = useState<{ id: number, name: string }[]>(null)
+  const [purchaseCost, setPurchaseCost] = useState(0)
   const { getCurrencyAmount } = usePurse()
   const { showConfirm = null } = useNotification()
 
@@ -142,14 +142,14 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props => {
     })
 
     SendMessageComposer(new GroupBuyDataComposer())
-  }, [ setGroupData ])
+  }, [setGroupData])
 
   if (!groupData) return null
 
   return (
-    <NitroCardView uniqueKey="group-creator" className="illumina-group-creator h-[520px] w-[392px]">
-      <NitroCardHeaderView headerText={LocalizeText("group.create.title")} onCloseClick={onCloseClose} />
-      <NitroCardContentView className="h-full">
+    <IlluminaCard uniqueKey="group-creator" className="illumina-group-creator h-[520px] w-[392px]">
+      <IlluminaCardHeader headerText={LocalizeText("group.create.title")} onCloseClick={onCloseClose} />
+      <IlluminaCardContent className="h-full">
         <div className="flex items-start pt-px">
           {TABS.map((tab, index) => (
             <div key={index} className={`flex h-7 justify-center gap-1 bg-[url('/client-assets/images/groups/spritesheet.png?v=2451779')] dark:bg-[url('/client-assets/images/groups/spritesheet-dark.png?v=2451779')] ${getTabStyle(tab)}`}>
@@ -190,7 +190,7 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props => {
                 <div className="illumina-groups-purchase flex w-[248px] justify-between px-3.5 py-2" onClick={nextStep}>
                   <div className="flex w-[140px] items-center gap-2.5">
                     <LayoutCurrencyIcon type="big" currency={-1} />
-                    <p className="text-sm text-[#090909]">{LocalizeText("group.create.confirm.buyinfo", [ "amount" ], [ purchaseCost.toString() ])}</p>
+                    <p className="text-sm text-[#090909]">{LocalizeText("group.create.confirm.buyinfo", ["amount"], [purchaseCost.toString()])}</p>
                   </div>
                   <Button>
                     {LocalizeText("group.create.confirm.buy")}
@@ -200,7 +200,7 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props => {
                 <div className="illumina-groups-purchase disabled flex w-[248px] justify-between px-3.5 py-2">
                   <div className="flex w-[140px] items-center gap-2.5">
                     <LayoutCurrencyIcon type="big" currency={-1} />
-                    <p className="text-sm text-[#090909]">{LocalizeText("group.create.confirm.buyinfo", [ "amount" ], [ purchaseCost.toString() ])}</p>
+                    <p className="text-sm text-[#090909]">{LocalizeText("group.create.confirm.buyinfo", ["amount"], [purchaseCost.toString()])}</p>
                   </div>
                   <Button disabled>
                     {LocalizeText("group.create.confirm.buy")}
@@ -209,7 +209,7 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props => {
             </div>
           </div>
         </div>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

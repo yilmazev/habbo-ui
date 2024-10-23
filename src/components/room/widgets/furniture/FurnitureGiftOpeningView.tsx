@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { attemptItemPlacement, CreateLinkEvent, LocalizeText } from "../../../../api"
-import { Button, LayoutAvatarImage, LayoutGiftTagView, LayoutImage, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader, LayoutAvatarImage, LayoutGiftTagView, LayoutImage } from "../../../../common"
 import { useFurniturePresentWidget, useInventoryFurni } from "../../../../hooks"
 
 export const FurnitureGiftOpeningView: FC<{}> = props => {
@@ -18,9 +18,9 @@ export const FurnitureGiftOpeningView: FC<{}> = props => {
   }
 
   return (
-    <NitroCardView uniqueKey="furniture-gift-opening" className="illumina-furniture-gift-opening w-[326px]">
-      <NitroCardHeaderView headerText={LocalizeText(senderName ? "widget.furni.present.window.title_from" : "widget.furni.present.window.title", [ "name" ], [ senderName ])} onCloseClick={onClose} />
-      <NitroCardContentView>
+    <IlluminaCard uniqueKey="furniture-gift-opening" className="illumina-furniture-gift-opening w-[326px]">
+      <IlluminaCardHeader headerText={LocalizeText(senderName ? "widget.furni.present.window.title_from" : "widget.furni.present.window.title", ["name"], [senderName])} onCloseClick={onClose} />
+      <IlluminaCardContent>
         {(placedItemId === -1) &&
           <>
             <LayoutGiftTagView userName={senderName} figure={senderFigure} message={text} />
@@ -31,7 +31,7 @@ export const FurnitureGiftOpeningView: FC<{}> = props => {
                 </Button>
                 {senderName &&
                   <Button onClick={event => CreateLinkEvent("catalog/open")}>
-                    {LocalizeText("widget.furni.present.give_gift", [ "name" ], [ senderName ])}
+                    {LocalizeText("widget.furni.present.give_gift", ["name"], [senderName])}
                   </Button>}
               </div>}
           </>}
@@ -41,7 +41,7 @@ export const FurnitureGiftOpeningView: FC<{}> = props => {
               <div className="flex h-20 w-[81px] items-center justify-center bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-309px_-212px] bg-no-repeat">
                 <LayoutImage imageUrl={imageUrl} />
               </div>
-              <p className="text-sm">{LocalizeText("widget.furni.present.message_opened", [ "product" ], [ text ])}</p>
+              <p className="text-sm">{LocalizeText("widget.furni.present.message_opened", ["product"], [text])}</p>
             </div>
             <div className="mb-2.5 flex flex-col gap-2.5 px-[50px]">
               <Button onClick={event => place(placedItemId)}>
@@ -53,12 +53,12 @@ export const FurnitureGiftOpeningView: FC<{}> = props => {
             </div>
             {(senderName && senderName.length) && <div className="illumina-catalogue-info relative flex justify-center py-3">
               <Button variant="success" className="relative" onClick={event => CreateLinkEvent("catalog/open")}>
-                {LocalizeText("widget.furni.present.give_gift", [ "name" ], [ senderName ])}
+                {LocalizeText("widget.furni.present.give_gift", ["name"], [senderName])}
                 <LayoutAvatarImage className="!absolute -right-10 top-[-50px] !bg-[center_6px]" figure={senderFigure} direction={2} headOnly={true} />
               </Button>
             </div>}
           </div>}
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

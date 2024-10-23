@@ -1,6 +1,6 @@
-import { FC } from "react"
-import { LocalizeText } from "../../../api"
-import { Button, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../common"
+import { FC } from "react";
+import { LocalizeText } from "../../../api";
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader } from "../../../common";
 
 export interface ThanksViewProps {
   onClose: () => void;
@@ -10,9 +10,9 @@ export const ThanksView: FC<ThanksViewProps> = props => {
   const { onClose = null } = props
 
   return (
-    <NitroCardView uniqueKey="help-thanks" className="illumina-help-thanks w-[370px]">
-      <NitroCardHeaderView headerText={LocalizeText("guide.bully.request.reporter.title")} onCloseClick={onClose} />
-      <NitroCardContentView className="mt-1.5 h-full">
+    <IlluminaCard uniqueKey="help-thanks" className="illumina-help-thanks w-[370px]">
+      <IlluminaCardHeader headerText={LocalizeText("guide.bully.request.reporter.title")} onCloseClick={onClose} />
+      <IlluminaCardContent className="mt-1.5 h-full">
         <div className="mb-[18px] flex justify-between">
           <div className="w-[250px]">
             <p className="mb-1.5 font-semibold text-[#373737] [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("guide.bully.request.reporter.valid.caption")}</p>
@@ -27,7 +27,7 @@ export const ThanksView: FC<ThanksViewProps> = props => {
         <div className="mt-6 flex items-center justify-center">
           <Button onClick={onClose}>{LocalizeText("alert.close.button")}</Button>
         </div>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

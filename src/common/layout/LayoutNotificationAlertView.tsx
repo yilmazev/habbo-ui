@@ -1,33 +1,30 @@
-import { FC, useMemo } from "react"
-import { NotificationAlertType } from "../../api"
-import { NitroCardContentView, NitroCardHeaderView, NitroCardView, NitroCardViewProps } from "../card"
+import { FC, useMemo } from "react";
+import { NotificationAlertType } from "../../api";
+import { IlluminaCard, IlluminaCardContent, IlluminaCardHeader, IlluminaCardProps } from "../card";
 
-export interface LayoutNotificationAlertViewProps extends NitroCardViewProps
-{
-    title?: string;
-    type?: string;
-    onClose: () => void;
+export interface LayoutNotificationAlertViewProps extends IlluminaCardProps {
+  title?: string;
+  type?: string;
+  onClose: () => void;
 }
 
-export const LayoutNotificationAlertView: FC<LayoutNotificationAlertViewProps> = props =>
-{
+export const LayoutNotificationAlertView: FC<LayoutNotificationAlertViewProps> = props => {
   const { title = "", onClose = null, classNames = [], children = null, type = NotificationAlertType.DEFAULT, ...rest } = props
 
-  const getClassNames = useMemo(() =>
-  {
-    const newClassNames: string[] = [ "illumina-alert" ]
+  const getClassNames = useMemo(() => {
+    const newClassNames: string[] = ["illumina-alert"]
 
-    if(classNames.length) newClassNames.push(...classNames)
+    if (classNames.length) newClassNames.push(...classNames)
 
     return newClassNames
-  }, [ classNames, type ])
+  }, [classNames, type])
 
   return (
-    <NitroCardView uniqueKey="alert" customZIndex={ 510 } disableDrag={ type === NotificationAlertType.ALERT } classNames={ getClassNames } { ...rest }>
-      <NitroCardHeaderView headerText={ title } onCloseClick={ onClose } />
-      <NitroCardContentView>
-        { children }
-      </NitroCardContentView>
-    </NitroCardView>
+    <IlluminaCard uniqueKey="alert" customZIndex={510} disableDrag={type === NotificationAlertType.ALERT} classNames={getClassNames} {...rest}>
+      <IlluminaCardHeader headerText={title} onCloseClick={onClose} />
+      <IlluminaCardContent>
+        {children}
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

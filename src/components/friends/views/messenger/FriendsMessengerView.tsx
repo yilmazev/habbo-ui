@@ -1,15 +1,15 @@
 import { FollowFriendMessageComposer, ILinkEventTracker } from "@nitrots/nitro-renderer"
 import { FC, KeyboardEvent, useEffect, useRef, useState } from "react"
 import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeText, RemoveLinkEventTracker, ReportType, SendMessageComposer } from "../../../../api"
-import { Button, LayoutAvatarImage, LayoutBadgeImageView, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader, LayoutAvatarImage, LayoutBadgeImageView } from "../../../../common"
 import { LayoutTimesView } from "../../../../common/layout/LayoutTimesView"
 import { useHelp, useMessenger } from "../../../../hooks"
 import { FriendsMessengerThreadView } from "./messenger-thread/FriendsMessengerThreadView"
 
 export const FriendsMessengerView: FC<{}> = props => {
-  const [ isVisible, setIsVisible ] = useState(false)
-  const [ lastThreadId, setLastThreadId ] = useState(-1)
-  const [ messageText, setMessageText ] = useState("")
+  const [isVisible, setIsVisible] = useState(false)
+  const [lastThreadId, setLastThreadId] = useState(-1)
+  const [messageText, setMessageText] = useState("")
   const { visibleThreads = [], activeThread = null, getMessageThread = null, sendMessage = null, setActiveThreadId = null, closeThread = null } = useMessenger()
   const { report = null } = useHelp()
   const messagesBox = useRef<HTMLDivElement>()
@@ -63,13 +63,13 @@ export const FriendsMessengerView: FC<{}> = props => {
     AddEventLinkTracker(linkTracker)
 
     return () => RemoveLinkEventTracker(linkTracker)
-  }, [ getMessageThread, setActiveThreadId ])
+  }, [getMessageThread, setActiveThreadId])
 
   useEffect(() => {
     if (!isVisible || !activeThread) return
 
     messagesBox.current.scrollTop = messagesBox.current.scrollHeight
-  }, [ isVisible, activeThread ])
+  }, [isVisible, activeThread])
 
   useEffect(() => {
     if (isVisible && !activeThread) {
@@ -87,20 +87,20 @@ export const FriendsMessengerView: FC<{}> = props => {
       setLastThreadId(activeThread.threadId)
       setActiveThreadId(-1)
     }
-  }, [ isVisible, activeThread, lastThreadId, visibleThreads, setActiveThreadId ])
+  }, [isVisible, activeThread, lastThreadId, visibleThreads, setActiveThreadId])
 
   useEffect(() => {
     if (visibleThreads.length === 0) {
       setIsVisible(false)
     }
-  }, [ visibleThreads ])
+  }, [visibleThreads])
 
   if (!isVisible) return null
 
   return (
-    <NitroCardView uniqueKey="messenger" className="illumina-messenger w-[282px]">
-      <NitroCardHeaderView headerText={LocalizeText("messenger.window.title", [ "OPEN_CHAT_COUNT" ], [ visibleThreads.length.toString() ])} onCloseClick={event => setIsVisible(false)} isClose={false} />
-      <NitroCardContentView>
+    <IlluminaCard uniqueKey="messenger" className="illumina-messenger w-[282px]">
+      <IlluminaCardHeader headerText={LocalizeText("messenger.window.title", ["OPEN_CHAT_COUNT"], [visibleThreads.length.toString()])} onCloseClick={event => setIsVisible(false)} isClose={false} />
+      <IlluminaCardContent>
         <div className="flex flex-col">
           <div className="flex items-center">
             {visibleThreads && (visibleThreads.length > 0) && visibleThreads.map(thread => (
@@ -119,7 +119,7 @@ export const FriendsMessengerView: FC<{}> = props => {
           {activeThread &&
             <div className="mt-2">
               <div className="mb-1.5 flex items-center gap-1.5">
-                <p className="text-[11px] font-semibold !leading-3 text-[#4a4a4a] [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("messenger.window.separator", [ "FRIEND_NAME" ], [ activeThread.participant.name ])}</p>
+                <p className="text-[11px] font-semibold !leading-3 text-[#4a4a4a] [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("messenger.window.separator", ["FRIEND_NAME"], [activeThread.participant.name])}</p>
                 <div className="h-0.5 grow border-b border-white bg-[#CCCCCC] dark:border-[#36322C] dark:bg-black" />
               </div>
               <div className="flex items-center justify-between">
@@ -144,14 +144,14 @@ export const FriendsMessengerView: FC<{}> = props => {
                 <FriendsMessengerThreadView thread={activeThread} />
               </div>
               <div className="illumina-input relative flex h-7 items-center px-px">
-                <input type="text" className="w-full pl-[9px] pr-[70px] text-xs text-[#010101]" maxLength={255} placeholder={LocalizeText("messenger.window.input.default", [ "FRIEND_NAME" ], [ activeThread.participant.name ])} value={messageText} onChange={event => setMessageText(event.target.value)} onKeyDown={onKeyDown} />
+                <input type="text" className="w-full pl-[9px] pr-[70px] text-xs text-[#010101]" maxLength={255} placeholder={LocalizeText("messenger.window.input.default", ["FRIEND_NAME"], [activeThread.participant.name])} value={messageText} onChange={event => setMessageText(event.target.value)} onKeyDown={onKeyDown} />
                 <Button className="absolute right-1 !h-5" onClick={send}>
                   <p className="text-[10px] font-semibold !leading-3 text-[#040404] [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">{LocalizeText("widgets.chatinput.say")}</p>
                 </Button>
               </div>
             </div>}
         </div>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

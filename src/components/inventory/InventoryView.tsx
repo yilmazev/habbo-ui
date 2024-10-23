@@ -1,7 +1,7 @@
 import { BadgePointLimitsEvent, ILinkEventTracker, IRoomSession, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomPreviewer, RoomSessionEvent } from "@nitrots/nitro-renderer"
 import { FC, useEffect, useState } from "react"
 import { AddEventLinkTracker, GetLocalization, GetRoomEngine, LocalizeText, RemoveLinkEventTracker, UnseenItemCategory, isObjectMoverRequested, setObjectMoverRequested } from "../../api"
-import { DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from "../../common"
+import { DraggableWindowPosition, IlluminaCard, IlluminaCardContent, IlluminaCardHeader, NitroCardTabsItemView, NitroCardTabsView } from "../../common"
 import { useInventoryTrade, useInventoryUnseenTracker, useMessageEvent, useRoomEngineEvent, useRoomSessionManagerEvent } from "../../hooks"
 import { InventoryBadgeView } from "./views/badge/InventoryBadgeView"
 import { InventoryBotView } from "./views/bot/InventoryBotView"
@@ -13,14 +13,14 @@ const TAB_FURNITURE: string = "furnis"
 const TAB_PETS: string = "pets"
 const TAB_BADGES: string = "badges"
 const TAB_BOTS: string = "bots"
-const TABS = [ TAB_FURNITURE, TAB_PETS, TAB_BADGES, TAB_BOTS ]
-const UNSEEN_CATEGORIES = [ UnseenItemCategory.FURNI, UnseenItemCategory.PET, UnseenItemCategory.BADGE, UnseenItemCategory.BOT ]
+const TABS = [TAB_FURNITURE, TAB_PETS, TAB_BADGES, TAB_BOTS]
+const UNSEEN_CATEGORIES = [UnseenItemCategory.FURNI, UnseenItemCategory.PET, UnseenItemCategory.BADGE, UnseenItemCategory.BOT]
 
 export const InventoryView: FC<{}> = props => {
-  const [ isVisible, setIsVisible ] = useState(false)
-  const [ currentTab, setCurrentTab ] = useState(TABS[0])
-  const [ roomSession, setRoomSession ] = useState<IRoomSession>(null)
-  const [ roomPreviewer, setRoomPreviewer ] = useState<RoomPreviewer>(null)
+  const [isVisible, setIsVisible] = useState(false)
+  const [currentTab, setCurrentTab] = useState(TABS[0])
+  const [roomSession, setRoomSession] = useState<IRoomSession>(null)
+  const [roomPreviewer, setRoomPreviewer] = useState<RoomPreviewer>(null)
   const { isTrading = false, stopTrading = null } = useInventoryTrade()
   const { getCount = null, resetCategory = null } = useInventoryUnseenTracker()
 
@@ -43,13 +43,13 @@ export const InventoryView: FC<{}> = props => {
     RoomSessionEvent.ENDED
   ], event => {
     switch (event.type) {
-    case RoomSessionEvent.CREATED:
-      setRoomSession(event.session)
-      return
-    case RoomSessionEvent.ENDED:
-      setRoomSession(null)
-      setIsVisible(false)
-      return
+      case RoomSessionEvent.CREATED:
+        setRoomSession(event.session)
+        return
+      case RoomSessionEvent.ENDED:
+        setRoomSession(null)
+        setIsVisible(false)
+        return
     }
   })
 
@@ -67,15 +67,15 @@ export const InventoryView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-        case "show":
-          setIsVisible(true)
-          return
-        case "hide":
-          setIsVisible(false)
-          return
-        case "toggle":
-          setIsVisible(prevValue => !prevValue)
-          return
+          case "show":
+            setIsVisible(true)
+            return
+          case "hide":
+            setIsVisible(false)
+            return
+          case "toggle":
+            setIsVisible(prevValue => !prevValue)
+            return
         }
       },
       eventUrlPrefix: "inventory/"
@@ -100,13 +100,13 @@ export const InventoryView: FC<{}> = props => {
 
   useEffect(() => {
     if (!isVisible && isTrading) setIsVisible(true)
-  }, [ isVisible, isTrading ])
+  }, [isVisible, isTrading])
 
   if (!isVisible) return null
 
   return (
-    <NitroCardView uniqueKey="inventory" windowPosition={DraggableWindowPosition.TOP_LEFT} className="illumina-inventory min-h-[350px] w-[490px]">
-      <NitroCardHeaderView headerText={LocalizeText("inventory.title")} onCloseClick={onClose} />
+    <IlluminaCard uniqueKey="inventory" windowPosition={DraggableWindowPosition.TOP_LEFT} className="illumina-inventory min-h-[350px] w-[490px]">
+      <IlluminaCardHeader headerText={LocalizeText("inventory.title")} onCloseClick={onClose} />
       {!isTrading &&
         <>
           <NitroCardTabsView className="!justify-start !gap-0.5">
@@ -121,7 +121,7 @@ export const InventoryView: FC<{}> = props => {
               )
             })}
           </NitroCardTabsView>
-          <NitroCardContentView overflow="hidden" className="h-max">
+          <IlluminaCardContent overflow="hidden" className="h-max">
             <div className="my-[5px] h-0.5 w-full border-b border-white bg-[#CCCCCC] dark:border-[#36322C] dark:bg-black" />
             {(currentTab === TAB_FURNITURE) &&
               <InventoryFurnitureView roomSession={roomSession} roomPreviewer={roomPreviewer} />}
@@ -131,12 +131,12 @@ export const InventoryView: FC<{}> = props => {
               <InventoryBadgeView />}
             {(currentTab === TAB_BOTS) &&
               <InventoryBotView roomSession={roomSession} roomPreviewer={roomPreviewer} />}
-          </NitroCardContentView>
+          </IlluminaCardContent>
         </>}
       {isTrading &&
-        <NitroCardContentView>
+        <IlluminaCardContent>
           <InventoryTradeView cancelTrade={onClose} roomPreviewer={roomPreviewer} />
-        </NitroCardContentView>}
-    </NitroCardView>
+        </IlluminaCardContent>}
+    </IlluminaCard>
   )
 }

@@ -9,28 +9,23 @@ import { SelectReportedUserView } from "./views/SelectReportedUserView"
 import { ThanksView } from "./views/ThanksView"
 import { NameChangeView } from "./views/name-change/NameChangeView"
 
-export const HelpView: FC<{}> = props =>
-{
+export const Help: FC<{}> = () => {
   const [ isVisible, setIsVisible ] = useState(false)
   const { activeReport = null, setActiveReport = null, report = null } = useHelp()
 
-  const onClose = () =>
-  {
+  const onClose = () => {
     setActiveReport(null)
     setIsVisible(false)
   }
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     const linkTracker: ILinkEventTracker = {
-      linkReceived: (url: string) =>
-      {
+      linkReceived: (url: string) => {
         const parts = url.split("/")
-        
-        if(parts.length < 2) return
-        
-        switch(parts[1])
-        {
+
+        if (parts.length < 2) return
+
+        switch (parts[1]) {
         case "show":
           setIsVisible(true)
           return
@@ -44,8 +39,7 @@ export const HelpView: FC<{}> = props =>
           // todo: launch tour
           return
         case "report":
-          if((parts.length >= 5) && (parts[2] === "room"))
-          {
+          if ((parts.length >= 5) && (parts[2] === "room")) {
             const roomId = parseInt(parts[3])
             const unknown = unescape(parts.splice(4).join("/"))
             //this.reportRoom(roomId, unknown, "");
@@ -61,36 +55,32 @@ export const HelpView: FC<{}> = props =>
     return () => RemoveLinkEventTracker(linkTracker)
   }, [])
 
-  useEffect(() =>
-  {
-    if(!activeReport) return
+  useEffect(() => {
+    if (!activeReport) return
 
     setIsVisible(true)
   }, [ activeReport ])
-    
-  const CurrentStepView = () =>
-  {
-    if(activeReport)
-    {
-      switch(activeReport.currentStep)
-      {
+
+  const CurrentStepView = () => {
+    if (activeReport) {
+      switch (activeReport.currentStep) {
       case ReportState.SELECT_USER:
-        return <SelectReportedUserView onClose={ onClose } />
+        return <SelectReportedUserView onClose={onClose} />
       case ReportState.SELECT_CHATS:
-        return <SelectReportedChatsView onClose={ onClose } />
+        return <SelectReportedChatsView onClose={onClose} />
       case ReportState.REPORT_SUMMARY:
         return <ReportSummaryView />
       case ReportState.THANKS:
-        return <ThanksView onClose={ onClose } />
+        return <ThanksView onClose={onClose} />
       }
     }
 
-    return <HelpIndexView onClose={ onClose } />
+    return <HelpIndexView onClose={onClose} />
   }
 
   return (
     <>
-      { isVisible && <CurrentStepView /> }
+      {isVisible && <CurrentStepView />}
       <NameChangeView />
     </>
   )

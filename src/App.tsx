@@ -2,18 +2,18 @@ import { ConfigurationEvent, GetAssetManager, HabboWebTools, LegacyExternalInter
 import { FC, useCallback, useEffect, useState } from "react"
 import { GetCommunication, GetConfiguration, GetIlluminaVersion, GetNitroInstance, GetUIVersion } from "./api"
 import { TransitionAnimation, TransitionAnimationTypes } from "./common"
-import { Loading } from "./components/loading"
-import { Main } from "./components/main"
+import { Loading } from "./components/loading/Loading"
+import { Main } from "./components/main/Main"
 import { useConfigurationEvent, useLocalizationEvent, useMainEvent, useRoomEngineEvent } from "./hooks"
 
 NitroVersion.UI_VERSION = GetUIVersion()
 
 export const App: FC<{}> = () => {
-  const [ isReady, setIsReady ] = useState(false)
-  const [ isError, setIsError ] = useState(false)
-  const [ message, setMessage ] = useState("Getting Ready")
-  const [ percent, setPercent ] = useState(0)
-  const [ imageRendering, setImageRendering ] = useState(true)
+  const [isReady, setIsReady] = useState(false)
+  const [isError, setIsError] = useState(false)
+  const [message, setMessage] = useState("Getting Ready")
+  const [percent, setPercent] = useState(0)
+  const [imageRendering, setImageRendering] = useState(true)
 
   console.log(`%c Flash UI - ${"v" + GetIlluminaVersion()} \n%c by cowboystyle \n%c https://discord.gg/yMRWuSekS8`, "font-size: 16px; border font-weight: bold;", "font-size: 12px;", "font-size: 12px;")
 
@@ -26,72 +26,72 @@ export const App: FC<{}> = () => {
 
   const handler = useCallback(async (event: NitroEvent) => {
     switch (event.type) {
-    case ConfigurationEvent.LOADED:
-      GetNitroInstance().localization.init()
-      setPercent(prevValue => (prevValue + 20))
-      return
-    case ConfigurationEvent.FAILED:
-      setIsError(true)
-      setMessage("Configuration Failed")
-      return
-    case Nitro.WEBGL_UNAVAILABLE:
-      setIsError(true)
-      setMessage("WebGL Required")
-      return
-    case Nitro.WEBGL_CONTEXT_LOST:
-      setIsError(true)
-      setMessage("WebGL Context Lost - Reloading")
-
-      setTimeout(() => window.location.reload(), 1500)
-      return
-    case NitroCommunicationDemoEvent.CONNECTION_HANDSHAKING:
-      setPercent(prevValue => (prevValue + 20))
-      return
-    case NitroCommunicationDemoEvent.CONNECTION_HANDSHAKE_FAILED:
-      setIsError(true)
-      setMessage("Handshake Failed")
-      return
-    case NitroCommunicationDemoEvent.CONNECTION_AUTHENTICATED:
-      setPercent(prevValue => (prevValue + 20))
-
-      GetNitroInstance().init()
-
-      if (LegacyExternalInterface.available) LegacyExternalInterface.call("legacyTrack", "authentication", "authok", [])
-      return
-    case NitroCommunicationDemoEvent.CONNECTION_ERROR:
-      setIsError(true)
-      setMessage("Connection Error")
-      return
-    case NitroCommunicationDemoEvent.CONNECTION_CLOSED:
-      //if(GetNitroInstance().roomEngine) GetNitroInstance().roomEngine.dispose();
-      setIsError(true)
-      setMessage("Connection Closed")
-
-      HabboWebTools.send(-1, "client.init.handshake.fail")
-      return
-    case RoomEngineEvent.ENGINE_INITIALIZED:
-      setPercent(prevValue => (prevValue + 20))
-
-      setTimeout(() => setIsReady(true), 300)
-      return
-    case NitroLocalizationEvent.LOADED: {
-      const assetUrls = GetConfiguration<string[]>("preload.assets.urls")
-      const urls: string[] = []
-
-      if (assetUrls && assetUrls.length) for (const url of assetUrls) urls.push(NitroConfiguration.interpolate(url))
-
-      const status = await GetAssetManager().downloadAssets(urls)
-
-      if (status) {
-        GetCommunication().init()
-
+      case ConfigurationEvent.LOADED:
+        GetNitroInstance().localization.init()
         setPercent(prevValue => (prevValue + 20))
-      } else {
+        return
+      case ConfigurationEvent.FAILED:
         setIsError(true)
-        setMessage("Assets Failed")
+        setMessage("Configuration Failed")
+        return
+      case Nitro.WEBGL_UNAVAILABLE:
+        setIsError(true)
+        setMessage("WebGL Required")
+        return
+      case Nitro.WEBGL_CONTEXT_LOST:
+        setIsError(true)
+        setMessage("WebGL Context Lost - Reloading")
+
+        setTimeout(() => window.location.reload(), 1500)
+        return
+      case NitroCommunicationDemoEvent.CONNECTION_HANDSHAKING:
+        setPercent(prevValue => (prevValue + 20))
+        return
+      case NitroCommunicationDemoEvent.CONNECTION_HANDSHAKE_FAILED:
+        setIsError(true)
+        setMessage("Handshake Failed")
+        return
+      case NitroCommunicationDemoEvent.CONNECTION_AUTHENTICATED:
+        setPercent(prevValue => (prevValue + 20))
+
+        GetNitroInstance().init()
+
+        if (LegacyExternalInterface.available) LegacyExternalInterface.call("legacyTrack", "authentication", "authok", [])
+        return
+      case NitroCommunicationDemoEvent.CONNECTION_ERROR:
+        setIsError(true)
+        setMessage("Connection Error")
+        return
+      case NitroCommunicationDemoEvent.CONNECTION_CLOSED:
+        //if(GetNitroInstance().roomEngine) GetNitroInstance().roomEngine.dispose();
+        setIsError(true)
+        setMessage("Connection Closed")
+
+        HabboWebTools.send(-1, "client.init.handshake.fail")
+        return
+      case RoomEngineEvent.ENGINE_INITIALIZED:
+        setPercent(prevValue => (prevValue + 20))
+
+        setTimeout(() => setIsReady(true), 300)
+        return
+      case NitroLocalizationEvent.LOADED: {
+        const assetUrls = GetConfiguration<string[]>("preload.assets.urls")
+        const urls: string[] = []
+
+        if (assetUrls && assetUrls.length) for (const url of assetUrls) urls.push(NitroConfiguration.interpolate(url))
+
+        const status = await GetAssetManager().downloadAssets(urls)
+
+        if (status) {
+          GetCommunication().init()
+
+          setPercent(prevValue => (prevValue + 20))
+        } else {
+          setIsError(true)
+          setMessage("Assets Failed")
+        }
+        return
       }
-      return
-    }
     }
   }, [])
 
@@ -121,8 +121,10 @@ export const App: FC<{}> = () => {
   }, [])
 
   return (
-    <div className="pixelated size-full select-none overflow-hidden antialiased">
-      {(!isReady || isError) && <Loading isError={isError} message={message} percent={percent} />}
+    <div className="pixelated size-full select-none overflow-hidden antialiased bg-[#121212]">
+      {(!isReady || isError) && (
+        <Loading isError={isError} message={message} percent={percent} />
+      )}
       <TransitionAnimation type={TransitionAnimationTypes.FADE_IN} inProp={(isReady)}>
         <Main />
       </TransitionAnimation>

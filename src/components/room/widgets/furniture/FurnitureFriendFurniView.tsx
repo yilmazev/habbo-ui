@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { LocalizeText } from "../../../../api"
-import { Button, DraggableWindow, LayoutAvatarImage, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
+import { Button, DraggableWindow, IlluminaCard, IlluminaCardContent, IlluminaCardHeader, LayoutAvatarImage } from "../../../../common"
 import { useFurnitureFriendFurniWidget } from "../../../../hooks"
 
 export const FurnitureFriendFurniView: FC<{}> = props => {
@@ -35,9 +35,9 @@ export const FurnitureFriendFurniView: FC<{}> = props => {
 
   if (stage > 0) {
     return (
-      <NitroCardView uniqueKey="engraving-confirm" className="illumina-engraving-confirm w-[300px]">
-        <NitroCardHeaderView headerText={LocalizeText("friend.furniture.confirm.lock.caption")} onCloseClick={onClose} />
-        <NitroCardContentView>
+      <IlluminaCard uniqueKey="engraving-confirm" className="illumina-engraving-confirm w-[300px]">
+        <IlluminaCardHeader headerText={LocalizeText("friend.furniture.confirm.lock.caption")} onCloseClick={onClose} />
+        <IlluminaCardContent>
           <p className="mb-2.5 text-center text-sm font-semibold [text-shadow:_0_1px_0_#fff] dark:[text-shadow:_0_1px_0_#33312B]">
             {LocalizeText("friend.furniture.confirm.lock.subtitle")}
           </p>
@@ -49,8 +49,8 @@ export const FurnitureFriendFurniView: FC<{}> = props => {
             <Button onClick={event => respond(false)}>{LocalizeText("friend.furniture.confirm.lock.button.cancel")}</Button>
             <Button onClick={event => respond(true)}>{LocalizeText("friend.furniture.confirm.lock.button.confirm")}</Button>
           </div>
-        </NitroCardContentView>
-      </NitroCardView>
+        </IlluminaCardContent>
+      </IlluminaCard>
     )
   }
 

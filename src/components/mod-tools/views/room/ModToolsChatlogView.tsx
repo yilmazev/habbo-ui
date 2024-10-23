@@ -1,44 +1,40 @@
 import { ChatRecordData, GetRoomChatlogMessageComposer, RoomChatlogEvent } from "@nitrots/nitro-renderer"
 import { FC, useEffect, useState } from "react"
 import { SendMessageComposer } from "../../../../api"
-import { DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
+import { DraggableWindowPosition, IlluminaCard, IlluminaCardContent, IlluminaCardHeader } from "../../../../common"
 import { useMessageEvent } from "../../../../hooks"
 import { ChatlogView } from "../chatlog/ChatlogView"
 
-interface ModToolsChatlogViewProps
-{
-    roomId: number;
-    onCloseClick: () => void;
+interface ModToolsChatlogViewProps {
+  roomId: number;
+  onCloseClick: () => void;
 }
 
-export const ModToolsChatlogView: FC<ModToolsChatlogViewProps> = props =>
-{
+export const ModToolsChatlogView: FC<ModToolsChatlogViewProps> = props => {
   const { roomId = null, onCloseClick = null } = props
-  const [ roomChatlog, setRoomChatlog ] = useState<ChatRecordData>(null)
+  const [roomChatlog, setRoomChatlog] = useState<ChatRecordData>(null)
 
-  useMessageEvent<RoomChatlogEvent>(RoomChatlogEvent, event =>
-  {
+  useMessageEvent<RoomChatlogEvent>(RoomChatlogEvent, event => {
     const parser = event.getParser()
 
-    if(!parser || parser.data.roomId !== roomId) return
+    if (!parser || parser.data.roomId !== roomId) return
 
     setRoomChatlog(parser.data)
   })
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     SendMessageComposer(new GetRoomChatlogMessageComposer(roomId))
-  }, [ roomId ])
+  }, [roomId])
 
-  if(!roomChatlog) return null
+  if (!roomChatlog) return null
 
   return (
-    <NitroCardView uniqueKey="mod-tools-chatlog" className="illumina-mod-tools-chatlog" windowPosition={ DraggableWindowPosition.TOP_LEFT }>
-      <NitroCardHeaderView headerText={ `Room Chatlog: ${ roomChatlog.roomName }` } onCloseClick={ onCloseClick } />
-      <NitroCardContentView className="text-black" overflow="hidden">
-        { roomChatlog &&
-                    <ChatlogView records={ [ roomChatlog ] } /> }
-      </NitroCardContentView>
-    </NitroCardView>
+    <IlluminaCard uniqueKey="mod-tools-chatlog" className="illumina-mod-tools-chatlog" windowPosition={DraggableWindowPosition.TOP_LEFT}>
+      <IlluminaCardHeader headerText={`Room Chatlog: ${roomChatlog.roomName}`} onCloseClick={onCloseClick} />
+      <IlluminaCardContent className="text-black" overflow="hidden">
+        {roomChatlog &&
+          <ChatlogView records={[roomChatlog]} />}
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

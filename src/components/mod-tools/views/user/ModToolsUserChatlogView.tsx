@@ -1,7 +1,7 @@
 import { ChatRecordData, GetUserChatlogMessageComposer, UserChatlogEvent } from "@nitrots/nitro-renderer"
 import { FC, useEffect, useState } from "react"
 import { SendMessageComposer } from "../../../../api"
-import { DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
+import { DraggableWindowPosition, IlluminaCard, IlluminaCardContent, IlluminaCardHeader } from "../../../../common"
 import { useMessageEvent } from "../../../../hooks"
 import { ChatlogView } from "../chatlog/ChatlogView"
 
@@ -12,8 +12,8 @@ interface ModToolsUserChatlogViewProps {
 
 export const ModToolsUserChatlogView: FC<ModToolsUserChatlogViewProps> = props => {
   const { userId = null, onCloseClick = null } = props
-  const [ userChatlog, setUserChatlog ] = useState<ChatRecordData[]>(null)
-  const [ username, setUsername ] = useState(null)
+  const [userChatlog, setUserChatlog] = useState<ChatRecordData[]>(null)
+  const [username, setUsername] = useState(null)
 
   useMessageEvent<UserChatlogEvent>(UserChatlogEvent, event => {
     const parser = event.getParser()
@@ -26,15 +26,15 @@ export const ModToolsUserChatlogView: FC<ModToolsUserChatlogViewProps> = props =
 
   useEffect(() => {
     SendMessageComposer(new GetUserChatlogMessageComposer(userId))
-  }, [ userId ])
+  }, [userId])
 
   return (
-    <NitroCardView uniqueKey="mod-tools-chatlog" className="illumina-mod-tools-chatlog" windowPosition={DraggableWindowPosition.TOP_LEFT}>
-      <NitroCardHeaderView headerText={`User Chatlog: ${username || ""}`} onCloseClick={onCloseClick} />
-      <NitroCardContentView>
+    <IlluminaCard uniqueKey="mod-tools-chatlog" className="illumina-mod-tools-chatlog" windowPosition={DraggableWindowPosition.TOP_LEFT}>
+      <IlluminaCardHeader headerText={`User Chatlog: ${username || ""}`} onCloseClick={onCloseClick} />
+      <IlluminaCardContent>
         {userChatlog &&
           <ChatlogView records={userChatlog} />}
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

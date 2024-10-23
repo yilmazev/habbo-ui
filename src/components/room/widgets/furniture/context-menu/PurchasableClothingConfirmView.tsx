@@ -1,7 +1,7 @@
 import { RedeemItemClothingComposer, RoomObjectCategory, UserFigureComposer } from "@nitrots/nitro-renderer"
 import { FC, useEffect, useState } from "react"
 import { FigureData, FurniCategory, GetAvatarRenderManager, GetConnection, GetFurnitureDataForRoomObject, GetSessionDataManager, LocalizeText } from "../../../../../api"
-import { Button, LayoutAvatarImage, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader, LayoutAvatarImage } from "../../../../../common"
 import { useRoom } from "../../../../../hooks"
 
 interface PurchasableClothingConfirmViewProps {
@@ -14,9 +14,9 @@ const MODE_PURCHASABLE_CLOTHING: number = 0
 
 export const PurchasableClothingConfirmView: FC<PurchasableClothingConfirmViewProps> = props => {
   const { objectId = -1, onClose = null } = props
-  const [ mode, setMode ] = useState(MODE_DEFAULT)
-  const [ gender, setGender ] = useState(FigureData.MALE)
-  const [ newFigure, setNewFigure ] = useState(null)
+  const [mode, setMode] = useState(MODE_DEFAULT)
+  const [gender, setGender] = useState(FigureData.MALE)
+  const [newFigure, setNewFigure] = useState(null)
   const { roomSession = null } = useRoom()
 
   const useProduct = () => {
@@ -38,16 +38,16 @@ export const PurchasableClothingConfirmView: FC<PurchasableClothingConfirmViewPr
 
       if (furniData) {
         switch (furniData.specialType) {
-        case FurniCategory.FIGURE_PURCHASABLE_SET:
-          mode = MODE_PURCHASABLE_CLOTHING
+          case FurniCategory.FIGURE_PURCHASABLE_SET:
+            mode = MODE_PURCHASABLE_CLOTHING
 
-          const setIds = furniData.customParams.split(",").map(part => parseInt(part))
+            const setIds = furniData.customParams.split(",").map(part => parseInt(part))
 
-          for (const setId of setIds) {
-            if (GetAvatarRenderManager().isValidFigureSetForGender(setId, gender)) validSets.push(setId)
-          }
+            for (const setId of setIds) {
+              if (GetAvatarRenderManager().isValidFigureSetForGender(setId, gender)) validSets.push(setId)
+            }
 
-          break
+            break
         }
       }
     }
@@ -64,14 +64,14 @@ export const PurchasableClothingConfirmView: FC<PurchasableClothingConfirmViewPr
     // if owns clothing, change to it
 
     setMode(mode)
-  }, [ roomSession, objectId, onClose ])
+  }, [roomSession, objectId, onClose])
 
   if (mode === MODE_DEFAULT) return null
 
   return (
-    <NitroCardView uniqueKey="use-purchasable-clothing-confirm" className="illumina-purchasable-clothing-confirm w-[350px]">
-      <NitroCardHeaderView headerText={LocalizeText("useproduct.widget.title.bind_clothing")} onCloseClick={onClose} />
-      <NitroCardContentView center>
+    <IlluminaCard uniqueKey="use-purchasable-clothing-confirm" className="illumina-purchasable-clothing-confirm w-[350px]">
+      <IlluminaCardHeader headerText={LocalizeText("useproduct.widget.title.bind_clothing")} onCloseClick={onClose} />
+      <IlluminaCardContent center>
         <div className="flex h-full">
           <div className="flex w-[137px] items-center">
             <LayoutAvatarImage figure={newFigure} direction={2} />
@@ -87,7 +87,7 @@ export const PurchasableClothingConfirmView: FC<PurchasableClothingConfirmViewPr
             </div>
           </div>
         </div>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

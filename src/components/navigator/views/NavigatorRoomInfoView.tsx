@@ -1,7 +1,7 @@
 import { GetCustomRoomFilterMessageComposer, NavigatorSearchComposer, RoomMuteComposer, RoomSettingsComposer, SecurityLevel, ToggleStaffPickMessageComposer, UpdateHomeRoomMessageComposer } from "@nitrots/nitro-renderer"
 import { FC, useEffect, useMemo, useState } from "react"
 import { CreateLinkEvent, DispatchUiEvent, GetConfiguration, GetGroupInformation, GetSessionDataManager, GetUserProfile, LocalizeText, ReportType, SendMessageComposer } from "../../../api"
-import { Button, LayoutBadgeImageView, LayoutRoomThumbnailView, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader, LayoutBadgeImageView, LayoutRoomThumbnailView } from "../../../common"
 import { RoomWidgetThumbnailEvent } from "../../../events"
 import { useHelp, useNavigator } from "../../../hooks"
 
@@ -11,8 +11,8 @@ export class NavigatorRoomInfoViewProps {
 
 export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
   const { onCloseClick = null } = props
-  const [ isRoomPicked, setIsRoomPicked ] = useState(false)
-  const [ isRoomMuted, setIsRoomMuted ] = useState(false)
+  const [isRoomPicked, setIsRoomPicked] = useState(false)
+  const [isRoomMuted, setIsRoomMuted] = useState(false)
   const { report = null } = useHelp()
   const { navigatorData = null } = useNavigator()
 
@@ -23,11 +23,11 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
 
   const hasPermission = (permission: string) => {
     switch (permission) {
-    case "settings":
-      return (GetSessionDataManager().userId === navigatorData.enteredGuestRoom.ownerId || GetSessionDataManager().isModerator)
-    case "staff_pick":
-      return GetSessionDataManager().securityLevel >= SecurityLevel.COMMUNITY
-    default: return false
+      case "settings":
+        return (GetSessionDataManager().userId === navigatorData.enteredGuestRoom.ownerId || GetSessionDataManager().isModerator)
+      case "staff_pick":
+        return GetSessionDataManager().securityLevel >= SecurityLevel.COMMUNITY
+      default: return false
     }
   }
 
@@ -35,54 +35,54 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
     if (!navigatorData || !navigatorData.enteredGuestRoom) return
 
     switch (action) {
-    case "set_home_room":
-      let newRoomId = -1
+      case "set_home_room":
+        let newRoomId = -1
 
-      if (navigatorData.homeRoomId !== navigatorData.enteredGuestRoom.roomId) {
-        newRoomId = navigatorData.enteredGuestRoom.roomId
-      }
+        if (navigatorData.homeRoomId !== navigatorData.enteredGuestRoom.roomId) {
+          newRoomId = navigatorData.enteredGuestRoom.roomId
+        }
 
-      if (newRoomId > 0) SendMessageComposer(new UpdateHomeRoomMessageComposer(newRoomId))
-      return
-    case "navigator_search_tag":
-      CreateLinkEvent(`navigator/search/${value}`)
-      SendMessageComposer(new NavigatorSearchComposer("hotel_view", `tag:${value}`))
-      return
-    case "open_room_thumbnail_camera":
-      DispatchUiEvent(new RoomWidgetThumbnailEvent(RoomWidgetThumbnailEvent.TOGGLE_THUMBNAIL))
-      onCloseClick()
-      return
-    case "open_group_info":
-      GetGroupInformation(navigatorData.enteredGuestRoom.habboGroupId)
-      return
-    case "toggle_room_link":
-      CreateLinkEvent("navigator/toggle-room-link")
-      return
-    case "open_room_settings":
-      SendMessageComposer(new RoomSettingsComposer(navigatorData.enteredGuestRoom.roomId))
-      onCloseClick()
-      return
-    case "toggle_pick":
-      setIsRoomPicked(value => !value)
-      SendMessageComposer(new ToggleStaffPickMessageComposer(navigatorData.enteredGuestRoom.roomId))
-      return
-    case "toggle_mute":
-      setIsRoomMuted(value => !value)
-      SendMessageComposer(new RoomMuteComposer())
-      return
-    case "room_filter":
-      SendMessageComposer(new GetCustomRoomFilterMessageComposer(navigatorData.enteredGuestRoom.roomId))
-      return
-    case "open_floorplan_editor":
-      CreateLinkEvent("floor-editor/toggle")
-      onCloseClick()
-      return
-    case "report_room":
-      report(ReportType.ROOM, { roomId: navigatorData.enteredGuestRoom.roomId, roomName: navigatorData.enteredGuestRoom.roomName })
-      return
-    case "close":
-      onCloseClick()
-      return
+        if (newRoomId > 0) SendMessageComposer(new UpdateHomeRoomMessageComposer(newRoomId))
+        return
+      case "navigator_search_tag":
+        CreateLinkEvent(`navigator/search/${value}`)
+        SendMessageComposer(new NavigatorSearchComposer("hotel_view", `tag:${value}`))
+        return
+      case "open_room_thumbnail_camera":
+        DispatchUiEvent(new RoomWidgetThumbnailEvent(RoomWidgetThumbnailEvent.TOGGLE_THUMBNAIL))
+        onCloseClick()
+        return
+      case "open_group_info":
+        GetGroupInformation(navigatorData.enteredGuestRoom.habboGroupId)
+        return
+      case "toggle_room_link":
+        CreateLinkEvent("navigator/toggle-room-link")
+        return
+      case "open_room_settings":
+        SendMessageComposer(new RoomSettingsComposer(navigatorData.enteredGuestRoom.roomId))
+        onCloseClick()
+        return
+      case "toggle_pick":
+        setIsRoomPicked(value => !value)
+        SendMessageComposer(new ToggleStaffPickMessageComposer(navigatorData.enteredGuestRoom.roomId))
+        return
+      case "toggle_mute":
+        setIsRoomMuted(value => !value)
+        SendMessageComposer(new RoomMuteComposer())
+        return
+      case "room_filter":
+        SendMessageComposer(new GetCustomRoomFilterMessageComposer(navigatorData.enteredGuestRoom.roomId))
+        return
+      case "open_floorplan_editor":
+        CreateLinkEvent("floor-editor/toggle")
+        onCloseClick()
+        return
+      case "report_room":
+        report(ReportType.ROOM, { roomId: navigatorData.enteredGuestRoom.roomId, roomName: navigatorData.enteredGuestRoom.roomName })
+        return
+      case "close":
+        onCloseClick()
+        return
     }
   }
 
@@ -92,7 +92,7 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
     }
 
     return `${GetConfiguration("thumbnails.url").replace("%thumbnail%", roomId.toString())}?cache=${Math.random()}`
-  }, [ customUrl, roomId ])
+  }, [customUrl, roomId])
 
   useEffect(() => {
     if (!navigatorData) return
@@ -100,14 +100,14 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
     setIsRoomPicked(navigatorData.currentRoomIsStaffPick)
 
     if (navigatorData.enteredGuestRoom) setIsRoomMuted(navigatorData.enteredGuestRoom.allInRoomMuted)
-  }, [ navigatorData ])
+  }, [navigatorData])
 
   if (!navigatorData.enteredGuestRoom) return null
 
   return (
-    <NitroCardView uniqueKey="room-info" className="illumina-room-info w-[290px]">
-      <NitroCardHeaderView headerText={navigatorData.enteredGuestRoom.roomName} onCloseClick={() => processAction("close")} />
-      <NitroCardContentView>
+    <IlluminaCard uniqueKey="room-info" className="illumina-room-info w-[290px]">
+      <IlluminaCardHeader headerText={navigatorData.enteredGuestRoom.roomName} onCloseClick={() => processAction("close")} />
+      <IlluminaCardContent>
         {navigatorData.enteredGuestRoom.description.length > 0 && <p className="mb-5 text-sm">{navigatorData.enteredGuestRoom.description}</p>}
         <div className="mb-3.5 flex gap-2">
           {navigatorType === "r63Large" &&
@@ -141,7 +141,7 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
           <div className="mb-3 flex gap-2 px-2.5" onClick={() => processAction("open_group_info")}>
             <LayoutBadgeImageView className="flex-none" badgeCode={navigatorData.enteredGuestRoom.groupBadgeCode} isGroup={true} />
             <p className="text-sm underline">
-              {LocalizeText("navigator.guildbase", [ "groupName" ], [ navigatorData.enteredGuestRoom.groupName ])}
+              {LocalizeText("navigator.guildbase", ["groupName"], [navigatorData.enteredGuestRoom.groupName])}
             </p>
           </div>}
         <div className="flex w-full flex-col gap-1">
@@ -171,7 +171,7 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
               {LocalizeText(isRoomMuted ? "navigator.muteall_on" : "navigator.muteall_off")}
             </Button>}
         </div>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

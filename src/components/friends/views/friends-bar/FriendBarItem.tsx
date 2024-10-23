@@ -4,8 +4,8 @@ import { GetUserProfile, LocalizeText, MessengerFriend, OpenMessengerChat, SendM
 import { Button, LayoutAvatarImage, LayoutBadgeImageView } from "../../../../common"
 import { useFriends } from "../../../../hooks"
 
-export const FriendBarItemView: FC<{ friend: MessengerFriend, itemWidth: number }> = ({ friend = null, itemWidth = 0 }) => {
-  const [ isVisible, setVisible ] = useState(false)
+export const FriendBarItem: FC<{ friend: MessengerFriend, itemWidth: number }> = ({ friend = null, itemWidth = 0 }) => {
+  const [isVisible, setVisible] = useState(false)
   const { followFriend = null } = useFriends()
   const elementRef = useRef<HTMLDivElement>()
 
@@ -37,7 +37,7 @@ export const FriendBarItemView: FC<{ friend: MessengerFriend, itemWidth: number 
         {isVisible && (
           <div className="px-[7px]">
             <div className="mt-[-2px] h-[62px] bg-white p-[5px]">
-              <p className="text-[11px] leading-[13px] text-black">{LocalizeText("friend.bar.find.text")}</p>
+              <p className="text-[12px] leading-[14px] text-black">{LocalizeText("friend.bar.find.text")}</p>
             </div>
             <Button className="mt-[6px] min-h-[32px] w-full" onClick={() => SendMessageComposer(new FindNewFriendsMessageComposer())}>
               {LocalizeText("friend.bar.find.button")}
@@ -58,7 +58,7 @@ export const FriendBarItemView: FC<{ friend: MessengerFriend, itemWidth: number 
           }
         </div>
         <div className="flex w-full flex-col">
-          <p className="h-[36px] content-center text-[12px] font-bold leading-[14px] text-white">
+          <p className="h-[36px] w-[85px] content-center truncate text-[13px] font-bold leading-[0] text-white">
             {friend.name}
           </p>
           {isVisible && (

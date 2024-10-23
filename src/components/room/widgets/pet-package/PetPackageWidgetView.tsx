@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { GetConfiguration, LocalizeText } from "../../../../api"
-import { Button, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader } from "../../../../common"
 import { usePetPackageWidget } from "../../../../hooks"
 
 export const PetPackageWidgetView: FC<{}> = props => {
@@ -9,9 +9,9 @@ export const PetPackageWidgetView: FC<{}> = props => {
   return (
     <>
       {isVisible &&
-        <NitroCardView uniqueKey="pet-package" className="illumina-pet-package w-[400px]">
-          <NitroCardHeaderView center headerText={objectType === "gnome_box" ? LocalizeText("widgets.gnomepackage.name.title") : LocalizeText("furni.petpackage.open")} onCloseClick={() => onClose()} />
-          <NitroCardContentView>
+        <IlluminaCard uniqueKey="pet-package" className="illumina-pet-package w-[400px]">
+          <IlluminaCardHeader center headerText={objectType === "gnome_box" ? LocalizeText("widgets.gnomepackage.name.title") : LocalizeText("furni.petpackage.open")} onCloseClick={() => onClose()} />
+          <IlluminaCardContent>
             <div className="flex gap-1.5 pb-[15px]">
               <div className={`package-image-${objectType} h-[84px] w-20 bg-no-repeat`}></div>
               <div className="m-2">
@@ -31,8 +31,8 @@ export const PetPackageWidgetView: FC<{}> = props => {
                 </div>
               </div>
             </div>
-          </NitroCardContentView>
-        </NitroCardView>
+          </IlluminaCardContent>
+        </IlluminaCard>
       }
     </>
   )

@@ -1,6 +1,6 @@
-import { Dispatch, FC, SetStateAction } from "react"
-import { AchievementUtilities, IAchievementCategory, LocalizeText } from "../../../../api"
-import { LayoutItemCountView } from "../../../../common"
+import { Dispatch, FC, SetStateAction } from "react";
+import { AchievementUtilities, IAchievementCategory, LocalizeText } from "../../../../api";
+import { LayoutItemCount } from "../../../../common";
 
 interface AchievementCategoryListItemViewProps {
   category: IAchievementCategory;
@@ -24,7 +24,7 @@ export const AchievementsCategoryListItemView: FC<AchievementCategoryListItemVie
       <div className="relative size-full bg-top bg-no-repeat" style={{ backgroundImage: `url(${getCategoryImage})` }}>
         <p className="absolute bottom-2.5 w-full text-center text-xs font-semibold text-white">{progress}/{maxProgress}</p>
       </div>
-      {(getTotalUnseen > 0) && <LayoutItemCountView count={getTotalUnseen} />}
+      {(getTotalUnseen > 0) && <LayoutItemCount count={getTotalUnseen} />}
     </div>
   )
 }

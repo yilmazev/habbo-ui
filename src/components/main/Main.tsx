@@ -8,27 +8,27 @@ import { CameraWidgetView } from "../camera/CameraWidgetView"
 import { CampaignView } from "../campaign/CampaignView"
 import { CatalogView } from "../catalog/CatalogView"
 import { FloorplanEditorView } from "../floorplan-editor/FloorplanEditorView"
-import { Friends } from "../friends"
-import { GameCenterView } from "../game-center/GameCenterView"
+import { Friends } from "../friends/Friends"
+import { GameCenter } from "../game-center/GameCenter"
 import { GroupsView } from "../groups/GroupsView"
 import { GuideToolView } from "../guide-tool/GuideToolView"
 import { HcCenterView } from "../hc-center/HcCenterView"
-import { HelpView } from "../help"
-import { HotelView } from "../hotel-view"
+import { Help } from "../help/Help"
+import { HotelView } from "../hotel-view/HotelView"
 import { InventoryView } from "../inventory/InventoryView"
 import { ModToolsView } from "../mod-tools/ModToolsView"
 import { NavigatorView } from "../navigator/NavigatorView"
 import { NitropediaView } from "../nitropedia/NitropediaView"
 import { RightSideView } from "../right-side/RightSideView"
 import { RoomView } from "../room/RoomView"
-import { Toolbar } from "../toolbar"
+import { Toolbar } from "../toolbar/Toolbar"
 import { UserProfileView } from "../user-profile/UserProfileView"
 import { UserSettingsView } from "../user-settings/UserSettingsView"
-import { Wired } from "../wired"
+import { Wired } from "../wired/Wired"
 
 export const Main: FC<{}> = () => {
-  const [ isReady, setIsReady ] = useState(false)
-  const [ landingViewVisible, setLandingViewVisible ] = useState(true)
+  const [isReady, setIsReady] = useState(false)
+  const [landingViewVisible, setLandingViewVisible] = useState(true)
 
   useRoomSessionManagerEvent<RoomSessionEvent>(RoomSessionEvent.CREATED, event => setLandingViewVisible(false))
   useRoomSessionManagerEvent<RoomSessionEvent>(RoomSessionEvent.ENDED, event => setLandingViewVisible(event.openLandingView))
@@ -46,19 +46,19 @@ export const Main: FC<{}> = () => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-        case "open":
-          if (parts.length > 2) {
-            switch (parts[2]) {
-            case "credits":
-              //HabboWebTools.openWebPageAndMinimizeClient(this._windowManager.getProperty(ExternalVariables.WEB_SHOP_RELATIVE_URL));
-              break
-            default: {
-              const name = parts[2]
-              HabboWebTools.openHabblet(name)
+          case "open":
+            if (parts.length > 2) {
+              switch (parts[2]) {
+                case "credits":
+                  //HabboWebTools.openWebPageAndMinimizeClient(this._windowManager.getProperty(ExternalVariables.WEB_SHOP_RELATIVE_URL));
+                  break
+                default: {
+                  const name = parts[2]
+                  HabboWebTools.openHabblet(name)
+                }
+              }
             }
-            }
-          }
-          return
+            return
         }
       },
       eventUrlPrefix: "habblet/"
@@ -72,7 +72,7 @@ export const Main: FC<{}> = () => {
   return (
     <>
       <HotelView />
-      <Toolbar isInRoom={!landingViewVisible} /> {/* todo */}
+      <Toolbar isInRoom={!landingViewVisible} />
       <ModToolsView /> {/* todo */}
       <RoomView /> {/* todo */}
       <Wired /> {/* todo */}
@@ -87,12 +87,12 @@ export const Main: FC<{}> = () => {
       <UserProfileView /> {/* todo */}
       <GroupsView /> {/* todo */}
       <CameraWidgetView /> {/* todo */}
-      <HelpView /> {/* todo */}
+      <Help /> {/* todo */}
       <NitropediaView /> {/* todo */}
       <GuideToolView /> {/* todo */}
       <HcCenterView /> {/* todo */}
       <CampaignView /> {/* todo */}
-      <GameCenterView /> {/* todo */}
+      <GameCenter />
       <FloorplanEditorView /> {/* todo */}
     </>
   )

@@ -1,7 +1,7 @@
 import { HabboClubLevelEnum, RoomControllerLevel } from "@nitrots/nitro-renderer"
 import { FC, useEffect, useState } from "react"
 import { CreateLinkEvent, GetAvatarRenderManager, GetClubMemberLevel, GetRoomSession, GetSessionDataManager, LocalizeText, MannequinUtilities } from "../../../../api"
-import { Button, LayoutAvatarImage, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader, LayoutAvatarImage } from "../../../../common"
 import { useFurnitureMannequinWidget } from "../../../../hooks"
 
 const MODE_NONE: number = -1
@@ -12,8 +12,8 @@ const MODE_NO_CLUB: number = 3
 const MODE_WRONG_GENDER: number = 4
 
 export const FurnitureMannequinView: FC<{}> = props => {
-  const [ renderedFigure, setRenderedFigure ] = useState(null)
-  const [ mode, setMode ] = useState(MODE_NONE)
+  const [renderedFigure, setRenderedFigure] = useState(null)
+  const [mode, setMode] = useState(MODE_NONE)
   const { objectId = -1, figure = null, gender = null, clubLevel = HabboClubLevelEnum.NO_CLUB, name = null, setName = null, saveFigure = null, wearFigure = null, saveName = null, onClose = null } = useFurnitureMannequinWidget()
 
   useEffect(() => {
@@ -40,43 +40,43 @@ export const FurnitureMannequinView: FC<{}> = props => {
     }
 
     setMode(MODE_PEER)
-  }, [ objectId, gender, clubLevel ])
+  }, [objectId, gender, clubLevel])
 
   useEffect(() => {
     switch (mode) {
-    case MODE_CONTROLLER:
-    case MODE_WRONG_GENDER: {
-      const figureContainer = GetAvatarRenderManager().createFigureContainer(figure)
+      case MODE_CONTROLLER:
+      case MODE_WRONG_GENDER: {
+        const figureContainer = GetAvatarRenderManager().createFigureContainer(figure)
 
-      MannequinUtilities.transformAsMannequinFigure(figureContainer)
+        MannequinUtilities.transformAsMannequinFigure(figureContainer)
 
-      setRenderedFigure(figureContainer.getFigureString())
-      break
+        setRenderedFigure(figureContainer.getFigureString())
+        break
+      }
+      case MODE_UPDATE: {
+        const figureContainer = GetAvatarRenderManager().createFigureContainer(GetSessionDataManager().figure)
+
+        MannequinUtilities.transformAsMannequinFigure(figureContainer)
+
+        setRenderedFigure(figureContainer.getFigureString())
+        break
+      }
+      case MODE_PEER:
+      case MODE_NO_CLUB: {
+        const figureContainer = MannequinUtilities.getMergedMannequinFigureContainer(GetSessionDataManager().figure, figure)
+
+        setRenderedFigure(figureContainer.getFigureString())
+        break
+      }
     }
-    case MODE_UPDATE: {
-      const figureContainer = GetAvatarRenderManager().createFigureContainer(GetSessionDataManager().figure)
-
-      MannequinUtilities.transformAsMannequinFigure(figureContainer)
-
-      setRenderedFigure(figureContainer.getFigureString())
-      break
-    }
-    case MODE_PEER:
-    case MODE_NO_CLUB: {
-      const figureContainer = MannequinUtilities.getMergedMannequinFigureContainer(GetSessionDataManager().figure, figure)
-
-      setRenderedFigure(figureContainer.getFigureString())
-      break
-    }
-    }
-  }, [ mode, figure, clubLevel ])
+  }, [mode, figure, clubLevel])
 
   if (objectId === -1) return null
 
   return (
-    <NitroCardView uniqueKey="furniture-mannequin" className="illumina-furniture-mannequin w-[388px]">
-      <NitroCardHeaderView headerText={LocalizeText("mannequin.widget.title")} onCloseClick={onClose} />
-      <NitroCardContentView>
+    <IlluminaCard uniqueKey="furniture-mannequin" className="illumina-furniture-mannequin w-[388px]">
+      <IlluminaCardHeader headerText={LocalizeText("mannequin.widget.title")} onCloseClick={onClose} />
+      <IlluminaCardContent>
         <div className="flex">
           <div className="relative h-[130px] w-[83px] shrink-0 bg-[url('/client-assets/images/room-widgets/mannequin/spritesheet.png?v=2451779')]">
             <LayoutAvatarImage className="absolute !bg-[-5px_-14px]" figure={renderedFigure} direction={2} />
@@ -151,7 +151,7 @@ export const FurnitureMannequinView: FC<{}> = props => {
               {LocalizeText("generic.ok")}
             </Button>
           </div>}
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

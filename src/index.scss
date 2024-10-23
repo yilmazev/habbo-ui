@@ -81,7 +81,8 @@ textarea {
 }
 
 .font-volter {
-  @apply text-[9px] leading-[12px];
+  font-size: 9px !important;
+  line-height: 12px !important;
 }
 
 ::-webkit-scrollbar {

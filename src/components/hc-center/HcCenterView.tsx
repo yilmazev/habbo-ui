@@ -1,12 +1,12 @@
 import { FriendlyTime, ILinkEventTracker, ScrGetKickbackInfoMessageComposer, ScrKickbackData, ScrSendKickbackInfoMessageEvent } from "@nitrots/nitro-renderer"
 import { FC, useEffect, useState } from "react"
 import { AddEventLinkTracker, ClubStatus, CreateLinkEvent, GetConfiguration, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from "../../api"
-import { Button, LayoutAvatarImage, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader, LayoutAvatarImage } from "../../common"
 import { useInventoryBadges, useMessageEvent, usePurse, useSessionInfo } from "../../hooks"
 
 export const HcCenterView: FC<{}> = props => {
-  const [ isVisible, setIsVisible ] = useState(false)
-  const [ kickbackData, setKickbackData ] = useState<ScrKickbackData>(null)
+  const [isVisible, setIsVisible] = useState(false)
+  const [kickbackData, setKickbackData] = useState<ScrKickbackData>(null)
   const { userFigure = null } = useSessionInfo()
   const { purse = null, clubStatus = null } = usePurse()
   const { activate = null, deactivate = null } = useInventoryBadges()
@@ -25,12 +25,12 @@ export const HcCenterView: FC<{}> = props => {
 
   const getInfoText = () => {
     switch (clubStatus) {
-    case ClubStatus.ACTIVE:
-      return LocalizeText(`hccenter.status.${clubStatus}.info`, [ "timeleft", "joindate", "streakduration" ], [ getClubText(), kickbackData?.firstSubscriptionDate, FriendlyTime.shortFormat(kickbackData?.currentHcStreak * 86400) ])
-    case ClubStatus.EXPIRED:
-      return LocalizeText(`hccenter.status.${clubStatus}.info`, [ "joindate" ], [ kickbackData?.firstSubscriptionDate ])
-    default:
-      return LocalizeText(`hccenter.status.${clubStatus}.info`)
+      case ClubStatus.ACTIVE:
+        return LocalizeText(`hccenter.status.${clubStatus}.info`, ["timeleft", "joindate", "streakduration"], [getClubText(), kickbackData?.firstSubscriptionDate, FriendlyTime.shortFormat(kickbackData?.currentHcStreak * 86400)])
+      case ClubStatus.EXPIRED:
+        return LocalizeText(`hccenter.status.${clubStatus}.info`, ["joindate"], [kickbackData?.firstSubscriptionDate])
+      default:
+        return LocalizeText(`hccenter.status.${clubStatus}.info`)
     }
   }
 
@@ -48,15 +48,15 @@ export const HcCenterView: FC<{}> = props => {
         if (parts.length < 2) return
 
         switch (parts[1]) {
-        case "open":
-          if (parts.length > 2) {
-            switch (parts[2]) {
-            case "hccenter":
-              setIsVisible(true)
-              break
+          case "open":
+            if (parts.length > 2) {
+              switch (parts[2]) {
+                case "hccenter":
+                  setIsVisible(true)
+                  break
+              }
             }
-          }
-          return
+            return
         }
       },
       eventUrlPrefix: "habboUI/"
@@ -73,7 +73,7 @@ export const HcCenterView: FC<{}> = props => {
     const id = activate()
 
     return () => deactivate(id)
-  }, [ isVisible, activate, deactivate ])
+  }, [isVisible, activate, deactivate])
 
   useEffect(() => {
     SendMessageComposer(new ScrGetKickbackInfoMessageComposer())
@@ -82,8 +82,8 @@ export const HcCenterView: FC<{}> = props => {
   if (!isVisible) return null
 
   return (
-    <NitroCardView uniqueKey="hc-center" className="illumina-hc-center w-[460px] overflow-hidden">
-      <NitroCardHeaderView headerText={LocalizeText("generic.hccenter")} onCloseClick={() => setIsVisible(false)} />
+    <IlluminaCard uniqueKey="hc-center" className="illumina-hc-center w-[460px] overflow-hidden">
+      <IlluminaCardHeader headerText={LocalizeText("generic.hccenter")} onCloseClick={() => setIsVisible(false)} />
       <div className="relative mx-px flex h-[250px] justify-between overflow-hidden p-2.5">
         <div className="flex flex-col">
           <img className="mb-3 w-fit" src={`https://habbofont.net/font/hc_big/${hotelName ?? "Illumina"}+club.gif`} height={71} alt={`${hotelName} Club`} />
@@ -99,7 +99,7 @@ export const HcCenterView: FC<{}> = props => {
           <LayoutAvatarImage className="!absolute !-top-0.5 !right-[90px]" figure={userFigure} direction={4} />
         </div>
       </div>
-      <NitroCardContentView>
+      <IlluminaCardContent>
         <div className="illumina-hc-center-benefits mt-12 flex items-end justify-between p-3 pb-0">
           <div className="text-white">
             <h5 className="mb-1 font-semibold [text-shadow:_0_1px_0_#dd4e00]">{LocalizeText("hccenter.general.title")}</h5>
@@ -110,7 +110,7 @@ export const HcCenterView: FC<{}> = props => {
           </div>
           <div className="h-[130px] w-[200px] bg-[url('/client-assets/images/hc-center/benefits-promo.png?v=2451779')]" />
         </div>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

@@ -1,13 +1,13 @@
 import { UpdateRoomFilterMessageComposer } from "@nitrots/nitro-renderer"
 import { FC, useState } from "react"
 import { LocalizeText, SendMessageComposer } from "../../../../api"
-import { Button, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader } from "../../../../common"
 import { useFilterWordsWidget, useNavigator } from "../../../../hooks"
 
 export const RoomFilterWordsWidgetView: FC<{}> = props => {
-  const [ word, setWord ] = useState("bobba")
-  const [ selectedWord, setSelectedWord ] = useState("")
-  const [ isSelectingWord, setIsSelectingWord ] = useState(false)
+  const [word, setWord] = useState("bobba")
+  const [selectedWord, setSelectedWord] = useState("")
+  const [isSelectingWord, setIsSelectingWord] = useState(false)
   const { wordsFilter = [], isVisible = null, setWordsFilter, onClose = null } = useFilterWordsWidget()
   const { navigatorData = null } = useNavigator()
 
@@ -22,7 +22,7 @@ export const RoomFilterWordsWidgetView: FC<{}> = props => {
     if (isAddingWord && wordsFilter.includes((isSelectingWord ? selectedWord : word))) return
 
     setWordsFilter(prevValue => {
-      const newWords = [ ...prevValue ]
+      const newWords = [...prevValue]
 
       isAddingWord ? newWords.push((isSelectingWord ? selectedWord : word)) : newWords.splice(newWords.indexOf((isSelectingWord ? selectedWord : word)), 1)
 
@@ -43,9 +43,9 @@ export const RoomFilterWordsWidgetView: FC<{}> = props => {
   if (!isVisible) return null
 
   return (
-    <NitroCardView uniqueKey="filter-words" className="illumina-filter-words w-[250px]">
-      <NitroCardHeaderView headerText={LocalizeText("navigator.roomsettings.roomfilter")} onCloseClick={() => onClose()} />
-      <NitroCardContentView>
+    <IlluminaCard uniqueKey="filter-words" className="illumina-filter-words w-[250px]">
+      <IlluminaCardHeader headerText={LocalizeText("navigator.roomsettings.roomfilter")} onCloseClick={() => onClose()} />
+      <IlluminaCardContent>
         <div className="mb-3.5 flex gap-1">
           <input type="text" className="illumina-input h-[31px] flex-1 p-2" maxLength={255} value={word} onChange={event => onTyping(event.target.value)} />
           <Button className="h-[30px]" onClick={() => processAction(true)}>{LocalizeText("navigator.roomsettings.roomfilter.addword")}</Button>
@@ -62,7 +62,7 @@ export const RoomFilterWordsWidgetView: FC<{}> = props => {
         <div className="mt-2 flex items-center justify-end">
           <Button onClick={() => processAction(false)} disabled={wordsFilter.length === 0 || !isSelectingWord}>{LocalizeText("navigator.roomsettings.roomfilter.removeword")}</Button>
         </div>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

@@ -1,7 +1,7 @@
 import { CallForHelpTopicData, DefaultSanctionMessageComposer, ModAlertMessageComposer, ModBanMessageComposer, ModKickMessageComposer, ModMessageMessageComposer, ModMuteMessageComposer, ModTradingLockMessageComposer } from "@nitrots/nitro-renderer"
 import { FC, useMemo, useState } from "react"
 import { ISelectedUser, LocalizeText, ModActionDefinition, NotificationAlertType, SendMessageComposer } from "../../../../api"
-import { Button, DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
+import { Button, DraggableWindowPosition, IlluminaCard, IlluminaCardContent, IlluminaCardHeader } from "../../../../common"
 import { useModTools, useNotification } from "../../../../hooks"
 
 interface ModToolsUserModActionViewProps {
@@ -26,9 +26,9 @@ const MOD_ACTION_DEFINITIONS = [
 
 export const ModToolsUserModActionView: FC<ModToolsUserModActionViewProps> = props => {
   const { user = null, onCloseClick = null } = props
-  const [ selectedTopic, setSelectedTopic ] = useState(-1)
-  const [ selectedAction, setSelectedAction ] = useState(-1)
-  const [ message, setMessage ] = useState("")
+  const [selectedTopic, setSelectedTopic] = useState(-1)
+  const [selectedAction, setSelectedAction] = useState(-1)
+  const [message, setMessage] = useState("")
   const { cfhCategories = null, settings = null } = useModTools()
   const { simpleAlert = null } = useNotification()
 
@@ -42,7 +42,7 @@ export const ModToolsUserModActionView: FC<ModToolsUserModActionViewProps> = pro
     }
 
     return values
-  }, [ cfhCategories ])
+  }, [cfhCategories])
 
   const sendAlert = (message: string) => simpleAlert(message, NotificationAlertType.DEFAULT, null, null, "Error")
 
@@ -82,54 +82,54 @@ export const ModToolsUserModActionView: FC<ModToolsUserModActionViewProps> = pro
     const messageOrDefault = (message.trim().length === 0) ? LocalizeText(`help.cfh.topic.${category.id}`) : message
 
     switch (sanction.actionType) {
-    case ModActionDefinition.ALERT: {
-      if (!settings.alertPermission) {
-        sendAlert("You have insufficient permissions")
+      case ModActionDefinition.ALERT: {
+        if (!settings.alertPermission) {
+          sendAlert("You have insufficient permissions")
 
-        return
+          return
+        }
+
+        SendMessageComposer(new ModAlertMessageComposer(user.userId, messageOrDefault, category.id))
+        break
       }
+      case ModActionDefinition.MUTE:
+        SendMessageComposer(new ModMuteMessageComposer(user.userId, messageOrDefault, category.id))
+        break
+      case ModActionDefinition.BAN: {
+        if (!settings.banPermission) {
+          sendAlert("You have insufficient permissions")
 
-      SendMessageComposer(new ModAlertMessageComposer(user.userId, messageOrDefault, category.id))
-      break
-    }
-    case ModActionDefinition.MUTE:
-      SendMessageComposer(new ModMuteMessageComposer(user.userId, messageOrDefault, category.id))
-      break
-    case ModActionDefinition.BAN: {
-      if (!settings.banPermission) {
-        sendAlert("You have insufficient permissions")
+          return
+        }
 
-        return
+        SendMessageComposer(new ModBanMessageComposer(user.userId, messageOrDefault, category.id, selectedAction, (sanction.actionId === 106)))
+        break
       }
+      case ModActionDefinition.KICK: {
+        if (!settings.kickPermission) {
+          sendAlert("You have insufficient permissions")
+          return
+        }
 
-      SendMessageComposer(new ModBanMessageComposer(user.userId, messageOrDefault, category.id, selectedAction, (sanction.actionId === 106)))
-      break
-    }
-    case ModActionDefinition.KICK: {
-      if (!settings.kickPermission) {
-        sendAlert("You have insufficient permissions")
-        return
+        SendMessageComposer(new ModKickMessageComposer(user.userId, messageOrDefault, category.id))
+        break
       }
+      case ModActionDefinition.TRADE_LOCK: {
+        const numSeconds = (sanction.actionLengthHours * 60)
 
-      SendMessageComposer(new ModKickMessageComposer(user.userId, messageOrDefault, category.id))
-      break
-    }
-    case ModActionDefinition.TRADE_LOCK: {
-      const numSeconds = (sanction.actionLengthHours * 60)
-
-      SendMessageComposer(new ModTradingLockMessageComposer(user.userId, messageOrDefault, numSeconds, category.id))
-      break
-    }
-    case ModActionDefinition.MESSAGE: {
-      if (message.trim().length === 0) {
-        sendAlert("Please write a message to user")
-
-        return
+        SendMessageComposer(new ModTradingLockMessageComposer(user.userId, messageOrDefault, numSeconds, category.id))
+        break
       }
+      case ModActionDefinition.MESSAGE: {
+        if (message.trim().length === 0) {
+          sendAlert("Please write a message to user")
 
-      SendMessageComposer(new ModMessageMessageComposer(user.userId, message, category.id))
-      break
-    }
+          return
+        }
+
+        SendMessageComposer(new ModMessageMessageComposer(user.userId, message, category.id))
+        break
+      }
     }
 
     onCloseClick()
@@ -138,9 +138,9 @@ export const ModToolsUserModActionView: FC<ModToolsUserModActionViewProps> = pro
   if (!user) return null
 
   return (
-    <NitroCardView uniqueKey="mod-tools-user-action" className="illumina-mod-tools-user-action" windowPosition={DraggableWindowPosition.TOP_LEFT}>
-      <NitroCardHeaderView headerText={`Mod Action: ${user ? user.username : ""}`} onCloseClick={() => onCloseClick()} />
-      <NitroCardContentView>
+    <IlluminaCard uniqueKey="mod-tools-user-action" className="illumina-mod-tools-user-action" windowPosition={DraggableWindowPosition.TOP_LEFT}>
+      <IlluminaCardHeader headerText={`Mod Action: ${user ? user.username : ""}`} onCloseClick={() => onCloseClick()} />
+      <IlluminaCardContent>
         <div className="flex flex-col gap-1.5">
           <div className="illumina-card-filter relative flex h-6 items-center gap-[3px] px-2.5">
             <select className="w-full text-[13px]" value={selectedTopic} onChange={event => setSelectedTopic(parseInt(event.target.value))}>
@@ -164,7 +164,7 @@ export const ModToolsUserModActionView: FC<ModToolsUserModActionViewProps> = pro
           <Button className="w-full" onClick={sendDefaultSanction}>Default Sanction</Button>
           <Button className="w-full" onClick={sendSanction}>Sanction</Button>
         </div>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

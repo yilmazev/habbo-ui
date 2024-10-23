@@ -1,27 +1,24 @@
 import { FriendlyTime, GetModeratorUserInfoMessageComposer, ModeratorUserInfoData, ModeratorUserInfoEvent } from "@nitrots/nitro-renderer"
 import { FC, useEffect, useMemo, useState } from "react"
 import { SendMessageComposer } from "../../../../api"
-import { DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
+import { DraggableWindowPosition, IlluminaCard, IlluminaCardContent, IlluminaCardHeader } from "../../../../common"
 import { useMessageEvent } from "../../../../hooks"
 import { ModToolsUserInfo } from "./ModToolsUserInfo"
 
-interface ModToolsUserViewProps
-{
-    userId: number;
-    onCloseClick: () => void;
+interface ModToolsUserViewProps {
+  userId: number;
+  onCloseClick: () => void;
 }
 
-export const ModToolsUserView: FC<ModToolsUserViewProps> = props =>
-{
+export const ModToolsUserView: FC<ModToolsUserViewProps> = props => {
   const { onCloseClick = null, userId = null } = props
-  const [ userInfo, setUserInfo ] = useState<ModeratorUserInfoData>(null)
-  const [ sendMessageVisible, setSendMessageVisible ] = useState(false)
-  const [ modActionVisible, setModActionVisible ] = useState(false)
-  const [ roomVisitsVisible, setRoomVisitsVisible ] = useState(false)
+  const [userInfo, setUserInfo] = useState<ModeratorUserInfoData>(null)
+  const [sendMessageVisible, setSendMessageVisible] = useState(false)
+  const [modActionVisible, setModActionVisible] = useState(false)
+  const [roomVisitsVisible, setRoomVisitsVisible] = useState(false)
 
-  const userProperties = useMemo(() =>
-  {
-    if(!userInfo) return null
+  const userProperties = useMemo(() => {
+    if (!userInfo) return null
 
     return [
       {
@@ -65,32 +62,30 @@ export const ModToolsUserView: FC<ModToolsUserViewProps> = props =>
         value: userInfo.userClassification
       }
     ]
-  }, [ userInfo ])
+  }, [userInfo])
 
-  useMessageEvent<ModeratorUserInfoEvent>(ModeratorUserInfoEvent, event =>
-  {
+  useMessageEvent<ModeratorUserInfoEvent>(ModeratorUserInfoEvent, event => {
     const parser = event.getParser()
-    
-    if(!parser || parser.data.userId !== userId) return
-    
+
+    if (!parser || parser.data.userId !== userId) return
+
     setUserInfo(parser.data)
   })
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     SendMessageComposer(new GetModeratorUserInfoMessageComposer(userId))
-  }, [ userId ])
+  }, [userId])
 
-  if(!userInfo) return null
+  if (!userInfo) return null
 
   return (
     <>
-      <NitroCardView uniqueKey="mod-tools-user" className="illumina-mod-tools-user" windowPosition={ DraggableWindowPosition.TOP_LEFT }>
-        <NitroCardHeaderView headerText="User Info" onCloseClick={ () => onCloseClick() } />
-        <NitroCardContentView>
-          <ModToolsUserInfo userId={ userId } />
-        </NitroCardContentView>
-      </NitroCardView>
+      <IlluminaCard uniqueKey="mod-tools-user" className="illumina-mod-tools-user" windowPosition={DraggableWindowPosition.TOP_LEFT}>
+        <IlluminaCardHeader headerText="User Info" onCloseClick={() => onCloseClick()} />
+        <IlluminaCardContent>
+          <ModToolsUserInfo userId={userId} />
+        </IlluminaCardContent>
+      </IlluminaCard>
     </>
   )
 }

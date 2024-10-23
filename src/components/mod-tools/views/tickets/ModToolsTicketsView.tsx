@@ -1,7 +1,7 @@
 import { IssueMessageData } from "@nitrots/nitro-renderer"
 import { FC, useState } from "react"
 import { GetSessionDataManager } from "../../../../api"
-import { NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from "../../../../common"
+import { IlluminaCard, IlluminaCardContent, IlluminaCardHeader, NitroCardTabsItemView, NitroCardTabsView } from "../../../../common"
 import { useModTools } from "../../../../hooks"
 import { ModToolsIssueInfoView } from "./ModToolsIssueInfoView"
 import { ModToolsMyIssuesTabView } from "./ModToolsMyIssuesTabView"
@@ -20,8 +20,8 @@ const TABS: string[] = [
 
 export const ModToolsTicketsView: FC<ModToolsTicketsViewProps> = props => {
   const { onCloseClick = null } = props
-  const [ currentTab, setCurrentTab ] = useState(0)
-  const [ issueInfoWindows, setIssueInfoWindows ] = useState<number[]>([])
+  const [currentTab, setCurrentTab] = useState(0)
+  const [issueInfoWindows, setIssueInfoWindows] = useState<number[]>([])
   const { tickets = [] } = useModTools()
 
   const openIssues = tickets.filter(issue => issue.state === IssueMessageData.STATE_OPEN)
@@ -30,7 +30,7 @@ export const ModToolsTicketsView: FC<ModToolsTicketsViewProps> = props => {
 
   const closeIssue = (issueId: number) => {
     setIssueInfoWindows(prevValue => {
-      const newValue = [ ...prevValue ]
+      const newValue = [...prevValue]
       const existingIndex = newValue.indexOf(issueId)
 
       if (existingIndex >= 0) newValue.splice(existingIndex, 1)
@@ -41,7 +41,7 @@ export const ModToolsTicketsView: FC<ModToolsTicketsViewProps> = props => {
 
   const handleIssue = (issueId: number) => {
     setIssueInfoWindows(prevValue => {
-      const newValue = [ ...prevValue ]
+      const newValue = [...prevValue]
       const existingIndex = newValue.indexOf(issueId)
 
       if (existingIndex === -1) newValue.push(issueId)
@@ -53,9 +53,9 @@ export const ModToolsTicketsView: FC<ModToolsTicketsViewProps> = props => {
 
   const CurrentTabComponent = () => {
     switch (currentTab) {
-    case 0: return <ModToolsOpenIssuesTabView openIssues={openIssues} />
-    case 1: return <ModToolsMyIssuesTabView myIssues={myIssues} handleIssue={handleIssue} />
-    case 2: return <ModToolsPickedIssuesTabView pickedIssues={pickedIssues} />
+      case 0: return <ModToolsOpenIssuesTabView openIssues={openIssues} />
+      case 1: return <ModToolsMyIssuesTabView myIssues={myIssues} handleIssue={handleIssue} />
+      case 2: return <ModToolsPickedIssuesTabView pickedIssues={pickedIssues} />
     }
 
     return null
@@ -63,8 +63,8 @@ export const ModToolsTicketsView: FC<ModToolsTicketsViewProps> = props => {
 
   return (
     <>
-      <NitroCardView uniqueKey="mod-tools-tickets" className="illumina-mod-tools-tickets">
-        <NitroCardHeaderView headerText="Issue browser" onCloseClick={onCloseClick} />
+      <IlluminaCard uniqueKey="mod-tools-tickets" className="illumina-mod-tools-tickets">
+        <IlluminaCardHeader headerText="Issue browser" onCloseClick={onCloseClick} />
         <NitroCardTabsView className="mb-1.5">
           {TABS.map((tab, index) => (
             <NitroCardTabsItemView key={index} className="w-full" isActive={(currentTab === index)} onClick={event => setCurrentTab(index)}>
@@ -72,12 +72,12 @@ export const ModToolsTicketsView: FC<ModToolsTicketsViewProps> = props => {
             </NitroCardTabsItemView>)
           )}
         </NitroCardTabsView>
-        <NitroCardContentView>
+        <IlluminaCardContent>
           <div className="illumina-input h-[184px] w-[516px] p-1.5">
             <CurrentTabComponent />
           </div>
-        </NitroCardContentView>
-      </NitroCardView>
+        </IlluminaCardContent>
+      </IlluminaCard>
       {issueInfoWindows && (issueInfoWindows.length > 0) && issueInfoWindows.map(issueId => <ModToolsIssueInfoView key={issueId} issueId={issueId} onIssueInfoClosed={closeIssue} />)}
     </>
   )

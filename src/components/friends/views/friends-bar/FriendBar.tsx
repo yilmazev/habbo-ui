@@ -1,8 +1,8 @@
 import { FC, useEffect, useRef, useState } from "react"
 import { MessengerFriend } from "../../../../api"
-import { FriendBarItemView } from "./FriendBarItemView"
+import { FriendBarItem } from "./FriendBarItem"
 
-export const FriendBarView: FC<{ onlineFriends: MessengerFriend[] }> = ({ onlineFriends = null }) => {
+export const FriendBar: FC<{ onlineFriends: MessengerFriend[] }> = ({ onlineFriends = null }) => {
   const [ indexOffset, setIndexOffset ] = useState(0)
   const elementRef = useRef<HTMLDivElement | null>(null)
   const [ containerWidth, setContainerWidth ] = useState(1)
@@ -35,7 +35,7 @@ export const FriendBarView: FC<{ onlineFriends: MessengerFriend[] }> = ({ online
       )}
       <div ref={elementRef} className="flex size-full items-center gap-[3px]">
         {Array.from(Array(MAX_DISPLAY_COUNT), (e, i) => (
-          <FriendBarItemView key={i} friend={(onlineFriends[indexOffset + i] || null)} itemWidth={ITEM_WIDTH} />
+          <FriendBarItem key={i} friend={(onlineFriends[indexOffset + i] || null)} itemWidth={ITEM_WIDTH} />
         ))}
       </div>
       {onlineFriends.length >= MAX_DISPLAY_COUNT && (

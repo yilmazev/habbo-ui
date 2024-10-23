@@ -1,17 +1,17 @@
 import { GroupAdminGiveComposer, GroupAdminTakeComposer, GroupConfirmMemberRemoveEvent, GroupConfirmRemoveMemberComposer, GroupMemberParser, GroupMembersComposer, GroupMembersEvent, GroupMembershipAcceptComposer, GroupMembershipDeclineComposer, GroupMembersParser, GroupRank, GroupRemoveMemberComposer, ILinkEventTracker } from "@nitrots/nitro-renderer"
 import { FC, useCallback, useEffect, useState } from "react"
 import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from "../../../api"
-import { Button, LayoutAvatarImage, LayoutBadgeImageView, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader, LayoutAvatarImage, LayoutBadgeImageView } from "../../../common"
 import { useMessageEvent, useNotification } from "../../../hooks"
 
 export const GroupMembersView: FC<{}> = props => {
-  const [ groupId, setGroupId ] = useState(-1)
-  const [ levelId, setLevelId ] = useState(-1)
-  const [ membersData, setMembersData ] = useState<GroupMembersParser>(null)
-  const [ pageId, setPageId ] = useState(-1)
-  const [ totalPages, setTotalPages ] = useState(0)
-  const [ searchQuery, setSearchQuery ] = useState("")
-  const [ removingMemberName, setRemovingMemberName ] = useState(null)
+  const [groupId, setGroupId] = useState(-1)
+  const [levelId, setLevelId] = useState(-1)
+  const [membersData, setMembersData] = useState<GroupMembersParser>(null)
+  const [pageId, setPageId] = useState(-1)
+  const [totalPages, setTotalPages] = useState(0)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [removingMemberName, setRemovingMemberName] = useState(null)
   const { showConfirm = null } = useNotification()
   const isMod = GetSessionDataManager().isModerator
 
@@ -19,7 +19,7 @@ export const GroupMembersView: FC<{}> = props => {
     if ((groupId === -1) || (levelId === -1) || (pageId === -1)) return
 
     SendMessageComposer(new GroupMembersComposer(groupId, pageId, searchQuery, levelId))
-  }, [ groupId, levelId, pageId, searchQuery ])
+  }, [groupId, levelId, pageId, searchQuery])
 
   const toggleAdmin = (member: GroupMemberParser) => {
     if (!membersData.admin || (member.rank === GroupRank.OWNER)) return
@@ -64,7 +64,7 @@ export const GroupMembersView: FC<{}> = props => {
   useMessageEvent<GroupConfirmMemberRemoveEvent>(GroupConfirmMemberRemoveEvent, event => {
     const parser = event.getParser()
 
-    showConfirm(LocalizeText(((parser.furnitureCount > 0) ? "group.kickconfirm.desc" : "group.kickconfirm_nofurni.desc"), [ "user", "amount" ], [ removingMemberName, parser.furnitureCount.toString() ]), () => {
+    showConfirm(LocalizeText(((parser.furnitureCount > 0) ? "group.kickconfirm.desc" : "group.kickconfirm_nofurni.desc"), ["user", "amount"], [removingMemberName, parser.furnitureCount.toString()]), () => {
       SendMessageComposer(new GroupRemoveMemberComposer(membersData.groupId, parser.userId))
 
       refreshMembers()
@@ -97,13 +97,13 @@ export const GroupMembersView: FC<{}> = props => {
 
   useEffect(() => {
     setPageId(0)
-  }, [ groupId, levelId, searchQuery ])
+  }, [groupId, levelId, searchQuery])
 
   useEffect(() => {
     if ((groupId === -1) || (levelId === -1) || (pageId === -1)) return
 
     SendMessageComposer(new GroupMembersComposer(groupId, pageId, searchQuery, levelId))
-  }, [ groupId, levelId, pageId, searchQuery ])
+  }, [groupId, levelId, pageId, searchQuery])
 
   useEffect(() => {
     if (groupId === -1) return
@@ -113,14 +113,14 @@ export const GroupMembersView: FC<{}> = props => {
     setTotalPages(0)
     setSearchQuery("")
     setRemovingMemberName(null)
-  }, [ groupId ])
+  }, [groupId])
 
   if ((groupId === -1) || !membersData) return null
 
   return (
-    <NitroCardView uniqueKey="group-members" className="illumina-group-members h-[430px] w-[352px]" customZIndex={502}>
-      <NitroCardHeaderView headerText={LocalizeText("group.members.title", [ "groupName" ], [ membersData ? membersData.groupTitle : "" ])} onCloseClick={event => setGroupId(-1)} />
-      <NitroCardContentView className="h-full">
+    <IlluminaCard uniqueKey="group-members" className="illumina-group-members h-[430px] w-[352px]" customZIndex={502}>
+      <IlluminaCardHeader headerText={LocalizeText("group.members.title", ["groupName"], [membersData ? membersData.groupTitle : ""])} onCloseClick={event => setGroupId(-1)} />
+      <IlluminaCardContent className="h-full">
         <div className="flex h-full flex-col">
           <div className="mb-[9px] flex items-center gap-1">
             <div className="flex w-[75px] items-center justify-center">
@@ -159,14 +159,14 @@ export const GroupMembersView: FC<{}> = props => {
                       </div>
                       {member.rank !== GroupRank.OWNER
                         ? <p className="cursor-pointer truncate text-clip text-xs !leading-3 text-[#757575] underline group-hover:text-black" onClick={event => toggleAdmin(member)}>{member.rank === GroupRank.ADMIN ? LocalizeText("group.members.removerights") : LocalizeText("group.members.giverights")}</p>
-                        : <p className="truncate text-clip text-xs italic !leading-3 text-[#757575]">{LocalizeText("group.members.since", [ "date" ], [ member.joinedAt ])}</p>}
+                        : <p className="truncate text-clip text-xs italic !leading-3 text-[#757575]">{LocalizeText("group.members.since", ["date"], [member.joinedAt])}</p>}
                     </div>}
                   {(member.rank !== GroupRank.REQUESTED) && !membersData.admin &&
                     <div className="flex items-center">
                       <div className="h-[13px] w-[18px] shrink-0">
                         <i className={`block h-[13px] w-[11px] bg-[url('/client-assets/images/spritesheet.png?v=2451779')] ${((member.rank === GroupRank.OWNER) ? "w-[13px] bg-[-372px_-129px]" : (member.rank === GroupRank.ADMIN) ? "bg-[-386px_-129px]" : "bg-[-398px_-129px]")}`} />
                       </div>
-                      <p className="truncate text-clip text-xs italic !leading-3 text-[#757575]">{LocalizeText("group.members.since", [ "date" ], [ member.joinedAt ])}</p>
+                      <p className="truncate text-clip text-xs italic !leading-3 text-[#757575]">{LocalizeText("group.members.since", ["date"], [member.joinedAt])}</p>
                     </div>}
                   {membersData.admin && (member.rank === GroupRank.REQUESTED) &&
                     <div className="flex items-center">
@@ -183,7 +183,7 @@ export const GroupMembersView: FC<{}> = props => {
                 <i className="block h-[9px] w-2.5 bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-56px_-118px]" />
               </Button>
               : <div className="size-[26px]" />}
-            <p className="text-sm">{LocalizeText("group.members.pageinfo", [ "amount", "page", "totalPages" ], [ membersData.totalMembersCount.toString(), (membersData.pageIndex + 1).toString(), totalPages.toString() ])}</p>
+            <p className="text-sm">{LocalizeText("group.members.pageinfo", ["amount", "page", "totalPages"], [membersData.totalMembersCount.toString(), (membersData.pageIndex + 1).toString(), totalPages.toString()])}</p>
             {(membersData.pageIndex !== (totalPages - 1)) && (totalPages !== 0)
               ? <Button variant="primary" className="!w-[26px] !px-0" onClick={event => setPageId(prevValue => (prevValue + 1))}>
                 <i className="block h-[9px] w-2.5 bg-[url('/client-assets/images/spritesheet.png?v=2451779')] bg-[-56px_-128px]" />
@@ -191,7 +191,7 @@ export const GroupMembersView: FC<{}> = props => {
               : <div className="size-[26px]" />}
           </div>
         </div>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

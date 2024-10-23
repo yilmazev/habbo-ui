@@ -6,6 +6,13 @@
   }
 }
 
+.flash-toolbar-me {
+  border-image-slice: 10 fill;
+  border-image-width: 10px;
+  border-image-repeat: repeat repeat;
+  border-image-source: url("/client-assets/images/1flash/toolbar/toolbar-me-bg.png");
+}
+
 .flash-toolbar {
   .flash-friend-bar {
     border-image-source: url("/client-assets/images/1flash/toolbar/friend-bar/friend-bg.png");
@@ -46,12 +53,27 @@
   }
 }
 
+.flash-item-count {
+  border-image-slice: 8 fill;
+  border-image-width: 8px;
+  border-image-repeat: repeat repeat;
+  border-image-source: url("/client-assets/images/1flash/common/item-count-bg.png");
+}
+
 .flash-btn {
+  &.style-0 {
+    font-size: 14px;
+    padding-left: 0;
+    padding-right: 0;
+    text-decoration: underline;
+  }
+
   &.style-3 {
     border-image-slice: 8 fill;
     border-image-width: 8px;
     border-image-source: url("/client-assets/images/1flash/buttons/3/bg.png");
-    @apply font-bold text-[12px];
+    font-size: 12px;
+    font-weight: 600;
 
     &:hover {
       border-image-source: url("/client-assets/images/1flash/buttons/3/hover.png");
@@ -67,12 +89,14 @@
     border-image-slice: 8 fill;
     border-image-width: 8px;
     border-image-source: url("/client-assets/images/1flash/buttons/101/bg.png");
-    font-weight: 600;
-    text-shadow: 0 1px 0 #fff;
+
+    &:hover {
+      filter: drop-shadow(0px 0px 4px #ffffff63);
+    }
 
     &:active,
     &.active {
-      border-image-source: url("/client-assets/images/1flash/buttons/101/active-bg.png");
+      border-image-source: url("/client-assets/images/1flash/buttons/101/active.png");
     }
 
     &:disabled {
@@ -294,20 +318,6 @@
     width: 52px;
     height: 7px;
   }
-}
-
-.illumina-toolbar-me {
-  border-image-slice: 10 fill;
-  border-image-width: 10px;
-  border-image-repeat: repeat repeat;
-  border-image-source: url("/client-assets/images/toolbar/toolbar-me-bg.png?v=2451779");
-}
-
-.illumina-item-badge {
-  border-image-slice: 8 fill;
-  border-image-width: 8px;
-  border-image-repeat: repeat repeat;
-  border-image-source: url("/client-assets/images/common/badge-bg.png?v=2451779");
 }
 
 .illumina-btn-group {

@@ -1,7 +1,7 @@
 import { UpdateFloorPropertiesMessageComposer } from "@nitrots/nitro-renderer"
 import { FC, useState } from "react"
 import { LocalizeText, SendMessageComposer } from "../../../api"
-import { Button, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader } from "../../../common"
 import { UseMountEffect } from "../../../hooks"
 import { useFloorplanEditorContext } from "../FloorplanEditorContext"
 import { ConvertTileMapToString } from "../common/ConvertMapToString"
@@ -13,7 +13,7 @@ interface FloorplanImportExportViewProps {
 
 export const FloorplanImportExportView: FC<FloorplanImportExportViewProps> = props => {
   const { onCloseClick = null } = props
-  const [ map, setMap ] = useState("")
+  const [map, setMap] = useState("")
   const { originalFloorplanSettings = null } = useFloorplanEditorContext()
 
   const saveFloorChanges = () => {
@@ -33,9 +33,9 @@ export const FloorplanImportExportView: FC<FloorplanImportExportViewProps> = pro
   })
 
   return (
-    <NitroCardView uniqueKey="floorplan-editor-import_export" className="illumina-floorplan-editor-import_export w-[380px]">
-      <NitroCardHeaderView headerText={LocalizeText("floor.plan.editor.import.export")} onCloseClick={onCloseClick} />
-      <NitroCardContentView>
+    <IlluminaCard uniqueKey="floorplan-editor-import_export" className="illumina-floorplan-editor-import_export w-[380px]">
+      <IlluminaCardHeader headerText={LocalizeText("floor.plan.editor.import.export")} onCloseClick={onCloseClick} />
+      <IlluminaCardContent>
         <div className="illumina-input h-[253px] w-[363px] py-1.5 pr-1">
           <textarea className="illumina-scrollbar size-full pl-1" spellCheck={false} value={map} onChange={event => setMap(event.target.value)} />
         </div>
@@ -47,7 +47,7 @@ export const FloorplanImportExportView: FC<FloorplanImportExportViewProps> = pro
             {LocalizeText("floor.plan.editor.save")}
           </Button>
         </div>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

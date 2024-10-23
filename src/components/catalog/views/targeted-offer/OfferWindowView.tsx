@@ -1,7 +1,7 @@
 import { FriendlyTime, GetTargetedOfferComposer, PurchaseTargetedOfferComposer, TargetedOfferData } from "@nitrots/nitro-renderer"
 import { Dispatch, SetStateAction, useMemo, useState } from "react"
 import { GetConfiguration, LocalizeText, SendMessageComposer } from "../../../../api"
-import { Button, LayoutCurrencyIcon, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader, LayoutCurrencyIcon } from "../../../../common"
 import { usePurse } from "../../../../hooks"
 
 export const OfferWindowView = (props: { offer: TargetedOfferData, setOpen: Dispatch<SetStateAction> }) => {
@@ -9,7 +9,7 @@ export const OfferWindowView = (props: { offer: TargetedOfferData, setOpen: Disp
 
   const { getCurrencyAmount } = usePurse()
 
-  const [ amount, setAmount ] = useState(1)
+  const [amount, setAmount] = useState(1)
 
   const canPurchase = useMemo(() => {
     let credits = false
@@ -24,7 +24,7 @@ export const OfferWindowView = (props: { offer: TargetedOfferData, setOpen: Disp
     if (offer.purchaseLimit > 0) limit = true
 
     return (credits && points && limit)
-  }, [ offer, getCurrencyAmount ])
+  }, [offer, getCurrencyAmount])
 
   const expirationTime = () => {
     let expirationTime = Math.max(0, (offer.expirationTime - Date.now()) / 1000)
@@ -39,11 +39,11 @@ export const OfferWindowView = (props: { offer: TargetedOfferData, setOpen: Disp
 
   if (!offer) return
 
-  return <NitroCardView uniqueKey="targeted-offer" className="illumina-targeted-offer w-[575px]">
-    <NitroCardHeaderView headerText={LocalizeText(offer.title)} onCloseClick={event => setOpen(false)} />
-    <NitroCardContentView gap={1}>
+  return <IlluminaCard uniqueKey="targeted-offer" className="illumina-targeted-offer w-[575px]">
+    <IlluminaCardHeader headerText={LocalizeText(offer.title)} onCloseClick={event => setOpen(false)} />
+    <IlluminaCardContent gap={1}>
       <div className="illumina-offers-end-time mb-[13px] flex h-[35px] items-center justify-center">
-        <p className="text-[#FFFEFE]">{LocalizeText("targeted.offer.timeleft", [ "timeleft" ], [ expirationTime() ])}</p>
+        <p className="text-[#FFFEFE]">{LocalizeText("targeted.offer.timeleft", ["timeleft"], [expirationTime()])}</p>
       </div>
       <div className="flex justify-between">
         <div className="illumina-offers-content relative mb-[30px] h-[249px] w-80 px-[13px] py-[18px]">
@@ -79,6 +79,6 @@ export const OfferWindowView = (props: { offer: TargetedOfferData, setOpen: Disp
           <Button variant="success" disabled={!canPurchase} onClick={() => buyOffer()}>{LocalizeText("targeted.offer.button.buy")}</Button>
         </div>
       </div>
-    </NitroCardContentView>
-  </NitroCardView>
+    </IlluminaCardContent>
+  </IlluminaCard>
 }

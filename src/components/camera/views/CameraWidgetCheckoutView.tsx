@@ -1,7 +1,7 @@
 import { CameraPublishStatusMessageEvent, CameraPurchaseOKMessageEvent, CameraStorageUrlMessageEvent, PublishPhotoMessageComposer, PurchasePhotoMessageComposer } from "@nitrots/nitro-renderer"
 import { FC, useEffect, useMemo, useState } from "react"
 import { CreateLinkEvent, GetConfiguration, GetRoomEngine, LocalizeText, SendMessageComposer } from "../../../api"
-import { Button, LayoutCurrencyIcon, LayoutImage, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../../common"
+import { Button, IlluminaCard, IlluminaCardContent, IlluminaCardHeader, LayoutCurrencyIcon, LayoutImage } from "../../../common"
 import { useMessageEvent } from "../../../hooks"
 
 export interface CameraWidgetCheckoutViewProps {
@@ -13,12 +13,12 @@ export interface CameraWidgetCheckoutViewProps {
 
 export const CameraWidgetCheckoutView: FC<CameraWidgetCheckoutViewProps> = props => {
   const { base64Url = null, onCloseClick = null, onCancelClick = null, price = null } = props
-  const [ pictureUrl, setPictureUrl ] = useState(null)
-  const [ publishUrl, setPublishUrl ] = useState(null)
-  const [ picturesBought, setPicturesBought ] = useState(0)
-  const [ wasPicturePublished, setWasPicturePublished ] = useState(false)
-  const [ isWaiting, setIsWaiting ] = useState(false)
-  const [ publishCooldown, setPublishCooldown ] = useState(0)
+  const [pictureUrl, setPictureUrl] = useState(null)
+  const [publishUrl, setPublishUrl] = useState(null)
+  const [picturesBought, setPicturesBought] = useState(0)
+  const [wasPicturePublished, setWasPicturePublished] = useState(false)
+  const [isWaiting, setIsWaiting] = useState(false)
+  const [publishCooldown, setPublishCooldown] = useState(0)
 
   const publishDisabled = useMemo(() => GetConfiguration("camera.publish.disabled", false), [])
 
@@ -44,24 +44,24 @@ export const CameraWidgetCheckoutView: FC<CameraWidgetCheckoutViewProps> = props
 
   const processAction = (type: string, value: string | number = null) => {
     switch (type) {
-    case "close":
-      onCloseClick()
-      return
-    case "buy":
-      if (isWaiting) return
+      case "close":
+        onCloseClick()
+        return
+      case "buy":
+        if (isWaiting) return
 
-      setIsWaiting(true)
-      SendMessageComposer(new PurchasePhotoMessageComposer(""))
-      return
-    case "publish":
-      if (isWaiting) return
+        setIsWaiting(true)
+        SendMessageComposer(new PurchasePhotoMessageComposer(""))
+        return
+      case "publish":
+        if (isWaiting) return
 
-      setIsWaiting(true)
-      SendMessageComposer(new PublishPhotoMessageComposer())
-      return
-    case "cancel":
-      onCancelClick()
-      return
+        setIsWaiting(true)
+        SendMessageComposer(new PublishPhotoMessageComposer())
+        return
+      case "cancel":
+        onCancelClick()
+        return
     }
   }
 
@@ -69,14 +69,14 @@ export const CameraWidgetCheckoutView: FC<CameraWidgetCheckoutViewProps> = props
     if (!base64Url) return
 
     GetRoomEngine().saveBase64AsScreenshot(base64Url)
-  }, [ base64Url ])
+  }, [base64Url])
 
   if (!price) return null
 
   return (
-    <NitroCardView className="illumina-camera-checkout w-[340px]">
-      <NitroCardHeaderView headerText={LocalizeText("camera.confirm_phase.title")} onCloseClick={event => processAction("close")} />
-      <NitroCardContentView>
+    <IlluminaCard className="illumina-camera-checkout w-[340px]">
+      <IlluminaCardHeader headerText={LocalizeText("camera.confirm_phase.title")} onCloseClick={event => processAction("close")} />
+      <IlluminaCardContent>
         <div className="flex size-80 items-center justify-center bg-[#CCCCCC] dark:bg-[#33312b]">
           {(pictureUrl && pictureUrl.length) &&
             <LayoutImage className="size-full" imageUrl={pictureUrl} />}
@@ -146,7 +146,7 @@ export const CameraWidgetCheckoutView: FC<CameraWidgetCheckoutViewProps> = props
           </div>}
         <p className="mb-1.5 mt-2 text-sm">{LocalizeText("camera.warning.disclaimer")}</p>
         <Button className="!w-fit" onClick={event => processAction("cancel")}>{LocalizeText("generic.close")}</Button>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

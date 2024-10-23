@@ -1,14 +1,14 @@
 import { ILinkEventTracker, NitroLogger } from "@nitrots/nitro-renderer"
 import { FC, useEffect, useRef, useState } from "react"
 import { AddEventLinkTracker, GetConfiguration, OpenUrl, RemoveLinkEventTracker } from "../../api"
-import { DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from "../../common"
+import { DraggableWindowPosition, IlluminaCard, IlluminaCardContent, IlluminaCardHeader } from "../../common"
 
 const NEW_LINE_REGEX = /\n\r|\n|\r/mg
 
 export const NitropediaView: FC<{}> = props => {
-  const [ content, setContent ] = useState(null)
-  const [ header, setHeader ] = useState("")
-  const [ dimensions, setDimensions ] = useState<{ width: number, height: number }>(null)
+  const [content, setContent] = useState(null)
+  const [header, setHeader] = useState("")
+  const [dimensions, setDimensions] = useState<{ width: number, height: number }>(null)
   const elementRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -84,13 +84,13 @@ export const NitropediaView: FC<{}> = props => {
   if (!content) return null
 
   return (
-    <NitroCardView uniqueKey="nitropedia" className="illumina-nitropedia h-[400px] min-h-[400px] w-[420px] resize-y overflow-auto" windowPosition={DraggableWindowPosition.TOP_LEFT} style={dimensions ? { width: dimensions.width, height: dimensions.height } : {}}>
-      <NitroCardHeaderView headerText={header} onCloseClick={() => setContent(null)} />
-      <NitroCardContentView>
+    <IlluminaCard uniqueKey="nitropedia" className="illumina-nitropedia h-[400px] min-h-[400px] w-[420px] resize-y overflow-auto" windowPosition={DraggableWindowPosition.TOP_LEFT} style={dimensions ? { width: dimensions.width, height: dimensions.height } : {}}>
+      <IlluminaCardHeader headerText={header} onCloseClick={() => setContent(null)} />
+      <IlluminaCardContent>
         <div className="illumina-scrollbar overflow-auto">
           <div ref={elementRef} className="content" dangerouslySetInnerHTML={{ __html: content }} />
         </div>
-      </NitroCardContentView>
-    </NitroCardView>
+      </IlluminaCardContent>
+    </IlluminaCard>
   )
 }

@@ -98,3 +98,29 @@
 		}
 	}
 }
+
+.flash-toolbar-me {
+	.icon-helper-tool {
+		@apply bg-[url('/client-assets/images/1flash/toolbar/icons/helper-tool.png')] w-[32px] h-[30px];
+	}
+
+	.icon-achievements {
+		@apply bg-[url('/client-assets/images/1flash/toolbar/icons/achievements.png')] w-[32px] h-[30px];
+	}
+
+	.icon-my-profile {
+		@apply bg-[url('/client-assets/images/1flash/toolbar/icons/my-profile.png')] w-[32px] h-[30px];
+	}
+
+	.icon-my-rooms {
+		@apply bg-[url('/client-assets/images/1flash/toolbar/icons/my-rooms.png')] w-[32px] h-[30px];
+	}
+
+	.icon-clothes {
+		@apply bg-[url('/client-assets/images/1flash/toolbar/icons/clothes.png')] w-[32px] h-[30px];
+	}
+
+	.icon-forums {
+		@apply bg-[url('/client-assets/images/1flash/toolbar/icons/forums.png')] w-[32px] h-[30px];
+	}
+}
